@@ -2,6 +2,9 @@ const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
 const mysql = require('mysql');
+require('dotenv').config()
+const jwt = require('jsonwebtoken')
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 
 const conn = mysql.createConnection({
     host: 'localhost', 
@@ -41,7 +44,7 @@ function verifyBody(body){
     else return true;
 }
 
-router.post('/usermod/:username/:password', (req, res) => {
+router.post('/usermod/:username/:password', authenticateToken, authRole(1), (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
     //check if username appears in the database
@@ -100,7 +103,7 @@ router.post('/usermod/:username/:password', (req, res) => {
     
 });
 
-router.get('/users/:username', (req,res) =>{
+router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
     const username = req.params.username;
     //check if username appears in the database
     let sql = `SELECT * FROM user WHERE username='${username}'`;
