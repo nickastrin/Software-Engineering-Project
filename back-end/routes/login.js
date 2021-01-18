@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql');
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const {checkToken, addToken, deleteToken, clearTokens} = require('../Authentication/tokens')
 
 const conn = mysql.createConnection({
     host: 'localhost', 
@@ -32,6 +33,7 @@ router.post('/', (req, res) => {
 
             if(user.password !== password) return res.send('invalid password');
             const accessToken = jwt.sign(user, process.env.ACCESS_TOCKEN_SECRET);
+            addToken(accessToken);
             res.json({ token: accessToken});
         }
         else{

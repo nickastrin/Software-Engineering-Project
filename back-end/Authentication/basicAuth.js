@@ -1,5 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const {checkToken, addToken, deleteToken, clearTokens} = require('./tokens')
 
 function authRole(is_admin) {
   return (req, res, next) => {
@@ -23,7 +24,11 @@ function authenticateToken(req, res, next){
     if(err) return res.status(403).send('this token is not valid');
 
     //here we know we have a valid token
+    if(!checkToken(token)) return res.status(403).send('this token has expired');
+
+    //here we know we have a valid token that has not expired
     req.user = user;
+    req.token = token;
     //move on from middleware
     next();
   })
