@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Jan 17, 2021 at 09:23 PM
+-- Generation Time: Jan 18, 2021 at 03:20 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `softeng`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blacklist`
+--
+
+CREATE TABLE `blacklist` (
+  `exp_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `token` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`token`)),
+  `user_id` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1065,6 +1077,12 @@ INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `
 --
 
 --
+-- Indexes for table `blacklist`
+--
+ALTER TABLE `blacklist`
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `car`
 --
 ALTER TABLE `car`
@@ -1174,6 +1192,12 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `blacklist`
+--
+ALTER TABLE `blacklist`
+  ADD CONSTRAINT `blacklist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `car`
