@@ -14,10 +14,14 @@ function authRole(is_admin) {
 }
 
 function authenticateToken(req, res, next){
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.headers['x-observatory-auth'] || req.headers['authorization'];
+  let token = authHeader;
+  if(!authHeader) return res.status(401).send('token required');
 
-  if(token == null) return res.status(401).send('token required');
+  if (authHeader.startsWith('Bearer ')) {
+    // Remove Bearer from string
+    token = authHeader.split(' ')[1];
+  }
 
   //here we know we have a token
   jwt.verify(token, process.env.ACCESS_TOCKEN_SECRET, (err, user) => {
