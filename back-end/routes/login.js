@@ -4,21 +4,7 @@ const mysql = require('mysql');
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const {checkToken, addToken, deleteToken, clearTokens} = require('../Authentication/tokens')
-
-const conn = mysql.createConnection({
-    host: 'localhost', 
-    user:'back-end', 
-    password: 'back-end1234',
-    port: 3306,
-    connectionLimit: 5,
-    database: 'softeng'
-});
-conn.connect((err) =>{
-    if(err){
-        throw err;
-    }
-    console.log('MySql connected');
-});
+const conn = require('../Dbconnection/connection');
 
 router.post('/', (req, res) => {
     const username = req.body.username;

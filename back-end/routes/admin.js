@@ -5,21 +5,7 @@ const mysql = require('mysql');
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
-
-const conn = mysql.createConnection({
-    host: 'localhost', 
-    user:'back-end', 
-    password: 'back-end1234',
-    port: 3306,
-    connectionLimit: 5,
-    database: 'softeng'
-});
-conn.connect((err) =>{
-    if(err){
-        throw err;
-    }
-    console.log('MySql connected');
-});
+const conn = require('../Dbconnection/connection');
 
 function verifyBody(body){
     const schema = Joi.object({

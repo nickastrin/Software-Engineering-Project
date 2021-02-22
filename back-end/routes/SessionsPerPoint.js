@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const conn = require('../Dbconnection/connection');
 
-/* FIX ME */
-/* fix connection on other routers */
 router.get('/:pointID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
     const pointID = req.params.pointID;
     const yyyymmdd_from = JSON.stringify(req.params.yyyymmdd_from);
