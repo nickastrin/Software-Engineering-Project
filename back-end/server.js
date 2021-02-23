@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Import routers
-const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const adminRouter = require('./routes/admin');
@@ -24,12 +23,11 @@ const SessionsPerProviderRouter = require('./routes/SessionsPerProvider');
 app.use('/evcharge/api/login', loginRouter);
 app.use('/evcharge/api/logout', logoutRouter);
 app.use('/evcharge/api/admin', adminRouter);
-app.use('/evcharge/api/SessionsPerEVRouter', SessionsPerEVRouter);
-app.use('/evcharge/api/SessionsPerPointRouter', SessionsPerPointRouter);
-app.use('/evcharge/api/SessionsPerStationRouter', SessionsPerStationRouter);
-app.use('/evcharge/api/SessionsPerProviderRouter', SessionsPerProviderRouter);
+app.use('/evcharge/api/SessionsPerEV', SessionsPerEVRouter);
+app.use('/evcharge/api/SessionsPerPoint', SessionsPerPointRouter);
+app.use('/evcharge/api/SessionsPerStation', SessionsPerStationRouter);
+app.use('/evcharge/api/SessionsPerProvider', SessionsPerProviderRouter);
 
-app.use('/evcharge/api/users', usersRouter);
 
 app.get('/', (req, res) =>{
     res.send('hello people!\n Go to /evcharge/api/ to access the api');
