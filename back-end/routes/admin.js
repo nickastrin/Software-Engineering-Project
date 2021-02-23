@@ -107,6 +107,26 @@ router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
 
 });
 
+router.get('/healthcheck', (req,res) =>{
+    const conn = mysql.createConnection({
+        host: 'localhost', 
+        user:'back-end', 
+        password: 'back-end1234',
+        port: 3306,
+        connectionLimit: 5,
+        database: 'softeng'
+    });
+    conn.connect((err) =>{
+        if(err){
+            console.log('healthCheck error ' + err);
+            res.status(402).json({status: "failed"});
+            return;
+        }
+        console.log('MySql connected');
+        res.json({status: "OK"});
+    });
+});
+
 //Post on /system/sessionsupd ??
 
 module.exports = router;
