@@ -4,11 +4,13 @@ const https = require('https');
 const path = require('path');
 const fs = require('fs');
 const mysql = require('mysql');
+const upload = require('express-fileupload');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload());
 
 //Import routers
 const loginRouter = require('./routes/login');

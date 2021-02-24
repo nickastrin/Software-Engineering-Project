@@ -3,7 +3,6 @@ const Joi = require('joi');
 const router = express.Router();
 const mysql = require('mysql');
 require('dotenv').config()
-const jwt = require('jsonwebtoken')
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const conn = require('../Dbconnection/connection');
 
@@ -127,6 +126,62 @@ router.get('/healthcheck', (req,res) =>{
     });
 });
 
-//Post on /system/sessionsupd ??
+router.post('/system/sessionsupd', (req,res) =>{
+    if(req.files && req.files.file){
+        let file = req.files.file;
+        let csvData = file.data.toString('utf8');
+        let lines = csvData.split("\r\n")
+        //remove first (categories) and last (empty) line 
+        lines.shift();
+        lines.splice(-1,1);
+
+        let sql = `INSERT INTO charge_event (user_id, station_id, point_id, license_plate, start_time, finish_time, kwh_transferred, price, payment_method, protocol) VALUES `;
+
+        //format sql string
+        for (let i = 0; i < lines.length; i++) {
+            let value = '(' + lines[i] + '),';
+            sql += value;
+        }
+        sql = sql.slice(0, -1);
+        // console.log(sql);
+
+        conn.query(sql, (err, q_res) => {
+            if (err) {
+                console.log('error in csv upload: ' + err);
+                res.status(400).send('error in csv upload');
+            }
+            else{
+                //respond
+                // console.log(q_res);
+                let count_sql = `SELECT COUNT(*) FROM charge_event`;
+                conn.query(count_sql, (err, c_res) => {
+                    if (err) {
+                        console.log('error in csv upload - cound query: ' + err);
+                        res.status(400).send('error in csv upload');
+                    }
+                    else{
+                        const ret_obj = JSON.parse(JSON.stringify(c_res[0])); //convert RowDataPacket to plain object
+                        // console.log(ret_obj);
+                        let count = 0;
+                        for (var prop in ret_obj) {
+                            count = ret_obj[prop];
+                            break;
+                        }
+                        // console.log(count);
+                        res.json({
+                            SessionsInUploadedFile: lines.length,
+                            SessionsImported: q_res.affectedRows,
+                            TotalSessionsInDatabase: count
+                        });
+                    }
+                })
+            }
+        });
+    }
+    else{
+        console.log('no file');
+        res.send('Please provide a file in the field name "file"');
+    }
+});
 
 module.exports = router;
