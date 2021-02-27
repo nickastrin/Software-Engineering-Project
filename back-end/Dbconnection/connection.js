@@ -6,7 +6,8 @@ const conn = mysql.createConnection({
     password: 'back-end1234',
     port: 3306,
     connectionLimit: 5,
-    database: 'softeng'
+    database: 'softeng',
+    dateStrings : true
 });
 conn.connect((err) =>{
     if(err){
