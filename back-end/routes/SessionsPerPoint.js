@@ -75,6 +75,12 @@ async function getData(pointID, stationID, from_date, to_date, reqTimeStamp, req
         let sessionList = [];
         for (let i = 0; i < objList.length; i++) {
             const element = objList[i];
+
+            let model_query = `SELECT * FROM car INNER JOIN car_model ON car.model_id = car_model.model_id WHERE license_plate = "${element.license_plate}"`;
+
+            let model_res = await makeQuery(model_query);
+
+            let model = model_res[0].manufacturer + " " + model_res[0].model_name;
             
             sessionList.push({
                 SessionIndex: i+1,
@@ -84,7 +90,7 @@ async function getData(pointID, stationID, from_date, to_date, reqTimeStamp, req
                 Protocol: element.protocol,
                 EnergyDelivered: element.kwh_transferred,
                 Payment: element.payment_method,
-                VehicleType: "?"
+                VehicleType: model
             });
         }
 
