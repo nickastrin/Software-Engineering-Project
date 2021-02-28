@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Jan 18, 2021 at 03:20 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Φιλοξενητής: 127.0.0.1:3307
+-- Χρόνος δημιουργίας: 28 Φεβ 2021 στις 21:00:51
+-- Έκδοση διακομιστή: 10.4.17-MariaDB
+-- Έκδοση PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `softeng`
+-- Βάση δεδομένων: `softeng`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blacklist`
+-- Δομή πίνακα για τον πίνακα `blacklist`
 --
 
 CREATE TABLE `blacklist` (
@@ -36,7 +36,7 @@ CREATE TABLE `blacklist` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car`
+-- Δομή πίνακα για τον πίνακα `car`
 --
 
 CREATE TABLE `car` (
@@ -47,7 +47,7 @@ CREATE TABLE `car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `car`
+-- Άδειασμα δεδομένων του πίνακα `car`
 --
 
 INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VALUES
@@ -205,7 +205,7 @@ INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car_model`
+-- Δομή πίνακα για τον πίνακα `car_model`
 --
 
 CREATE TABLE `car_model` (
@@ -216,7 +216,7 @@ CREATE TABLE `car_model` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `car_model`
+-- Άδειασμα δεδομένων του πίνακα `car_model`
 --
 
 INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_name`) VALUES
@@ -241,7 +241,7 @@ INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `charge_event`
+-- Δομή πίνακα για τον πίνακα `charge_event`
 --
 
 CREATE TABLE `charge_event` (
@@ -259,7 +259,7 @@ CREATE TABLE `charge_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `charge_event`
+-- Άδειασμα δεδομένων του πίνακα `charge_event`
 --
 
 INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `license_plate`, `start_time`, `finish_time`, `kwh_transferred`, `price`, `payment_method`, `protocol`) VALUES
@@ -667,7 +667,7 @@ INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `li
 -- --------------------------------------------------------
 
 --
--- Table structure for table `credit_card`
+-- Δομή πίνακα για τον πίνακα `credit_card`
 --
 
 CREATE TABLE `credit_card` (
@@ -681,7 +681,7 @@ CREATE TABLE `credit_card` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `elec_owes`
+-- Δομή πίνακα για τον πίνακα `elec_owes`
 --
 
 CREATE TABLE `elec_owes` (
@@ -691,7 +691,7 @@ CREATE TABLE `elec_owes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `elec_owes`
+-- Άδειασμα δεδομένων του πίνακα `elec_owes`
 --
 
 INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
@@ -749,7 +749,7 @@ INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `elec_supplier`
+-- Δομή πίνακα για τον πίνακα `elec_supplier`
 --
 
 CREATE TABLE `elec_supplier` (
@@ -758,7 +758,7 @@ CREATE TABLE `elec_supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `elec_supplier`
+-- Άδειασμα δεδομένων του πίνακα `elec_supplier`
 --
 
 INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
@@ -781,7 +781,7 @@ INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `point`
+-- Δομή πίνακα για τον πίνακα `point`
 --
 
 CREATE TABLE `point` (
@@ -791,7 +791,7 @@ CREATE TABLE `point` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `point`
+-- Άδειασμα δεδομένων του πίνακα `point`
 --
 
 INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
@@ -889,7 +889,7 @@ INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `station`
+-- Δομή πίνακα για τον πίνακα `station`
 --
 
 CREATE TABLE `station` (
@@ -907,7 +907,7 @@ CREATE TABLE `station` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `station`
+-- Άδειασμα δεδομένων του πίνακα `station`
 --
 
 INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, `charge_rate`, `station_name`, `country`, `street_name`, `city`, `postal_code`, `street_number`) VALUES
@@ -945,14 +945,14 @@ INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Δομή πίνακα για τον πίνακα `user`
 --
 
 CREATE TABLE `user` (
   `user_id` int(5) NOT NULL,
   `email` varchar(30) DEFAULT NULL,
   `name` varchar(30) DEFAULT NULL,
-  `password` varchar(30) DEFAULT NULL,
+  `password` varchar(61) DEFAULT NULL,
   `country` varchar(15) DEFAULT NULL,
   `city` varchar(20) DEFAULT NULL,
   `street_name` varchar(20) DEFAULT NULL,
@@ -967,7 +967,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Άδειασμα δεδομένων του πίνακα `user`
 --
 
 INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `street_name`, `street_number`, `postal_code`, `phone_number`, `date_of_birth`, `points`, `sex`, `is_admin`, `username`) VALUES
@@ -1070,20 +1070,22 @@ INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `
 (97, 'facilisis@vestibulum.edu', 'Jelani Riddle', 'HLX58HYV1JP', 'Poland', 'Izel', 'P.O. Box 463, 6109 I', 41, '2044', '(299) 875-8256', '1953-07-01', 62, 1, 0, 'HE466TVD3IR'),
 (98, 'diam@ligulaNullamfeugiat.org', 'Nadine Nixon', 'TBH30YXV8DL', 'Ireland', 'Steenokkerzeel', '9412 Auctor. St.', 21, '1252', '(284) 566-6022', '1995-12-03', 1, 0, 0, 'UH195IYQ5HA'),
 (99, 'dui.in@eleifendvitaeerat.co.uk', 'Aurora Myers', 'ZSM22UBU8GL', 'Niue', 'Moffat', '7753 Molestie Ave', 32, 'OB75 9TY', '(448) 680-3670', '1955-01-22', 13, 2, 1, 'IJ917NBN6HB'),
-(100, 'vestibulum.massa@justoPraesent', 'Shea Page', 'UWP68ZBI6TI', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG');
+(100, 'vestibulum.massa@justoPraesent', 'Shea Page', 'UWP68ZBI6TI', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG'),
+(101, 'tampakc@yahoo.gr', 'Chris Tabakakis', 'hekkhekk', 'Greece', 'Elefsina', 'Gongaga', 1241, '69420', '601920311', NULL, NULL, NULL, NULL, 'tampakc'),
+(102, 'admin@evgroup.gr', 'Admin', 'petrol4ever', 'Greece', 'Athens', 'Kolokotroni', 5, '22000', '1234567890', '2021-01-01', NULL, NULL, 1, 'admin');
 
 --
--- Indexes for dumped tables
+-- Ευρετήρια για άχρηστους πίνακες
 --
 
 --
--- Indexes for table `blacklist`
+-- Ευρετήρια για πίνακα `blacklist`
 --
 ALTER TABLE `blacklist`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `car`
+-- Ευρετήρια για πίνακα `car`
 --
 ALTER TABLE `car`
   ADD PRIMARY KEY (`license_plate`),
@@ -1091,13 +1093,13 @@ ALTER TABLE `car`
   ADD KEY `model_id` (`model_id`);
 
 --
--- Indexes for table `car_model`
+-- Ευρετήρια για πίνακα `car_model`
 --
 ALTER TABLE `car_model`
   ADD PRIMARY KEY (`model_id`);
 
 --
--- Indexes for table `charge_event`
+-- Ευρετήρια για πίνακα `charge_event`
 --
 ALTER TABLE `charge_event`
   ADD PRIMARY KEY (`event_id`),
@@ -1107,34 +1109,34 @@ ALTER TABLE `charge_event`
   ADD KEY `license_plate` (`license_plate`);
 
 --
--- Indexes for table `credit_card`
+-- Ευρετήρια για πίνακα `credit_card`
 --
 ALTER TABLE `credit_card`
   ADD PRIMARY KEY (`card_number`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `elec_owes`
+-- Ευρετήρια για πίνακα `elec_owes`
 --
 ALTER TABLE `elec_owes`
   ADD KEY `supplier_id` (`supplier_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `elec_supplier`
+-- Ευρετήρια για πίνακα `elec_supplier`
 --
 ALTER TABLE `elec_supplier`
   ADD PRIMARY KEY (`supplier_id`);
 
 --
--- Indexes for table `point`
+-- Ευρετήρια για πίνακα `point`
 --
 ALTER TABLE `point`
   ADD PRIMARY KEY (`point_id`,`station_id`),
   ADD KEY `station_id` (`station_id`);
 
 --
--- Indexes for table `station`
+-- Ευρετήρια για πίνακα `station`
 --
 ALTER TABLE `station`
   ADD PRIMARY KEY (`station_id`),
@@ -1142,7 +1144,7 @@ ALTER TABLE `station`
   ADD KEY `supplier_id` (`supplier_id`);
 
 --
--- Indexes for table `user`
+-- Ευρετήρια για πίνακα `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
@@ -1150,64 +1152,64 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT για άχρηστους πίνακες
 --
 
 --
--- AUTO_INCREMENT for table `car_model`
+-- AUTO_INCREMENT για πίνακα `car_model`
 --
 ALTER TABLE `car_model`
   MODIFY `model_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `charge_event`
+-- AUTO_INCREMENT για πίνακα `charge_event`
 --
 ALTER TABLE `charge_event`
   MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
 
 --
--- AUTO_INCREMENT for table `elec_supplier`
+-- AUTO_INCREMENT για πίνακα `elec_supplier`
 --
 ALTER TABLE `elec_supplier`
   MODIFY `supplier_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
--- AUTO_INCREMENT for table `point`
+-- AUTO_INCREMENT για πίνακα `point`
 --
 ALTER TABLE `point`
   MODIFY `point_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `station`
+-- AUTO_INCREMENT για πίνακα `station`
 --
 ALTER TABLE `station`
   MODIFY `station_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT για πίνακα `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
--- Constraints for dumped tables
+-- Περιορισμοί για άχρηστους πίνακες
 --
 
 --
--- Constraints for table `blacklist`
+-- Περιορισμοί για πίνακα `blacklist`
 --
 ALTER TABLE `blacklist`
   ADD CONSTRAINT `blacklist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Constraints for table `car`
+-- Περιορισμοί για πίνακα `car`
 --
 ALTER TABLE `car`
   ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `car_ibfk_2` FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`);
 
 --
--- Constraints for table `charge_event`
+-- Περιορισμοί για πίνακα `charge_event`
 --
 ALTER TABLE `charge_event`
   ADD CONSTRAINT `charge_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
@@ -1216,26 +1218,26 @@ ALTER TABLE `charge_event`
   ADD CONSTRAINT `charge_event_ibfk_4` FOREIGN KEY (`license_plate`) REFERENCES `car` (`license_plate`);
 
 --
--- Constraints for table `credit_card`
+-- Περιορισμοί για πίνακα `credit_card`
 --
 ALTER TABLE `credit_card`
   ADD CONSTRAINT `credit_card_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Constraints for table `elec_owes`
+-- Περιορισμοί για πίνακα `elec_owes`
 --
 ALTER TABLE `elec_owes`
   ADD CONSTRAINT `elec_owes_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `elec_supplier` (`supplier_id`),
   ADD CONSTRAINT `elec_owes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Constraints for table `point`
+-- Περιορισμοί για πίνακα `point`
 --
 ALTER TABLE `point`
   ADD CONSTRAINT `point_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `station` (`station_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `station`
+-- Περιορισμοί για πίνακα `station`
 --
 ALTER TABLE `station`
   ADD CONSTRAINT `station_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
