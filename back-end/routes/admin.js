@@ -2,7 +2,8 @@ const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
 const mysql = require('mysql');
-require('dotenv').config()
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const conn = require('../Dbconnection/connection');
 
@@ -29,63 +30,71 @@ function verifyBody(body){
     else return true;
 }
 
-router.post('/usermod/:username/:password', authenticateToken, authRole(1), (req, res) => {
-    const username = req.params.username;
-    const password = req.params.password;
-    //check if username appears in the database
-    //add or update user accordingly
+router.post('/usermod/:username/:password', authenticateToken, authRole(1), async (req, res) => {
+    try{
+        const username = req.params.username;
+        const password = req.params.password;
+        //check if username appears in the database
+        //add or update user accordingly
 
-    let sql = `SELECT * FROM user WHERE username='${username}'`;
+        let sql = `SELECT * FROM user WHERE username='${username}'`;
 
-    conn.query(sql, (error, results) => {
-        if (error) throw error;
-        // console.log('The result is: ', results);
-        if(results.length > 0){
-            //update user
-            let update_query = `UPDATE user SET password = '${password}' WHERE username='${username}'`;
-            conn.query(update_query, (err, qres) => {
-                if (err) throw err;
-                console.log('The result is: ', qres);
-            });
-            res.send('Updated');
-        }
-        else{
-            //create user
-            if(!verifyBody(req.body)){
-                res.status(400).send('give all required fields');
-                return;
+        conn.query(sql, async (error, results) => {
+            if (error) throw error;
+            // console.log('The result is: ', results);
+            if(results.length > 0){
+                //update user
+                const hashedPassword = await bcrypt.hash(password, 10);
+                let update_query = `UPDATE user SET password = '${hashedPassword}' WHERE username='${username}'`;
+                conn.query(update_query, (err, qres) => {
+                    if (err) throw err;
+                    // console.log('The result is: ', qres);
+                });
+                res.send('Updated');
             }
-            if(req.body.username !== username || req.body.password !== password){
-                res.status(400).send('args in url and body do not match');
-                return;
-            }
-        
-            const user = {
-                email: req.body.email,
-                name: req.body.name, 
-                password: req.body.password,
-                country: req.body.country, 
-                city: req.body.city, 
-                street_name: req.body.street_name, 
-                street_number: req.body.street_number, 
-                postal_code: req.body.postal_code, 
-                phone_number: req.body.phone_number, 
-                date_of_birth: req.body.date_of_birth,
-                points: req.body.points, 
-                sex: req.body.sex, 
-                is_admin: req.body.is_admin, 
-                username: req.body.username
-            };
+            else{
+                //create user
+                if(!verifyBody(req.body)){
+                    res.status(400).send('give all required fields');
+                    return;
+                }
+                if(req.body.username !== username || req.body.password !== password){
+                    res.status(400).send('args in url and body do not match');
+                    return;
+                }
 
-            let create_query = 'INSERT INTO user SET ?';
-            conn.query(create_query, user, (err, qres) => {
-                if (err) throw err;
-                console.log('The result is: ', qres);
-            });
-            res.send('Created');
-        }
-    });
-    
+                const hashedPassword = await bcrypt.hash(req.body.password, 10);
+                // console.log(hashedPassword);
+            
+                const user = {
+                    email: req.body.email,
+                    name: req.body.name, 
+                    password: hashedPassword,
+                    country: req.body.country, 
+                    city: req.body.city, 
+                    street_name: req.body.street_name, 
+                    street_number: req.body.street_number, 
+                    postal_code: req.body.postal_code, 
+                    phone_number: req.body.phone_number, 
+                    date_of_birth: req.body.date_of_birth,
+                    points: req.body.points, 
+                    sex: req.body.sex, 
+                    is_admin: req.body.is_admin, 
+                    username: req.body.username
+                };
+
+                let create_query = 'INSERT INTO user SET ?';
+                conn.query(create_query, user, (err, qres) => {
+                    if (err) throw err;
+                    // console.log('The result is: ', qres);
+                });
+                res.send('Created');
+            }
+        });
+    } catch(e){
+        console.log('admin error: ' + e);
+        res.status(400).send('error');
+    }
 });
 
 router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
