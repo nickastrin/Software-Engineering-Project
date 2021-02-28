@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conn = require('../Dbconnection/connection');
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');
 const {currentTimestamp} = require('../csvParser/timestamp');
@@ -37,7 +38,7 @@ const csvFields = [
 ];
 
 //pointID is the 3 last digits of the id given in the url and stationID is the rest
-router.get('/:pointID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
+router.get('/:pointID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const reqTimeStamp = currentTimestamp();
     const pointID_string = req.params.pointID;
     const pointID = pointID_string.split("-")[1];

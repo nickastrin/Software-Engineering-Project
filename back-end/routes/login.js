@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
         if(results.length > 0){
             let user = JSON.parse(JSON.stringify(results[0])); //to convert RowDataPacket to plain object
 
-            if(user.password !== password) return res.send('invalid password');
+            if(user.password !== password) return res.status(400).send('invalid password');
             const accessToken = jwt.sign(user, process.env.ACCESS_TOCKEN_SECRET);
             addToken(accessToken);
             res.json({ token: accessToken});

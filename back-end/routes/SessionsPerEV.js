@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conn = require('../Dbconnection/connection');
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');
 const {currentTimestamp, twodeciPointsAcc} = require('../csvParser/timestamp');
@@ -41,7 +42,7 @@ const csvFields = [
 ];
 
 //vehicle id is passed as license plate
-router.get('/:vehicleID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
+router.get('/:vehicleID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const reqTimeStamp = currentTimestamp();
 
     const licensePlate = req.params.vehicleID;

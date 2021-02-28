@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conn = require('../Dbconnection/connection');
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const sendCsv = require('../csvParser/csvResponse');
 const {currentTimestamp, twodeciPointsAcc} = require('../csvParser/timestamp');
 
@@ -43,7 +44,7 @@ const csvFields = [
     },
 ];
 
-router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
+router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const reqTimeStamp = currentTimestamp();
     const stationID = req.params.stationID;
     const yyyymmdd_from = JSON.stringify(req.params.yyyymmdd_from);

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conn = require('../Dbconnection/connection');
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');
 
@@ -19,7 +20,7 @@ const csvFields = [
     }
 ];
 
-router.get('/:providerID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
+router.get('/:providerID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const providerID = req.params.providerID;
     const yyyymmdd_from = JSON.stringify(req.params.yyyymmdd_from);
     const from_date = yyyymmdd_from.slice(1, 5) + '-' + yyyymmdd_from.slice(5, 7) + '-' + yyyymmdd_from.slice(7, 9);

@@ -25,10 +25,10 @@ function authenticateToken(req, res, next){
 
   //here we know we have a token
   jwt.verify(token, process.env.ACCESS_TOCKEN_SECRET, (err, user) => {
-    if(err) return res.status(403).send('this token is not valid');
+    if(err) return res.status(401).send('this token is not valid');
 
     //here we know we have a valid token
-    if(!checkToken(token)) return res.status(403).send('this token has expired');
+    if(!checkToken(token)) return res.status(401).send('this token has expired');
 
     //here we know we have a valid token that has not expired
     req.user = user;
