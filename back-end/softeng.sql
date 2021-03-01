@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Φιλοξενητής: 127.0.0.1:3307
--- Χρόνος δημιουργίας: 28 Φεβ 2021 στις 21:00:51
--- Έκδοση διακομιστή: 10.4.17-MariaDB
--- Έκδοση PHP: 8.0.0
+-- Host: 127.0.0.1
+-- Generation Time: Mar 01, 2021 at 08:15 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Βάση δεδομένων: `softeng`
+-- Database: `softeng`
 --
 
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `blacklist`
+-- Table structure for table `blacklist`
 --
 
 CREATE TABLE `blacklist` (
@@ -36,7 +36,7 @@ CREATE TABLE `blacklist` (
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `car`
+-- Table structure for table `car`
 --
 
 CREATE TABLE `car` (
@@ -47,7 +47,7 @@ CREATE TABLE `car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `car`
+-- Dumping data for table `car`
 --
 
 INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VALUES
@@ -205,7 +205,7 @@ INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VA
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `car_model`
+-- Table structure for table `car_model`
 --
 
 CREATE TABLE `car_model` (
@@ -216,7 +216,7 @@ CREATE TABLE `car_model` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `car_model`
+-- Dumping data for table `car_model`
 --
 
 INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_name`) VALUES
@@ -241,7 +241,7 @@ INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `charge_event`
+-- Table structure for table `charge_event`
 --
 
 CREATE TABLE `charge_event` (
@@ -259,7 +259,7 @@ CREATE TABLE `charge_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `charge_event`
+-- Dumping data for table `charge_event`
 --
 
 INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `license_plate`, `start_time`, `finish_time`, `kwh_transferred`, `price`, `payment_method`, `protocol`) VALUES
@@ -662,12 +662,14 @@ INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `li
 (397, 16, 28, 1, 'CSX-2400', '2021-01-01 02:46:49', '2021-01-01 03:21:11', 5.55, 1.33, 2, 'OSCP'),
 (398, 48, 29, 1, 'UKF-6232', '2021-01-11 03:31:00', '2021-01-11 03:32:28', 4.77, 1.14, 1, 'OpenADR'),
 (399, 64, 24, 1, 'ZDJ-2118', '2021-01-04 11:32:12', '2021-01-04 11:56:16', 13.45, 3.23, 1, 'OpenADR'),
-(400, 98, 23, 2, 'IBW-8841', '2021-01-11 07:36:48', '2021-01-11 08:32:35', 6.52, 1.50, 4, 'OCPI');
+(400, 98, 23, 2, 'IBW-8841', '2021-01-11 07:36:48', '2021-01-11 08:32:35', 6.52, 1.50, 4, 'OCPI'),
+(421, 42, 1, 1, 'HOS-9576', '2021-01-08 19:41:04', '2021-01-08 20:39:11', 5.09, 1.43, 3, 'OCPI'),
+(422, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI');
 
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `credit_card`
+-- Table structure for table `credit_card`
 --
 
 CREATE TABLE `credit_card` (
@@ -681,7 +683,7 @@ CREATE TABLE `credit_card` (
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `elec_owes`
+-- Table structure for table `elec_owes`
 --
 
 CREATE TABLE `elec_owes` (
@@ -691,7 +693,7 @@ CREATE TABLE `elec_owes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `elec_owes`
+-- Dumping data for table `elec_owes`
 --
 
 INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
@@ -749,7 +751,7 @@ INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `elec_supplier`
+-- Table structure for table `elec_supplier`
 --
 
 CREATE TABLE `elec_supplier` (
@@ -758,7 +760,7 @@ CREATE TABLE `elec_supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `elec_supplier`
+-- Dumping data for table `elec_supplier`
 --
 
 INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
@@ -781,7 +783,7 @@ INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `point`
+-- Table structure for table `point`
 --
 
 CREATE TABLE `point` (
@@ -791,7 +793,7 @@ CREATE TABLE `point` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `point`
+-- Dumping data for table `point`
 --
 
 INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
@@ -889,7 +891,7 @@ INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `station`
+-- Table structure for table `station`
 --
 
 CREATE TABLE `station` (
@@ -907,7 +909,7 @@ CREATE TABLE `station` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `station`
+-- Dumping data for table `station`
 --
 
 INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, `charge_rate`, `station_name`, `country`, `street_name`, `city`, `postal_code`, `street_number`) VALUES
@@ -945,7 +947,7 @@ INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, 
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -967,125 +969,126 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Άδειασμα δεδομένων του πίνακα `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `street_name`, `street_number`, `postal_code`, `phone_number`, `date_of_birth`, `points`, `sex`, `is_admin`, `username`) VALUES
-(1, 'Nullam.scelerisque.neque@liber', 'Shad Ayers', 'UDE60QTX9GU', 'Kuwait', 'Waalwijk', 'Ap #757-8072 Pretium', 17, 'Z2320', '(212) 107-6077', '1970-10-04', 44, 1, 0, 'QX548WQH2FP'),
-(2, 'interdum.Curabitur.dictum@Inte', 'Amery Lucas', 'AIR07IEJ6LF', 'Equatorial Guin', 'Filadelfia', '200-6205 Donec Av.', 30, '64169', '(651) 469-8268', '1981-08-27', 89, 1, 1, 'HX325JTK6OB'),
-(3, 'amet.consectetuer@metusfacilis', 'Ima Foley', 'VHK12JKY4ZO', 'Slovakia', 'Montacuto', 'P.O. Box 629, 5279 E', 68, '881426', '(820) 775-0261', '1959-04-01', 79, 1, 1, 'DX699AXW6TT'),
-(4, 'luctus.et@risusDuisa.co.uk', 'Joy Vang', 'WFT94JQK1XE', 'Palau', 'Burin', 'P.O. Box 959, 9107 T', 17, '17657-59266', '(791) 203-5725', '1964-06-26', 35, 0, 1, 'JC084GLT5XR'),
-(5, 'non.hendrerit.id@at.org', 'Adrian Goodman', 'LRQ26LRS9PZ', 'Slovakia', 'Kayseri', 'Ap #209-7568 Amet Rd', 84, '2264', '(555) 771-5057', '1982-06-14', 95, 0, 1, 'BG457SZJ2NO'),
-(6, 'velit.Sed@cursus.co.uk', 'Keely Hunt', 'OJG14HUC4NE', 'Senegal', 'Sindelfingen', 'P.O. Box 302, 3649 A', 72, '13891', '(512) 695-1264', '1954-05-14', 93, 1, 0, 'CK605RRB2TZ'),
-(7, 'Curabitur.consequat@vitaeeratV', 'Whoopi Todd', 'HOL52KRT0ZN', 'Sierra Leone', 'Vaux-sur-Sure', 'P.O. Box 387, 1325 L', 69, '87917-806', '(532) 109-5218', '1964-02-19', 43, 2, 1, 'MS695XKV0NQ'),
-(8, 'sem.ut.cursus@bibendumsed.net', 'Wade Elliott', 'OVP05HCL0MK', 'Pakistan', 'Helmsdale', '317-8970 Mi Av.', 66, '71692', '(994) 451-2025', '1952-07-08', 51, 2, 0, 'SP039REB5VK'),
-(9, 'neque.tellus@doloregestas.co.u', 'Bradley Mann', 'OBS81FQJ8WQ', 'Kazakhstan', 'Tlaquepaque', 'Ap #655-8680 Nam St.', 35, '06323', '(963) 201-6668', '1980-10-08', 73, 1, 0, 'FX673GTU7OS'),
-(10, 'luctus@Pellentesquehabitant.ed', 'Willa Patel', 'VDH37RQE4JB', 'Mauritius', 'Ottignies-Louvain-la', 'P.O. Box 165, 1607 M', 58, '717146', '(965) 753-4437', '1952-12-24', 75, 1, 1, 'QR193KFZ9OR'),
-(11, 'Praesent.eu.dui@venenatislacus', 'Martin Barron', 'QLR81IHO1MJ', 'Ethiopia', 'Oevel', 'Ap #128-9652 Semper ', 51, '189800', '(586) 650-2460', '1992-07-02', 83, 1, 1, 'HZ991SKY5RA'),
-(12, 'orci@Classaptenttaciti.net', 'Phillip Cotton', 'GJP08FSB6OR', 'Saint Martin', 'Jaunpur', '8281 Consectetuer Rd', 51, '50364', '(805) 561-9430', '2002-07-02', 78, 1, 1, 'EI562KVI6KG'),
-(13, 'molestie@litoratorquentper.com', 'Naida Tucker', 'RVI03EBG7AO', 'South Africa', 'Wichita', 'P.O. Box 131, 359 Ni', 13, '534595', '(362) 596-8649', '1995-01-25', 18, 1, 0, 'FC138ATD1HG'),
-(14, 'Nunc@Nunccommodo.ca', 'Kaden Aguilar', 'UWP28UAV0HW', 'Guernsey', 'Sanluri', '7564 Euismod Street', 45, '97798', '(978) 989-6946', '1972-01-29', 6, 2, 1, 'AE147PZF1GW'),
-(15, 'porttitor.vulputate.posuere@Su', 'Brittany Bradford', 'HGP72ZLL1LE', 'Belgium', 'Montebello', '860-7901 Fermentum A', 90, 'Z0 9CI', '(775) 913-6228', '1952-11-04', 85, 0, 0, 'AF181FYG0CP'),
-(16, 'vel.turpis.Aliquam@blanditmatt', 'Kai Sutton', 'ZZM63THZ5LU', 'Equatorial Guin', 'Georgia', '7901 Est, St.', 7, '043778', '(984) 759-8988', '1989-06-27', 43, 2, 1, 'KC196PDU2MH'),
-(17, 'Fusce.dolor@vel.ca', 'Frances Valdez', 'YEF14ZRL3EV', 'China', 'Villa del Rosario', '7581 Cras St.', 28, '29921', '(902) 822-7541', '1972-11-29', 30, 0, 0, 'PR053ZBE8TI'),
-(18, 'ut.dolor.dapibus@estarcu.ca', 'Dennis Alvarez', 'NOP71MCL8LI', 'Saint Pierre an', 'Selva di Cadore', '784-6867 Sed Street', 76, '1207', '(129) 969-9386', '1964-10-29', 73, 1, 1, 'MD508XKL7BW'),
-(19, 'vitae.sodales@estvitaesodales.', 'Kevin Jones', 'HUC38EZC1ZM', 'Uganda', 'Acapulco', '415-4771 Nec, Road', 61, '27667-21521', '(314) 120-2633', '1958-01-04', 67, 0, 1, 'MH910LQM3EJ'),
-(20, 'cursus.vestibulum@quis.co.uk', 'Rudyard Cabrera', 'JCY54BMN0SG', 'Christmas Islan', 'Algarrobo', 'P.O. Box 291, 8021 D', 19, '259387', '(558) 768-1152', '1953-04-04', 40, 2, 1, 'BZ226UEA1GX'),
-(21, 'euismod@ligulaAeneaneuismod.ca', 'Lucius Bowman', 'LJL74GFD7HO', 'British Indian ', 'Padre Hurtado', '8703 Libero St.', 24, '579658', '(228) 544-5373', '1994-04-03', 3, 2, 0, 'EF421BRT0VI'),
-(22, 'Cras@auctorodioa.ca', 'Buffy Terry', 'BWX08PPJ2AI', 'Greece', 'Fuenlabrada', '724-1290 Cras St.', 37, '366810', '(406) 449-9551', '1995-11-01', 20, 1, 1, 'UK439APO5GO'),
-(23, 'sagittis.Duis.gravida@Fusce.co', 'Carolyn Maddox', 'WKW84FPT1KC', 'Guatemala', 'Placanica', 'P.O. Box 108, 3252 N', 35, '35239', '(409) 961-3523', '1981-02-24', 49, 2, 0, 'PB056COI4ZP'),
-(24, 'Nullam.velit.dui@Phasellus.com', 'Chancellor Hunter', 'GAU28ZGT1LC', 'Nigeria', 'Paisley', 'P.O. Box 575, 7232 N', 6, '3018', '(875) 775-8138', '1955-01-16', 76, 1, 0, 'JG024FRY6CA'),
-(25, 'sit.amet@maurisblanditmattis.c', 'Lance Fleming', 'TDI06UEC9PI', 'Andorra', 'Calmar', 'Ap #504-5325 Cras St', 95, '574867', '(838) 327-5258', '1984-10-14', 63, 0, 0, 'CW147OEF4DV'),
-(26, 'ultrices.posuere.cubilia@ferme', 'Silas Avila', 'CGG42UNE5TL', 'Bangladesh', 'Pondicherry', 'Ap #748-2987 Tellus.', 32, '00345-98640', '(373) 539-9701', '1997-08-21', 56, 1, 0, 'GK735HBT7QW'),
-(27, 'velit@magna.co.uk', 'Mira Spears', 'SNN19RSS4HS', 'Swaziland', 'Pescantina', '1985 Enim. Rd.', 18, '55457', '(406) 933-4960', '2003-03-29', 79, 1, 0, 'YX914PPA3CA'),
-(28, 'nascetur@Donectemporest.edu', 'Cecilia Hammond', 'DBZ77GPF4AG', 'Zambia', 'Joliet', '433-3403 Ligula. Rd.', 51, '8621 BZ', '(950) 279-7620', '1965-09-15', 37, 0, 0, 'IG940RLH2QY'),
-(29, 'amet.diam@faucibus.edu', 'Naida Cruz', 'HBS44YSF6NA', 'Turks and Caico', 'Zeveneken', 'P.O. Box 554, 3134 S', 87, '8041 ZB', '(469) 985-2934', '1979-01-04', 27, 0, 0, 'YD126OQJ7XY'),
-(30, 'a.feugiat.tellus@Crasinterdum.', 'Catherine Hurst', 'LCZ37IGX5IH', 'Kenya', 'Neubrandenburg', '275-7326 Cras Avenue', 92, 'ZW8 6AH', '(337) 657-9024', '1962-01-19', 4, 0, 0, 'SU156FLO6BW'),
-(31, 'in.dolor.Fusce@aliquet.org', 'Carissa Dudley', 'TUR59FXP5XO', 'Samoa', 'Châlons-en-Champagne', '8633 Nec, Rd.', 27, '00-530', '(550) 764-7458', '2000-05-20', 40, 1, 0, 'FP734KUE6HI'),
-(32, 'nibh.vulputate.mauris@semeget.', 'Malcolm Hood', 'KZN55ESZ9IB', 'United States', 'Termoli', '4551 Magna. Street', 39, '46417', '(618) 146-4376', '1962-05-19', 11, 1, 1, 'WJ715TYW9JJ'),
-(33, 'congue@ullamcorper.ca', 'Elmo Leonard', 'YUB96EVT2PU', 'Barbados', 'Jauchelette', '668-3174 Mauris Stre', 21, '83201', '(679) 350-2061', '1954-06-10', 98, 2, 1, 'OC920RKH3LO'),
-(34, 'ut.pellentesque@vitaepurus.ca', 'Clarke Sellers', 'XXG38FUZ9NY', 'Svalbard and Ja', 'Chiusanico', '205-9146 Libero. Roa', 84, 'N57 4PC', '(502) 411-4624', '1985-10-21', 96, 2, 1, 'YX605CCQ5OO'),
-(35, 'bibendum.Donec.felis@nonarcuVi', 'Rana Pugh', 'ZUM93CZS3EQ', 'Bangladesh', 'Raurkela Civil Towns', 'P.O. Box 149, 5048 E', 20, '579470', '(824) 252-9206', '1964-06-27', 60, 1, 0, 'JT844YBK8EJ'),
-(36, 'magna.a.tortor@rutrum.org', 'Heidi Chan', 'WAL35PGZ0GK', 'American Samoa', 'King\'s Lynn', '3812 Urna Rd.', 50, '3223 BO', '(248) 349-7762', '1984-04-05', 87, 2, 1, 'DT878TXH0WU'),
-(37, 'luctus.et.ultrices@elit.co.uk', 'Nola Patterson', 'ZXU70AED7BJ', 'Guinea-Bissau', 'Richmond', '967-134 Ut, Avenue', 9, 'VG8 3YQ', '(479) 142-4775', '1977-09-01', 81, 0, 1, 'PU263JMA3CV'),
-(38, 'ornare.egestas.ligula@molestie', 'Nicholas Rivera', 'TSP41OLJ1JZ', 'Martinique', 'Coupar Angus', '4203 Molestie. St.', 73, 'Z1050', '(699) 130-1469', '1987-03-07', 55, 0, 0, 'DL732SID2MT'),
-(39, 'amet.massa@asollicitudinorci.c', 'Kadeem Pugh', 'DUC90BCE3QC', 'Yemen', 'Karacabey', 'P.O. Box 664, 8839 A', 91, '823907', '(453) 508-6956', '1950-06-13', 69, 2, 0, 'OB140CPF5IH'),
-(40, 'Lorem.ipsum.dolor@accumsaninte', 'Gray Moore', 'AEH79NXC4NU', 'Macao', 'Uttarpara-Kotrung', '1549 Aliquam, Street', 27, '524669', '(166) 882-7077', '1960-07-29', 74, 1, 1, 'AG514EFT0XD'),
-(41, 'gravida.sit@purusNullamsceleri', 'Hall Steele', 'DFF31SZZ2VY', 'Christmas Islan', 'San Clemente', '369-9860 Vel, St.', 19, '24836', '(565) 621-7680', '1962-11-08', 28, 1, 1, 'JJ721GNJ2KM'),
-(42, 'vel.convallis@Crasegetnisi.com', 'Abraham Mckay', 'DGF24PPE9EC', 'Lithuania', 'Dangjin', '651 Eu Rd.', 49, '76066', '(268) 237-6786', '1965-10-23', 79, 0, 0, 'CB726OWX9TI'),
-(43, 'urna.Nullam@ipsumcursus.com', 'Quemby Singleton', 'KES45IZZ7QO', 'Sao Tome and Pr', 'Kirov', 'P.O. Box 103, 9444 L', 41, '7459 AL', '(304) 724-7943', '1964-05-05', 17, 2, 1, 'TK166KYH3CP'),
-(44, 'sem.egestas.blandit@variusorci', 'Brianna Robinson', 'IHJ28ANI4FL', 'South Sudan', 'Douai', 'Ap #224-5893 Nunc St', 28, '00187', '(873) 287-2224', '1951-09-09', 41, 0, 0, 'AN530FHF6XD'),
-(45, 'ornare@fames.co.uk', 'Yuli Lancaster', 'CUV30NRU4GZ', 'Virgin Islands,', 'Kitimat', '1060 Odio Street', 77, '870660', '(131) 925-8761', '1959-09-07', 56, 1, 1, 'AB706KDK2KW'),
-(46, 'sit@fermentum.org', 'Shad Cohen', 'ZGA52MSM6OP', 'Switzerland', 'Warspite', 'P.O. Box 914, 4130 A', 18, 'N7X 6K3', '(679) 493-2837', '1958-09-21', 45, 0, 0, 'YR946GWS4NK'),
-(47, 'risus.Donec@congue.net', 'Uma Garza', 'KVY71THG7RE', 'American Samoa', 'Fort Smith', '678-4806 Ullamcorper', 12, '54694', '(379) 286-4861', '1964-10-19', 31, 1, 1, 'CY109ZDD4LD'),
-(48, 'malesuada@vulputateeuodio.org', 'Hanae Howard', 'QYQ78VPE5DH', 'Singapore', 'Paternopoli', '576-2361 Nulla Ave', 86, '24881', '(326) 133-3851', '1989-01-05', 75, 1, 0, 'JC078SBY7LY'),
-(49, 'lectus.pede.ultrices@egestasa.', 'Logan Harrison', 'WWY81AVO5OC', 'Togo', 'Saint-Mard', 'P.O. Box 223, 1040 V', 25, '63026', '(957) 258-4203', '2001-09-07', 12, 1, 1, 'RF119TRP0AY'),
-(50, 'lobortis@viverra.net', 'Amanda Fields', 'TPX81XCF2TA', 'Philippines', 'Bad Dürkheim', '880-1755 Neque St.', 45, '380316', '(508) 200-7555', '1952-12-14', 27, 0, 0, 'FN685LSD1FA'),
-(51, 'Sed.nec.metus@Class.org', 'Jolene Durham', 'GVN41UTK8FA', 'South Georgia a', 'Waasmunster', 'Ap #977-3145 Ligula.', 13, '570648', '(761) 799-3251', '1980-10-31', 6, 2, 0, 'HF176ABQ2TY'),
-(52, 'pharetra.nibh@erosturpis.net', 'Hiram Bailey', 'BPC10CMJ5XH', 'Vanuatu', 'Argyle', '2284 Amet St.', 77, '7702', '(691) 776-1932', '1952-11-02', 27, 0, 1, 'OK497THH8OK'),
-(53, 'aliquet@blanditenim.edu', 'Kasimir Shepherd', 'BYM26XUK1PS', 'Syria', 'Montigny-lès-Metz', '9492 Id Road', 10, '33686', '(222) 851-9269', '1952-07-10', 39, 0, 1, 'JV802OXA5JQ'),
-(54, 'eu.erat.semper@Sed.org', 'Andrew Morris', 'XSD89POP2MR', 'Latvia', 'San Pablo', '390-575 Mauris St.', 84, '55431-048', '(419) 891-6141', '1965-11-26', 13, 2, 0, 'UH083LHV4CH'),
-(55, 'Curabitur.egestas@ligula.com', 'Zenia Blair', 'LOF36NHM1CB', 'Western Sahara', 'Ujjain', 'Ap #611-1894 Tristiq', 89, '38829', '(882) 654-5098', '1975-06-23', 34, 1, 0, 'LH492KAO0PG'),
-(56, 'sem@necmalesuadaut.ca', 'Guy Farmer', 'YHZ09UHO6MC', 'Saint Vincent a', 'Nurdağı', 'Ap #910-8792 Diam. R', 45, 'BB3 6YI', '(865) 481-5150', '1975-05-16', 82, 2, 0, 'PO264QGZ5JQ'),
-(57, 'montes.nascetur@tempus.edu', 'Amaya West', 'IQF09WSV8IU', 'Chile', 'Kidderminster', 'Ap #581-4466 Curabit', 14, '56090', '(351) 203-5039', '1950-01-10', 79, 1, 0, 'VA512FUM7BN'),
-(58, 'tempor@ipsum.net', 'Ali Moss', 'FSJ47BNR5YJ', 'Djibouti', 'María Pinto', 'Ap #545-8931 Sed St.', 72, '44724', '(797) 737-2439', '1950-03-20', 96, 0, 1, 'JS278SGG2PB'),
-(59, 'vestibulum.nec.euismod@pede.ne', 'Leroy Oneill', 'WKB72NYS1GZ', 'Guatemala', 'Casole d\'Elsa', 'P.O. Box 865, 9880 D', 11, '91747', '(325) 242-1872', '1951-07-05', 64, 2, 1, 'BC393SNP5XC'),
-(60, 'felis@risusNuncac.net', 'Sopoline Howard', 'PJZ92CIL1ZG', 'Korea, North', 'Springdale', '6533 Sapien. Av.', 57, '497502', '(752) 579-8237', '1991-11-23', 22, 1, 0, 'VU450RSX4SP'),
-(61, 'tortor@Cumsociis.ca', 'Claire Cote', 'VNO99SYQ7KU', 'Gibraltar', 'Jhang', 'P.O. Box 739, 8391 S', 29, '390515', '(465) 930-1549', '1974-11-16', 40, 2, 1, 'KU402IMK6SS'),
-(62, 'lorem@luctuset.net', 'Leah Conley', 'VFW37SOZ7RQ', 'Guam', 'Sunset Point', '831-533 Nunc Rd.', 47, '28866', '(219) 366-4557', '1976-11-24', 45, 0, 1, 'ZM008KZD3PP'),
-(63, 'Donec.egestas@egetlaoreet.co.u', 'Leonard Murphy', 'IIM00TGV6MA', 'Micronesia', 'Kalininets', 'Ap #728-5495 Eu Stre', 10, '950106', '(433) 693-5771', '1975-05-10', 25, 2, 1, 'PK231ZWP3FG'),
-(64, 'dui@lacus.co.uk', 'Ulla Vega', 'XYN45SHU4EW', 'Saint Pierre an', 'Brandenburg', 'Ap #553-7908 Vitae A', 2, '41267-18995', '(111) 927-4886', '1955-05-01', 55, 0, 1, 'ZD455QTJ3BN'),
-(65, 'ac@risusDonecegestas.net', 'Paula Miles', 'MZF62NMM7TW', 'Japan', 'Kharmang', 'Ap #716-6762 Molesti', 17, '48561', '(602) 693-8667', '1982-11-08', 48, 1, 0, 'ZK785ZXB4ZD'),
-(66, 'luctus@placerat.com', 'Elijah Owens', 'ENN71SQC4XZ', 'Romania', 'Nocera Umbra', 'Ap #615-7454 Turpis ', 45, '73-106', '(331) 446-5752', '1978-02-09', 91, 1, 1, 'KI904IRG1PO'),
-(67, 'sollicitudin.orci.sem@semperpr', 'Emerald Dodson', 'GDV30XSA0XN', 'Bermuda', 'Masullas', '3700 Tempor St.', 31, '68-287', '(132) 849-2264', '1999-08-05', 17, 2, 0, 'WN719LEU4BE'),
-(68, 'augue@elementumdui.org', 'Isadora Summers', 'JPQ55DZP2YS', 'Kyrgyzstan', 'Malvern', 'Ap #620-8369 Libero.', 37, 'X5W 2E0', '(803) 213-4313', '1991-01-22', 13, 2, 0, 'TJ709DQF1SN'),
-(69, 'odio.a.purus@utipsum.edu', 'Desirae Strong', 'JUQ55RNM9RF', 'Holy See (Vatic', 'Wallasey', '996-8220 Et Avenue', 55, '17398', '(418) 213-9120', '1984-05-30', 33, 1, 1, 'AM472IXG4MM'),
-(70, 'a@ipsumnunc.co.uk', 'Todd Meyer', 'IVB06RPU3IH', 'Lebanon', 'Cerrillos', '122-463 Libero St.', 34, '20024-694', '(780) 945-2555', '1978-11-28', 8, 1, 1, 'AF715IZU8AQ'),
-(71, 'nec.imperdiet.nec@rhoncusid.or', 'Rhoda Holcomb', 'DWL85JBA7MK', 'Tajikistan', 'Filey', 'Ap #980-8607 Aliquam', 57, '12833', '(657) 478-0562', '1994-03-10', 37, 1, 0, 'XM843OEG5VI'),
-(72, 'tincidunt.congue@Duis.edu', 'Dominique Oneal', 'GKK18RTZ8DH', 'Sint Maarten', 'Kostroma', '3988 Faucibus Street', 59, 'S0W 9A3', '(258) 708-8169', '1982-08-04', 16, 1, 1, 'AW389QZG3JE'),
-(73, 'mus.Proin@aliquetlobortis.com', 'Lawrence Jenkins', 'KXL54DKO3QT', 'Honduras', 'Steenokkerzeel', 'Ap #650-5013 Pretium', 29, '461766', '(950) 558-0559', '1989-11-09', 41, 2, 0, 'IF442XZB8RP'),
-(74, 'auctor@semper.ca', 'Simon Strickland', 'MGR98OYI4YH', 'Bermuda', 'Thon', '906-148 Vivamus Av.', 88, '991532', '(911) 200-9674', '1982-04-18', 51, 2, 1, 'CV671WZM8FE'),
-(75, 'Fusce@utsem.ca', 'Burton Gentry', 'EVJ87EON1WZ', 'Guinea', 'Lac La Biche County', 'P.O. Box 150, 3519 E', 58, '10474', '(490) 708-1294', '1953-03-04', 70, 1, 0, 'LG251TFD3VK'),
-(76, 'gravida@quisturpis.net', 'Jameson Cotton', 'NCF41UFO4AU', 'American Samoa', 'Windsor', 'P.O. Box 504, 8098 N', 36, '73302', '(342) 121-2820', '1992-09-08', 28, 2, 0, 'MV692TWF5KD'),
-(77, 'sapien.gravida@pedeNuncsed.com', 'Cailin Gay', 'BIH94BZK0EY', 'Mexico', 'Yuryuzan', '6788 Fringilla. Road', 37, '19368', '(225) 317-9963', '1987-07-25', 67, 2, 1, 'HY438UTB9OP'),
-(78, 'orci@adipiscingelit.co.uk', 'Reed Sullivan', 'CKX98XJI6WI', 'Swaziland', 'Sommethonne', 'Ap #861-5897 Sit St.', 71, '72-313', '(960) 965-0252', '1972-11-25', 80, 2, 1, 'ST626WYJ0YJ'),
-(79, 'Vivamus@magnaUt.net', 'Blossom Glover', 'HNT88WCN4OU', 'South Sudan', 'Liévin', 'P.O. Box 380, 9833 C', 54, '62219-232', '(166) 820-2272', '1967-08-31', 73, 2, 0, 'BJ951OUL3VB'),
-(80, 'imperdiet@nonummy.net', 'Fritz Hodge', 'NGD94KXZ2XQ', 'Hungary', 'Aydın', '929-1547 Ac, St.', 82, '4551', '(321) 809-9803', '1988-06-02', 7, 0, 0, 'LG231EDX6MV'),
-(81, 'mi.enim@Proinvelit.edu', 'Tatum Whitney', 'LVD62EEE5KT', 'Denmark', 'Hilversum', 'P.O. Box 267, 9233 S', 70, '26257', '(365) 149-4106', '1950-12-02', 72, 0, 0, 'KU681TWE2KK'),
-(82, 'pretium.aliquet.metus@sitametn', 'Axel Harrell', 'OHX56JFS8GQ', 'Canada', 'Dipignano', 'P.O. Box 657, 5268 E', 73, '9207', '(336) 287-1914', '1993-09-08', 81, 1, 0, 'LR506QSI6QY'),
-(83, 'eget@arcu.net', 'Caryn Mayer', 'NRG54BLK4OE', 'Cocos (Keeling)', 'Filadelfia', 'P.O. Box 988, 5473 E', 34, '58006-753', '(252) 900-8618', '1965-08-22', 60, 0, 1, 'YK080BUE7VY'),
-(84, 'est.Nunc@semegetmassa.com', 'Sacha Dickerson', 'EAA82XYD2JC', 'Virgin Islands,', 'Limelette', 'P.O. Box 910, 9700 E', 10, '2647', '(146) 203-2912', '1979-02-11', 19, 0, 1, 'QD405HAD6IB'),
-(85, 'Donec@luctusetultrices.org', 'Ingrid Lawson', 'XAK41FFK5WZ', 'Hong Kong', 'Taunusstein', 'P.O. Box 978, 5636 M', 20, '49393', '(651) 126-1965', '1972-05-28', 89, 1, 1, 'DK507VQL1XH'),
-(86, 'malesuada.ut@quamafelis.co.uk', 'Adele Jennings', 'BLO76NKW1IG', 'Moldova', 'Ripalta Guerina', 'P.O. Box 177, 2689 L', 19, '35600', '(425) 641-4572', '1988-05-27', 51, 0, 1, 'HY879BOH6JU'),
-(87, 'at.libero.Morbi@Aeneansed.net', 'Herrod Dotson', 'BKD46ZUS6LO', 'Niue', 'Crecchio', 'Ap #327-8102 Malesua', 82, '2428', '(921) 363-1149', '1991-07-09', 5, 0, 0, 'BI237KHF2PL'),
-(88, 'neque.et.nunc@rutrumlorem.edu', 'Amela Hoffman', 'MZZ29QOT1DU', 'San Marino', 'Istanbul', 'P.O. Box 733, 5310 M', 39, 'Z5 5II', '(122) 325-3567', '1958-04-03', 97, 0, 0, 'GD593YWF4AY'),
-(89, 'commodo@amet.com', 'Cameran Chaney', 'LLU67JCC5JH', 'Italy', 'Bettiah', 'Ap #447-325 Mauris A', 37, '30380', '(464) 842-1652', '1972-09-29', 36, 0, 1, 'CB078LQP1RB'),
-(90, 'Fusce@disparturientmontes.com', 'Signe Clayton', 'FSF61WEE4UR', 'Hungary', 'Yurzhnouralsk', 'Ap #176-7310 Maecena', 25, '077230', '(778) 386-9986', '1975-12-06', 67, 2, 0, 'BF738ROH4YL'),
-(91, 'in@vulputate.com', 'Jackson Holloway', 'UBT73GDF6PE', 'Tonga', 'Trois-Rivières', 'P.O. Box 672, 3679 M', 2, '65708', '(500) 196-6838', '1991-11-02', 90, 1, 0, 'BJ607VYU8SK'),
-(92, 'in@loremDonecelementum.co.uk', 'Bert White', 'ZCE44SXP4QO', 'Papua New Guine', 'Denbigh', 'P.O. Box 124, 8334 E', 70, '141001', '(650) 102-7058', '1988-02-17', 5, 2, 1, 'LR792VCS8MN'),
-(93, 'nonummy@leo.co.uk', 'Steven Velazquez', 'EWP86PDJ0VK', 'Western Sahara', 'Wichelen', '2215 Egestas. St.', 92, '21262-407', '(331) 853-1541', '1967-03-07', 76, 2, 1, 'DT851MMQ8GG'),
-(94, 'sed.tortor.Integer@ultriciesse', 'Hayfa Joyce', 'NRO79WMP2YN', 'Papua New Guine', 'Kursk', '119-4100 Urna Rd.', 75, '4733', '(122) 949-3760', '1962-12-17', 48, 2, 1, 'MB680KGG7CU'),
-(95, 'vehicula@Pellentesque.net', 'Faith Wilcox', 'VVW61WBZ6OM', 'Palestine, Stat', 'Acquasparta', 'P.O. Box 612, 9959 P', 87, '82091', '(397) 875-5350', '1989-05-03', 54, 2, 0, 'RG839MTD6IE'),
-(96, 'dui.nec@condimentumDonecat.ca', 'Germane Riddle', 'LKA78DUI6DB', 'Malta', 'Olivola', 'P.O. Box 767, 3876 N', 85, '6479', '(138) 463-4723', '1990-12-30', 33, 2, 0, 'UD144XCC3TY'),
-(97, 'facilisis@vestibulum.edu', 'Jelani Riddle', 'HLX58HYV1JP', 'Poland', 'Izel', 'P.O. Box 463, 6109 I', 41, '2044', '(299) 875-8256', '1953-07-01', 62, 1, 0, 'HE466TVD3IR'),
-(98, 'diam@ligulaNullamfeugiat.org', 'Nadine Nixon', 'TBH30YXV8DL', 'Ireland', 'Steenokkerzeel', '9412 Auctor. St.', 21, '1252', '(284) 566-6022', '1995-12-03', 1, 0, 0, 'UH195IYQ5HA'),
-(99, 'dui.in@eleifendvitaeerat.co.uk', 'Aurora Myers', 'ZSM22UBU8GL', 'Niue', 'Moffat', '7753 Molestie Ave', 32, 'OB75 9TY', '(448) 680-3670', '1955-01-22', 13, 2, 1, 'IJ917NBN6HB'),
-(100, 'vestibulum.massa@justoPraesent', 'Shea Page', 'UWP68ZBI6TI', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG'),
-(101, 'tampakc@yahoo.gr', 'Chris Tabakakis', 'hekkhekk', 'Greece', 'Elefsina', 'Gongaga', 1241, '69420', '601920311', NULL, NULL, NULL, NULL, 'tampakc'),
-(102, 'admin@evgroup.gr', 'Admin', 'petrol4ever', 'Greece', 'Athens', 'Kolokotroni', 5, '22000', '1234567890', '2021-01-01', NULL, NULL, 1, 'admin');
+(1, 'Nullam.scelerisque.neque@liber', 'Shad Ayers', '$2b$10$5.ZfNFuStXCyhcZQkewRfuni3LswSoMOpmlprzC6sikXy0nhrt.q6', 'Kuwait', 'Waalwijk', 'Ap #757-8072 Pretium', 17, 'Z2320', '(212) 107-6077', '1970-10-04', 44, 1, 0, 'QX548WQH2FP'),
+(2, 'interdum.Curabitur.dictum@Inte', 'Amery Lucas', '$2b$10$1WjEYOaVqXvQj5cxpkbR2ewZecWSUWyXOXln.ojxf4IQctxayZjRu', 'Equatorial Guin', 'Filadelfia', '200-6205 Donec Av.', 30, '64169', '(651) 469-8268', '1981-08-27', 89, 1, 1, 'HX325JTK6OB'),
+(3, 'amet.consectetuer@metusfacilis', 'Ima Foley', '$2b$10$vYEzEhGQZHC6ftKCOnVBdO5LmGWNOMe7AJ7dahDt4hcdMfPoDNtRq', 'Slovakia', 'Montacuto', 'P.O. Box 629, 5279 E', 68, '881426', '(820) 775-0261', '1959-04-01', 79, 1, 1, 'DX699AXW6TT'),
+(4, 'luctus.et@risusDuisa.co.uk', 'Joy Vang', '$2b$10$evI/G6ST6S5h0/EgZ8PMYeYbtSEbpdZy.D9UbAe30veGI.UlU29wm', 'Palau', 'Burin', 'P.O. Box 959, 9107 T', 17, '17657-59266', '(791) 203-5725', '1964-06-26', 35, 0, 1, 'JC084GLT5XR'),
+(5, 'non.hendrerit.id@at.org', 'Adrian Goodman', '$2b$10$VxYzEjsQACrGbwjc19jrMuKGdIhAl/FpQQkJPIo1fIWxXm7QHKFqO', 'Slovakia', 'Kayseri', 'Ap #209-7568 Amet Rd', 84, '2264', '(555) 771-5057', '1982-06-14', 95, 0, 1, 'BG457SZJ2NO'),
+(6, 'velit.Sed@cursus.co.uk', 'Keely Hunt', '$2b$10$JcSXvSkV3ZjYyZkIcYKgDevYo/amYOvi31qY5Tw80KksU.fpwSuuS', 'Senegal', 'Sindelfingen', 'P.O. Box 302, 3649 A', 72, '13891', '(512) 695-1264', '1954-05-14', 93, 1, 0, 'CK605RRB2TZ'),
+(7, 'Curabitur.consequat@vitaeeratV', 'Whoopi Todd', '$2b$10$/DsRDWrmM8OIOrTuz9jXmOn5a37VOLT.S39K68sZzsUD..ZTLPG7G', 'Sierra Leone', 'Vaux-sur-Sure', 'P.O. Box 387, 1325 L', 69, '87917-806', '(532) 109-5218', '1964-02-19', 43, 2, 1, 'MS695XKV0NQ'),
+(8, 'sem.ut.cursus@bibendumsed.net', 'Wade Elliott', '$2b$10$Ua.JHgpAwJo6kUwc27aAKe32Cu94FhF/dcPWBWL79IEkIMnsNzxUW', 'Pakistan', 'Helmsdale', '317-8970 Mi Av.', 66, '71692', '(994) 451-2025', '1952-07-08', 51, 2, 0, 'SP039REB5VK'),
+(9, 'neque.tellus@doloregestas.co.u', 'Bradley Mann', '$2b$10$MPny3SuFDzpgLfuyLW55vu7jc7DDt9PYXipvcuS2LhlXnEM2utJ8m', 'Kazakhstan', 'Tlaquepaque', 'Ap #655-8680 Nam St.', 35, '06323', '(963) 201-6668', '1980-10-08', 73, 1, 0, 'FX673GTU7OS'),
+(10, 'luctus@Pellentesquehabitant.ed', 'Willa Patel', '$2b$10$RIDqp0sM53tUn.LnFKAWcubWrtT62YQxXPAcT3VO7CCWzhC.BB09K', 'Mauritius', 'Ottignies-Louvain-la', 'P.O. Box 165, 1607 M', 58, '717146', '(965) 753-4437', '1952-12-24', 75, 1, 1, 'QR193KFZ9OR'),
+(11, 'Praesent.eu.dui@venenatislacus', 'Martin Barron', '$2b$10$yxCNqUvlFshHSRddOIkwmODvIL/N6.xIhNjCtSOaR3/da5wo4rU9u', 'Ethiopia', 'Oevel', 'Ap #128-9652 Semper ', 51, '189800', '(586) 650-2460', '1992-07-02', 83, 1, 1, 'HZ991SKY5RA'),
+(12, 'orci@Classaptenttaciti.net', 'Phillip Cotton', '$2b$10$zU7or4ReLkRyC3/dmSJVg.hAydSDf665Q48ZVEnuCL4Fxmi286XUW', 'Saint Martin', 'Jaunpur', '8281 Consectetuer Rd', 51, '50364', '(805) 561-9430', '2002-07-02', 78, 1, 1, 'EI562KVI6KG'),
+(13, 'molestie@litoratorquentper.com', 'Naida Tucker', '$2b$10$rjUKZBlEiZQXUwC95BikPuUw9.SANWY.aKxi3uKDUfHMGvhfowwZO', 'South Africa', 'Wichita', 'P.O. Box 131, 359 Ni', 13, '534595', '(362) 596-8649', '1995-01-25', 18, 1, 0, 'FC138ATD1HG'),
+(14, 'Nunc@Nunccommodo.ca', 'Kaden Aguilar', '$2b$10$U3XJU6C2BMM1SiSgtXxiBeiUGLkQ/YwVki37jhgRLhAfJHwshJXRC', 'Guernsey', 'Sanluri', '7564 Euismod Street', 45, '97798', '(978) 989-6946', '1972-01-29', 6, 2, 1, 'AE147PZF1GW'),
+(15, 'porttitor.vulputate.posuere@Su', 'Brittany Bradford', '$2b$10$jP9VKsdiD8lrqpE.h9DINuWHmVRdRFcp0Jn/v7I7Ls4VK4P/FLbri', 'Belgium', 'Montebello', '860-7901 Fermentum A', 90, 'Z0 9CI', '(775) 913-6228', '1952-11-04', 85, 0, 0, 'AF181FYG0CP'),
+(16, 'vel.turpis.Aliquam@blanditmatt', 'Kai Sutton', '$2b$10$/fipD0.Og6isJRPf1S/REOocx7PzpNS1J54CtEfi6kHPI6acdN/yq', 'Equatorial Guin', 'Georgia', '7901 Est, St.', 7, '043778', '(984) 759-8988', '1989-06-27', 43, 2, 1, 'KC196PDU2MH'),
+(17, 'Fusce.dolor@vel.ca', 'Frances Valdez', '$2b$10$hQ9QYMBC3ZJPdWezLGtND.BUI2.n5elwerZNQLfmiNq27PcWSc4aa', 'China', 'Villa del Rosario', '7581 Cras St.', 28, '29921', '(902) 822-7541', '1972-11-29', 30, 0, 0, 'PR053ZBE8TI'),
+(18, 'ut.dolor.dapibus@estarcu.ca', 'Dennis Alvarez', '$2b$10$ehP.kL14qeJLKGHjQiRiI.4E3n1GmdOdq9J0XvlT2ZHahtgIn0tO2', 'Saint Pierre an', 'Selva di Cadore', '784-6867 Sed Street', 76, '1207', '(129) 969-9386', '1964-10-29', 73, 1, 1, 'MD508XKL7BW'),
+(19, 'vitae.sodales@estvitaesodales.', 'Kevin Jones', '$2b$10$A1.WOFJ8jS7rBL3PSncr5.IdRY5brkztPovieQ9MMfnYbO6QFhNeG', 'Uganda', 'Acapulco', '415-4771 Nec, Road', 61, '27667-21521', '(314) 120-2633', '1958-01-04', 67, 0, 1, 'MH910LQM3EJ'),
+(20, 'cursus.vestibulum@quis.co.uk', 'Rudyard Cabrera', '$2b$10$BTzbPbuDQnRc7BzQ.6h9Wu3L82QN9N9hsL2BsZ5lb0hp9gGWRuuUK', 'Christmas Islan', 'Algarrobo', 'P.O. Box 291, 8021 D', 19, '259387', '(558) 768-1152', '1953-04-04', 40, 2, 1, 'BZ226UEA1GX'),
+(21, 'euismod@ligulaAeneaneuismod.ca', 'Lucius Bowman', '$2b$10$5Qh7KU4YNGO81sAUxNJVeOzvs6qsRy0lUyfAJkEeEvVB/IyBPiANe', 'British Indian ', 'Padre Hurtado', '8703 Libero St.', 24, '579658', '(228) 544-5373', '1994-04-03', 3, 2, 0, 'EF421BRT0VI'),
+(22, 'Cras@auctorodioa.ca', 'Buffy Terry', '$2b$10$3lbdqBMhIFT5FgoOk2OzDuFaY6ODB03uQiHBqljDtcnld7LVLPFDC', 'Greece', 'Fuenlabrada', '724-1290 Cras St.', 37, '366810', '(406) 449-9551', '1995-11-01', 20, 1, 1, 'UK439APO5GO'),
+(23, 'sagittis.Duis.gravida@Fusce.co', 'Carolyn Maddox', '$2b$10$sg5MU6JJPMSJEezTCNQHcuxsN1tI/3G2Xq83F6MQy8fU5UbJVxrSq', 'Guatemala', 'Placanica', 'P.O. Box 108, 3252 N', 35, '35239', '(409) 961-3523', '1981-02-24', 49, 2, 0, 'PB056COI4ZP'),
+(24, 'Nullam.velit.dui@Phasellus.com', 'Chancellor Hunter', '$2b$10$oMXCm8RCrwpHC8VrEPj6j.stbDf/f/VEdDiuvAgZqfopUO54KSKPi', 'Nigeria', 'Paisley', 'P.O. Box 575, 7232 N', 6, '3018', '(875) 775-8138', '1955-01-16', 76, 1, 0, 'JG024FRY6CA'),
+(25, 'sit.amet@maurisblanditmattis.c', 'Lance Fleming', '$2b$10$hjAFd4346m3/agUUA5TOKODXHLCtwlSwG6t/C4iZcNSWnxUvbmUPq', 'Andorra', 'Calmar', 'Ap #504-5325 Cras St', 95, '574867', '(838) 327-5258', '1984-10-14', 63, 0, 0, 'CW147OEF4DV'),
+(26, 'ultrices.posuere.cubilia@ferme', 'Silas Avila', '$2b$10$1Hv475cUM.2Dp2GH6iLrQOSF2nVfjahVUw6YM1xpsOfsWVhtWiFdi', 'Bangladesh', 'Pondicherry', 'Ap #748-2987 Tellus.', 32, '00345-98640', '(373) 539-9701', '1997-08-21', 56, 1, 0, 'GK735HBT7QW'),
+(27, 'velit@magna.co.uk', 'Mira Spears', '$2b$10$7T4KzIxLUrQ7htH8.8FTIOfn.MAWnm/ZIylkEJt9Bkhx39fNrt1Z2', 'Swaziland', 'Pescantina', '1985 Enim. Rd.', 18, '55457', '(406) 933-4960', '2003-03-29', 79, 1, 0, 'YX914PPA3CA'),
+(28, 'nascetur@Donectemporest.edu', 'Cecilia Hammond', '$2b$10$mFiED3Qxqj.oxlPXFX5K1ujCcaUnUeS5.tZeI48ArVbhDTEC3Y3wG', 'Zambia', 'Joliet', '433-3403 Ligula. Rd.', 51, '8621 BZ', '(950) 279-7620', '1965-09-15', 37, 0, 0, 'IG940RLH2QY'),
+(29, 'amet.diam@faucibus.edu', 'Naida Cruz', '$2b$10$YqkplYgRQR5smaeUR7M.3OsSrbRDuDIvsy6LCRg1rm2qEXulgeNaO', 'Turks and Caico', 'Zeveneken', 'P.O. Box 554, 3134 S', 87, '8041 ZB', '(469) 985-2934', '1979-01-04', 27, 0, 0, 'YD126OQJ7XY'),
+(30, 'a.feugiat.tellus@Crasinterdum.', 'Catherine Hurst', '$2b$10$JA7dltZKnSt0nqhpEz1zk.ECp3SDy11QaHAieSRU6vXJkzAEUvbsa', 'Kenya', 'Neubrandenburg', '275-7326 Cras Avenue', 92, 'ZW8 6AH', '(337) 657-9024', '1962-01-19', 4, 0, 0, 'SU156FLO6BW'),
+(31, 'in.dolor.Fusce@aliquet.org', 'Carissa Dudley', '$2b$10$rZqy6R5xlTs73qdNdG7exOsBk1HPY0txyfOOL8wu9imXr1l2gEmPC', 'Samoa', 'Châlons-en-Champagne', '8633 Nec, Rd.', 27, '00-530', '(550) 764-7458', '2000-05-20', 40, 1, 0, 'FP734KUE6HI'),
+(32, 'nibh.vulputate.mauris@semeget.', 'Malcolm Hood', '$2b$10$M4rD7sPokSZO7M5TZY6Tyu7MDxQu3x2Pr.8PrR2c4904PvSXnX4Ru', 'United States', 'Termoli', '4551 Magna. Street', 39, '46417', '(618) 146-4376', '1962-05-19', 11, 1, 1, 'WJ715TYW9JJ'),
+(33, 'congue@ullamcorper.ca', 'Elmo Leonard', '$2b$10$CVbO8WNMkMyQ8yr2nsTGfuYodVQQ9hpQT/AWpIxmEFJseJv5T24UO', 'Barbados', 'Jauchelette', '668-3174 Mauris Stre', 21, '83201', '(679) 350-2061', '1954-06-10', 98, 2, 1, 'OC920RKH3LO'),
+(34, 'ut.pellentesque@vitaepurus.ca', 'Clarke Sellers', '$2b$10$56r9niU5VYkKczDlzNo4L.1aW7cXSHFQjf2YdUP1ip.CdceF/V66m', 'Svalbard and Ja', 'Chiusanico', '205-9146 Libero. Roa', 84, 'N57 4PC', '(502) 411-4624', '1985-10-21', 96, 2, 1, 'YX605CCQ5OO'),
+(35, 'bibendum.Donec.felis@nonarcuVi', 'Rana Pugh', '$2b$10$GNlc.2QWx2svFq22EhdmXeQ2AK5qZmP5d7K/tAuKplO.ptd.iq3U2', 'Bangladesh', 'Raurkela Civil Towns', 'P.O. Box 149, 5048 E', 20, '579470', '(824) 252-9206', '1964-06-27', 60, 1, 0, 'JT844YBK8EJ'),
+(36, 'magna.a.tortor@rutrum.org', 'Heidi Chan', '$2b$10$Z5NExfJbqrS8ITh7jwOyPersAfyqToGMMIlYWs2OE7haJ0OVrIF6u', 'American Samoa', 'King\'s Lynn', '3812 Urna Rd.', 50, '3223 BO', '(248) 349-7762', '1984-04-05', 87, 2, 1, 'DT878TXH0WU'),
+(37, 'luctus.et.ultrices@elit.co.uk', 'Nola Patterson', '$2b$10$aB.aCeaciGmzr/jBxB/bju8XZOe7mnBHgB7xOH.juNzK03/J7CJJO', 'Guinea-Bissau', 'Richmond', '967-134 Ut, Avenue', 9, 'VG8 3YQ', '(479) 142-4775', '1977-09-01', 81, 0, 1, 'PU263JMA3CV'),
+(38, 'ornare.egestas.ligula@molestie', 'Nicholas Rivera', '$2b$10$ZDR57GQqgjb4Q4nO8d5FdOqxYVWZ6OzOdzzg6tD473XhJB5l/.83e', 'Martinique', 'Coupar Angus', '4203 Molestie. St.', 73, 'Z1050', '(699) 130-1469', '1987-03-07', 55, 0, 0, 'DL732SID2MT'),
+(39, 'amet.massa@asollicitudinorci.c', 'Kadeem Pugh', '$2b$10$qPnhDVjn8KsOOhD5fd5tTexK0AabxVOQaMmlwOPq3CsgoYVD49ERS', 'Yemen', 'Karacabey', 'P.O. Box 664, 8839 A', 91, '823907', '(453) 508-6956', '1950-06-13', 69, 2, 0, 'OB140CPF5IH'),
+(40, 'Lorem.ipsum.dolor@accumsaninte', 'Gray Moore', '$2b$10$Sc1XYNxejQKV4YIVZX2dpu1RKojA20.c6uTqfIimQ0EOzVM3pKo3m', 'Macao', 'Uttarpara-Kotrung', '1549 Aliquam, Street', 27, '524669', '(166) 882-7077', '1960-07-29', 74, 1, 1, 'AG514EFT0XD'),
+(41, 'gravida.sit@purusNullamsceleri', 'Hall Steele', '$2b$10$VSnAvTAPs.l/jqA/pHtaVu697GCdYD6uh7zV7HJdqj/Wc8SHVIeI.', 'Christmas Islan', 'San Clemente', '369-9860 Vel, St.', 19, '24836', '(565) 621-7680', '1962-11-08', 28, 1, 1, 'JJ721GNJ2KM'),
+(42, 'vel.convallis@Crasegetnisi.com', 'Abraham Mckay', '$2b$10$cc7WWlwUrwU1oU.9xLCY6eaDLs3OYL71kyc4InRx6zqmW28eQXIDC', 'Lithuania', 'Dangjin', '651 Eu Rd.', 49, '76066', '(268) 237-6786', '1965-10-23', 79, 0, 0, 'CB726OWX9TI'),
+(43, 'urna.Nullam@ipsumcursus.com', 'Quemby Singleton', '$2b$10$mnMAxXklBgAxLSv0LAnSmuIGhAKrl08gQmwzjpGYG5lz7sT6CL/Se', 'Sao Tome and Pr', 'Kirov', 'P.O. Box 103, 9444 L', 41, '7459 AL', '(304) 724-7943', '1964-05-05', 17, 2, 1, 'TK166KYH3CP'),
+(44, 'sem.egestas.blandit@variusorci', 'Brianna Robinson', '$2b$10$HCY8Ztru8TJTmPfpO2xxX.efDQSvULUNDl/.aQO4Rn493TVAZqjjS', 'South Sudan', 'Douai', 'Ap #224-5893 Nunc St', 28, '00187', '(873) 287-2224', '1951-09-09', 41, 0, 0, 'AN530FHF6XD'),
+(45, 'ornare@fames.co.uk', 'Yuli Lancaster', '$2b$10$pOgTOyC./54gJZp.pEpmC.MgHrwwk7j.FPf61.8fNG2Qj4RwOSCq6', 'Virgin Islands,', 'Kitimat', '1060 Odio Street', 77, '870660', '(131) 925-8761', '1959-09-07', 56, 1, 1, 'AB706KDK2KW'),
+(46, 'sit@fermentum.org', 'Shad Cohen', '$2b$10$lBriil7s5ArLZ8aiBcAKV.gDOvzlyc2LmFrW7kt3q6s7UyofWfYNy', 'Switzerland', 'Warspite', 'P.O. Box 914, 4130 A', 18, 'N7X 6K3', '(679) 493-2837', '1958-09-21', 45, 0, 0, 'YR946GWS4NK'),
+(47, 'risus.Donec@congue.net', 'Uma Garza', '$2b$10$w1MHtK.ffYbJZwP/XYwKGOXUJMjoq7efw5mIMCD3RFmAP7QY1OnjC', 'American Samoa', 'Fort Smith', '678-4806 Ullamcorper', 12, '54694', '(379) 286-4861', '1964-10-19', 31, 1, 1, 'CY109ZDD4LD'),
+(48, 'malesuada@vulputateeuodio.org', 'Hanae Howard', '$2b$10$H4tUHvDQrOAWmsnTrps8u.wXAG4YtKoxxEK2glUHofwSX.vM6fx1S', 'Singapore', 'Paternopoli', '576-2361 Nulla Ave', 86, '24881', '(326) 133-3851', '1989-01-05', 75, 1, 0, 'JC078SBY7LY'),
+(49, 'lectus.pede.ultrices@egestasa.', 'Logan Harrison', '$2b$10$L9P3He9eoFPY8fKjFdiWbe4NJQFH1pE37/MXWdq.wyrZmkUtj.BaW', 'Togo', 'Saint-Mard', 'P.O. Box 223, 1040 V', 25, '63026', '(957) 258-4203', '2001-09-07', 12, 1, 1, 'RF119TRP0AY'),
+(50, 'lobortis@viverra.net', 'Amanda Fields', '$2b$10$Sygkfd9BworqJQBa45U/4eyKKbpTVe1ZwlyhMiZk02gE9zU.KjNba', 'Philippines', 'Bad Dürkheim', '880-1755 Neque St.', 45, '380316', '(508) 200-7555', '1952-12-14', 27, 0, 0, 'FN685LSD1FA'),
+(51, 'Sed.nec.metus@Class.org', 'Jolene Durham', '$2b$10$9YsE.gANUrwCh71YDBhsOevcXWciMFbqM7Wd.6J3whHPfs9b/e5km', 'South Georgia a', 'Waasmunster', 'Ap #977-3145 Ligula.', 13, '570648', '(761) 799-3251', '1980-10-31', 6, 2, 0, 'HF176ABQ2TY'),
+(52, 'pharetra.nibh@erosturpis.net', 'Hiram Bailey', '$2b$10$QdE8z2jcOV5F6wDNCv6/vuXm.zE47BtM2htq3Y4gJbog4imRXM/o.', 'Vanuatu', 'Argyle', '2284 Amet St.', 77, '7702', '(691) 776-1932', '1952-11-02', 27, 0, 1, 'OK497THH8OK'),
+(53, 'aliquet@blanditenim.edu', 'Kasimir Shepherd', '$2b$10$CK6KoDsvphcOG2McZiZjjegT7qUdML7eWOYsX/zeJBo0SCa9fnSVi', 'Syria', 'Montigny-lès-Metz', '9492 Id Road', 10, '33686', '(222) 851-9269', '1952-07-10', 39, 0, 1, 'JV802OXA5JQ'),
+(54, 'eu.erat.semper@Sed.org', 'Andrew Morris', '$2b$10$m8xJ71LKkS21V/KPwc5duObpt6XRQLTFS1QQYgU02SnN8.wuqjAgC', 'Latvia', 'San Pablo', '390-575 Mauris St.', 84, '55431-048', '(419) 891-6141', '1965-11-26', 13, 2, 0, 'UH083LHV4CH'),
+(55, 'Curabitur.egestas@ligula.com', 'Zenia Blair', '$2b$10$YuIjc3jkKWxXuikh/1OL8u4rLAr7qhqHqYqBIeOv5NctqnBqXz25C', 'Western Sahara', 'Ujjain', 'Ap #611-1894 Tristiq', 89, '38829', '(882) 654-5098', '1975-06-23', 34, 1, 0, 'LH492KAO0PG'),
+(56, 'sem@necmalesuadaut.ca', 'Guy Farmer', '$2b$10$yRiCVW0HE/TvnYUtJjvTouuXLlhmG8xDo1tot9J2sOcRKegQrI9hu', 'Saint Vincent a', 'Nurdağı', 'Ap #910-8792 Diam. R', 45, 'BB3 6YI', '(865) 481-5150', '1975-05-16', 82, 2, 0, 'PO264QGZ5JQ'),
+(57, 'montes.nascetur@tempus.edu', 'Amaya West', '$2b$10$pP5qBM322W5znzljuPM1fOqwA8mkwEWZjldAeXf4U8kKQIzJ2gHXu', 'Chile', 'Kidderminster', 'Ap #581-4466 Curabit', 14, '56090', '(351) 203-5039', '1950-01-10', 79, 1, 0, 'VA512FUM7BN'),
+(58, 'tempor@ipsum.net', 'Ali Moss', '$2b$10$iATMMo1L2isme3aB8/ONqeT0ascKGt1Y85C18789d6wGMgmWBqPYm', 'Djibouti', 'María Pinto', 'Ap #545-8931 Sed St.', 72, '44724', '(797) 737-2439', '1950-03-20', 96, 0, 1, 'JS278SGG2PB'),
+(59, 'vestibulum.nec.euismod@pede.ne', 'Leroy Oneill', '$2b$10$Y0jrRlUIRqagqin58k6N1ehCEbHvS11c47HLJlHdWV/lq5lQqfs0W', 'Guatemala', 'Casole d\'Elsa', 'P.O. Box 865, 9880 D', 11, '91747', '(325) 242-1872', '1951-07-05', 64, 2, 1, 'BC393SNP5XC'),
+(60, 'felis@risusNuncac.net', 'Sopoline Howard', '$2b$10$H/oc/DKqmkp3mCqp9TOxRO16jbPNb2f9Ecb.VnXyX3QeVI.u0xG..', 'Korea, North', 'Springdale', '6533 Sapien. Av.', 57, '497502', '(752) 579-8237', '1991-11-23', 22, 1, 0, 'VU450RSX4SP'),
+(61, 'tortor@Cumsociis.ca', 'Claire Cote', '$2b$10$OLsbDIQ/hdjSSe2fTIQVJeztD1Gkk.IMxc4y8uA6WQpcAHaiFtvfO', 'Gibraltar', 'Jhang', 'P.O. Box 739, 8391 S', 29, '390515', '(465) 930-1549', '1974-11-16', 40, 2, 1, 'KU402IMK6SS'),
+(62, 'lorem@luctuset.net', 'Leah Conley', '$2b$10$cS4d8KB9A85pItXo//d5FOYs.GYfdMvO2kncCZm1VVQxmWt/nm7tu', 'Guam', 'Sunset Point', '831-533 Nunc Rd.', 47, '28866', '(219) 366-4557', '1976-11-24', 45, 0, 1, 'ZM008KZD3PP'),
+(63, 'Donec.egestas@egetlaoreet.co.u', 'Leonard Murphy', '$2b$10$zy/Aatbs8vA9eqaS9TS1FOwUtsEkkSLkfCzLuVKSuNMZL5GOjPOTi', 'Micronesia', 'Kalininets', 'Ap #728-5495 Eu Stre', 10, '950106', '(433) 693-5771', '1975-05-10', 25, 2, 1, 'PK231ZWP3FG'),
+(64, 'dui@lacus.co.uk', 'Ulla Vega', '$2b$10$.4KhvOtGo3/kkrS2h7hGo.MBwTLJkDJgDxAZw0057gFsmLZHbM7TG', 'Saint Pierre an', 'Brandenburg', 'Ap #553-7908 Vitae A', 2, '41267-18995', '(111) 927-4886', '1955-05-01', 55, 0, 1, 'ZD455QTJ3BN'),
+(65, 'ac@risusDonecegestas.net', 'Paula Miles', '$2b$10$QMc/AkqkfrBUvQeGAR01nORleRZH7tW4Wz38g25QLhIIQFUrJZawS', 'Japan', 'Kharmang', 'Ap #716-6762 Molesti', 17, '48561', '(602) 693-8667', '1982-11-08', 48, 1, 0, 'ZK785ZXB4ZD'),
+(66, 'luctus@placerat.com', 'Elijah Owens', '$2b$10$dkfuAyeLz4UPeJ2g4j74YOqBssRK6EsVORWOlBN3TKgGZ7mdeboL2', 'Romania', 'Nocera Umbra', 'Ap #615-7454 Turpis ', 45, '73-106', '(331) 446-5752', '1978-02-09', 91, 1, 1, 'KI904IRG1PO'),
+(67, 'sollicitudin.orci.sem@semperpr', 'Emerald Dodson', '$2b$10$BjPiH86rypQ4mbhrud265u3srYhyzY85Mm0kuw/nZJ0gxAD5Hm35.', 'Bermuda', 'Masullas', '3700 Tempor St.', 31, '68-287', '(132) 849-2264', '1999-08-05', 17, 2, 0, 'WN719LEU4BE'),
+(68, 'augue@elementumdui.org', 'Isadora Summers', '$2b$10$3vMIaVg0ZU7YZnxh0yHrZe5AhXeY4.6lN5zKaw8a7cBq1JB/psHiK', 'Kyrgyzstan', 'Malvern', 'Ap #620-8369 Libero.', 37, 'X5W 2E0', '(803) 213-4313', '1991-01-22', 13, 2, 0, 'TJ709DQF1SN'),
+(69, 'odio.a.purus@utipsum.edu', 'Desirae Strong', '$2b$10$QAWvs4Icxe5Mw.pXhRtdjusr7wkh35lPhitNwiXRxztw/OW.UvcBO', 'Holy See (Vatic', 'Wallasey', '996-8220 Et Avenue', 55, '17398', '(418) 213-9120', '1984-05-30', 33, 1, 1, 'AM472IXG4MM'),
+(70, 'a@ipsumnunc.co.uk', 'Todd Meyer', '$2b$10$yC5PqB98piA3SZl8vf9.cOYz96tPTgETf9348a80n/tNcpXGHXwu.', 'Lebanon', 'Cerrillos', '122-463 Libero St.', 34, '20024-694', '(780) 945-2555', '1978-11-28', 8, 1, 1, 'AF715IZU8AQ'),
+(71, 'nec.imperdiet.nec@rhoncusid.or', 'Rhoda Holcomb', '$2b$10$FRBcCT.fypbyb0qgYlv8SuwhfbW4vuksGYvOtPrscd8FxduJXfE9i', 'Tajikistan', 'Filey', 'Ap #980-8607 Aliquam', 57, '12833', '(657) 478-0562', '1994-03-10', 37, 1, 0, 'XM843OEG5VI'),
+(72, 'tincidunt.congue@Duis.edu', 'Dominique Oneal', '$2b$10$mrAGbbdvNiSGqFTy1.cUDe.YN9T63pCActhYOxex2INPoCiy2SaNm', 'Sint Maarten', 'Kostroma', '3988 Faucibus Street', 59, 'S0W 9A3', '(258) 708-8169', '1982-08-04', 16, 1, 1, 'AW389QZG3JE'),
+(73, 'mus.Proin@aliquetlobortis.com', 'Lawrence Jenkins', '$2b$10$QllkgLA2aUxKa9PNwCLyCeLN/rK.ezMtUttk2YZAypYAuTU8KRtVe', 'Honduras', 'Steenokkerzeel', 'Ap #650-5013 Pretium', 29, '461766', '(950) 558-0559', '1989-11-09', 41, 2, 0, 'IF442XZB8RP'),
+(74, 'auctor@semper.ca', 'Simon Strickland', '$2b$10$SLDFjU//XbV/weu6rVUnX.wPV3uJtAlUMmGMrc3VY9Sh4yPkjr2oW', 'Bermuda', 'Thon', '906-148 Vivamus Av.', 88, '991532', '(911) 200-9674', '1982-04-18', 51, 2, 1, 'CV671WZM8FE'),
+(75, 'Fusce@utsem.ca', 'Burton Gentry', '$2b$10$Ks.n946ZZnFcFwW0ZdlrSuultlJUSs1tNuh6Ox.WPsBWD1.LeYzwK', 'Guinea', 'Lac La Biche County', 'P.O. Box 150, 3519 E', 58, '10474', '(490) 708-1294', '1953-03-04', 70, 1, 0, 'LG251TFD3VK'),
+(76, 'gravida@quisturpis.net', 'Jameson Cotton', '$2b$10$/aZ.ZCmqHXotj5MLZ8RYWub4P0boiYbqqWGQKsRgROA3ben2zV7sO', 'American Samoa', 'Windsor', 'P.O. Box 504, 8098 N', 36, '73302', '(342) 121-2820', '1992-09-08', 28, 2, 0, 'MV692TWF5KD'),
+(77, 'sapien.gravida@pedeNuncsed.com', 'Cailin Gay', '$2b$10$pMV28m16LzVnXvuRqLnxHOFiB4eB/ucf5iD6sRkkA6q6ygjwpOkra', 'Mexico', 'Yuryuzan', '6788 Fringilla. Road', 37, '19368', '(225) 317-9963', '1987-07-25', 67, 2, 1, 'HY438UTB9OP'),
+(78, 'orci@adipiscingelit.co.uk', 'Reed Sullivan', '$2b$10$ZVrodiPYzyxfdaRvJ3IbIudQRhxkh.qurdYg32nO/GXx898BNfdZW', 'Swaziland', 'Sommethonne', 'Ap #861-5897 Sit St.', 71, '72-313', '(960) 965-0252', '1972-11-25', 80, 2, 1, 'ST626WYJ0YJ'),
+(79, 'Vivamus@magnaUt.net', 'Blossom Glover', '$2b$10$x2q//KI1plGP0yh0ZWlXVOVVet/DXmkQr1Z5iYCgRSfYEmWvhMUWa', 'South Sudan', 'Liévin', 'P.O. Box 380, 9833 C', 54, '62219-232', '(166) 820-2272', '1967-08-31', 73, 2, 0, 'BJ951OUL3VB'),
+(80, 'imperdiet@nonummy.net', 'Fritz Hodge', '$2b$10$HsQUkcSoxL240hm8EEH8du5MDvDHPZH1AduVjWdVUtr8rXzai2AY6', 'Hungary', 'Aydın', '929-1547 Ac, St.', 82, '4551', '(321) 809-9803', '1988-06-02', 7, 0, 0, 'LG231EDX6MV'),
+(81, 'mi.enim@Proinvelit.edu', 'Tatum Whitney', '$2b$10$c99XjcEoB9wZTupOKitqzePTpX80hi0hLNCYm7JYsukD/gjfD5F4u', 'Denmark', 'Hilversum', 'P.O. Box 267, 9233 S', 70, '26257', '(365) 149-4106', '1950-12-02', 72, 0, 0, 'KU681TWE2KK'),
+(82, 'pretium.aliquet.metus@sitametn', 'Axel Harrell', '$2b$10$7zwSTFJT/uREM8x7VYmiIe6VR4aRvqHXvidDbj3PgNZWTsRh1Cg8K', 'Canada', 'Dipignano', 'P.O. Box 657, 5268 E', 73, '9207', '(336) 287-1914', '1993-09-08', 81, 1, 0, 'LR506QSI6QY'),
+(83, 'eget@arcu.net', 'Caryn Mayer', '$2b$10$vdRI76B5ugDFjSg3CAFnG.3EW5b0.yoC6t4Ke2aPr5dAsk1jULhpC', 'Cocos (Keeling)', 'Filadelfia', 'P.O. Box 988, 5473 E', 34, '58006-753', '(252) 900-8618', '1965-08-22', 60, 0, 1, 'YK080BUE7VY'),
+(84, 'est.Nunc@semegetmassa.com', 'Sacha Dickerson', '$2b$10$08E0rOHNASxfMNgdEam/a.g5aOqlSJSXkWPt7CBGRp1S.l1IjnKAW', 'Virgin Islands,', 'Limelette', 'P.O. Box 910, 9700 E', 10, '2647', '(146) 203-2912', '1979-02-11', 19, 0, 1, 'QD405HAD6IB'),
+(85, 'Donec@luctusetultrices.org', 'Ingrid Lawson', '$2b$10$S3U.RHy7/bcbmEp.i8fauu.wqqdW6mvb0SQsdBbmDvCzfefW6hbye', 'Hong Kong', 'Taunusstein', 'P.O. Box 978, 5636 M', 20, '49393', '(651) 126-1965', '1972-05-28', 89, 1, 1, 'DK507VQL1XH'),
+(86, 'malesuada.ut@quamafelis.co.uk', 'Adele Jennings', '$2b$10$kgwnzFF8MZ99RaVLxbX.He4p6V0EzGb24cZutzvmf4XdKbWHrqIwS', 'Moldova', 'Ripalta Guerina', 'P.O. Box 177, 2689 L', 19, '35600', '(425) 641-4572', '1988-05-27', 51, 0, 1, 'HY879BOH6JU'),
+(87, 'at.libero.Morbi@Aeneansed.net', 'Herrod Dotson', '$2b$10$Zzk1Dg/WFTpLVtiAw.kGxOIpa7XE1ssUCsdKqlt2KchV6EmGE5hDO', 'Niue', 'Crecchio', 'Ap #327-8102 Malesua', 82, '2428', '(921) 363-1149', '1991-07-09', 5, 0, 0, 'BI237KHF2PL'),
+(88, 'neque.et.nunc@rutrumlorem.edu', 'Amela Hoffman', '$2b$10$AdD9vZa1Vs5I7mt2XA3OsuF8Gkduwq7lD8F9b/Iru1hRPUvhLq5jG', 'San Marino', 'Istanbul', 'P.O. Box 733, 5310 M', 39, 'Z5 5II', '(122) 325-3567', '1958-04-03', 97, 0, 0, 'GD593YWF4AY'),
+(89, 'commodo@amet.com', 'Cameran Chaney', '$2b$10$Da.CTJ9bCYopri7B0rTIyOiojGQdM16RnHw4KfGC7etVDE02rNIje', 'Italy', 'Bettiah', 'Ap #447-325 Mauris A', 37, '30380', '(464) 842-1652', '1972-09-29', 36, 0, 1, 'CB078LQP1RB'),
+(90, 'Fusce@disparturientmontes.com', 'Signe Clayton', '$2b$10$tVU4f2umHjKBU5R5.gTNde11UIX5fTN6hiUfg3M6AIMWlowusdw/6', 'Hungary', 'Yurzhnouralsk', 'Ap #176-7310 Maecena', 25, '077230', '(778) 386-9986', '1975-12-06', 67, 2, 0, 'BF738ROH4YL'),
+(91, 'in@vulputate.com', 'Jackson Holloway', '$2b$10$fgf.VXzs2pq5nOwCUPaukuggSmKXyNDR2KGTAgnyIqnDXYPf326WK', 'Tonga', 'Trois-Rivières', 'P.O. Box 672, 3679 M', 2, '65708', '(500) 196-6838', '1991-11-02', 90, 1, 0, 'BJ607VYU8SK'),
+(92, 'in@loremDonecelementum.co.uk', 'Bert White', '$2b$10$98Ab7Giiuc5wwkZCTp8zQer/ngFpfk2gx2vimYZvJ.pctR6erYLEi', 'Papua New Guine', 'Denbigh', 'P.O. Box 124, 8334 E', 70, '141001', '(650) 102-7058', '1988-02-17', 5, 2, 1, 'LR792VCS8MN'),
+(93, 'nonummy@leo.co.uk', 'Steven Velazquez', '$2b$10$qXx2faisUJYEabdzbZysjudeKC.PDuVjk4DxA8MeqDHckruvIadKW', 'Western Sahara', 'Wichelen', '2215 Egestas. St.', 92, '21262-407', '(331) 853-1541', '1967-03-07', 76, 2, 1, 'DT851MMQ8GG'),
+(94, 'sed.tortor.Integer@ultriciesse', 'Hayfa Joyce', '$2b$10$U3PC9dMYjO9/RwLS1vr2OOjr1/i.YKo2e0qlqNznXPmE0x9QfV8wS', 'Papua New Guine', 'Kursk', '119-4100 Urna Rd.', 75, '4733', '(122) 949-3760', '1962-12-17', 48, 2, 1, 'MB680KGG7CU'),
+(95, 'vehicula@Pellentesque.net', 'Faith Wilcox', '$2b$10$pT0WmWBVzODxMc9VV5HzReEn9zC6eNlmEdsb9M3LGSIb8DX0.iZNK', 'Palestine, Stat', 'Acquasparta', 'P.O. Box 612, 9959 P', 87, '82091', '(397) 875-5350', '1989-05-03', 54, 2, 0, 'RG839MTD6IE'),
+(96, 'dui.nec@condimentumDonecat.ca', 'Germane Riddle', '$2b$10$kXem24xoixkjlb7QFYQuVu4gRr8/WopjmNJWO3OjMDva82prIwKHK', 'Malta', 'Olivola', 'P.O. Box 767, 3876 N', 85, '6479', '(138) 463-4723', '1990-12-30', 33, 2, 0, 'UD144XCC3TY'),
+(97, 'facilisis@vestibulum.edu', 'Jelani Riddle', '$2b$10$9FQHi4TQ/Gpta5eIJV7hp.P.Gp0QPAgkP/NCqO3pdYSGP5HaYmLVS', 'Poland', 'Izel', 'P.O. Box 463, 6109 I', 41, '2044', '(299) 875-8256', '1953-07-01', 62, 1, 0, 'HE466TVD3IR'),
+(98, 'diam@ligulaNullamfeugiat.org', 'Nadine Nixon', '$2b$10$N6niv4sG4KgLjRM93GpFee0gRRsSB2WFIVFIH.zROdGIlLDpqw5wi', 'Ireland', 'Steenokkerzeel', '9412 Auctor. St.', 21, '1252', '(284) 566-6022', '1995-12-03', 1, 0, 0, 'UH195IYQ5HA'),
+(99, 'dui.in@eleifendvitaeerat.co.uk', 'Aurora Myers', '$2b$10$EFoagb0aER8y1H9/i1ZXkutci65TUiPsTIUmVH7q26wsxGcrgFHK.', 'Niue', 'Moffat', '7753 Molestie Ave', 32, 'OB75 9TY', '(448) 680-3670', '1955-01-22', 13, 2, 1, 'IJ917NBN6HB'),
+(100, 'vestibulum.massa@justoPraesent', 'Shea Page', '$2b$10$3eRk4rvBHZ2QQ7mKU8w/mecSkQDAaNUj8ZVRyttMiZXJPvezc0cxG', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG'),
+(102, 'rty@mail.com', 'Colombiano', '$2b$10$iwIy3FgqrD/xRrZZN7Y9ouy6revBYpWJJcaauKNKPBIYhi0.2Cm9O', 'Greece', 'Filiatra', 'Pontou', 6, '34789', '6979587142', '1999-07-02', 0, 1, 0, 'Lapouta'),
+(106, 'stef@poutas.com', 'Stefanos', '$2b$10$iACCRjpUqqgkMD/Qgbo95OdMXj7gubKe8bZiLO.5MvSMyJCqLPefW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 1, 'Stef'),
+(108, 'paleho@poutas.com', 'Sokaros', '$2b$10$MWViEvUlqzFXbf7q05rhmek1VUkAlUUC7FEZG.LtSq2.grybsQILW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 0, 'Paleho');
 
 --
--- Ευρετήρια για άχρηστους πίνακες
+-- Indexes for dumped tables
 --
 
 --
--- Ευρετήρια για πίνακα `blacklist`
+-- Indexes for table `blacklist`
 --
 ALTER TABLE `blacklist`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Ευρετήρια για πίνακα `car`
+-- Indexes for table `car`
 --
 ALTER TABLE `car`
   ADD PRIMARY KEY (`license_plate`),
@@ -1093,13 +1096,13 @@ ALTER TABLE `car`
   ADD KEY `model_id` (`model_id`);
 
 --
--- Ευρετήρια για πίνακα `car_model`
+-- Indexes for table `car_model`
 --
 ALTER TABLE `car_model`
   ADD PRIMARY KEY (`model_id`);
 
 --
--- Ευρετήρια για πίνακα `charge_event`
+-- Indexes for table `charge_event`
 --
 ALTER TABLE `charge_event`
   ADD PRIMARY KEY (`event_id`),
@@ -1109,34 +1112,34 @@ ALTER TABLE `charge_event`
   ADD KEY `license_plate` (`license_plate`);
 
 --
--- Ευρετήρια για πίνακα `credit_card`
+-- Indexes for table `credit_card`
 --
 ALTER TABLE `credit_card`
   ADD PRIMARY KEY (`card_number`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Ευρετήρια για πίνακα `elec_owes`
+-- Indexes for table `elec_owes`
 --
 ALTER TABLE `elec_owes`
   ADD KEY `supplier_id` (`supplier_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Ευρετήρια για πίνακα `elec_supplier`
+-- Indexes for table `elec_supplier`
 --
 ALTER TABLE `elec_supplier`
   ADD PRIMARY KEY (`supplier_id`);
 
 --
--- Ευρετήρια για πίνακα `point`
+-- Indexes for table `point`
 --
 ALTER TABLE `point`
   ADD PRIMARY KEY (`point_id`,`station_id`),
   ADD KEY `station_id` (`station_id`);
 
 --
--- Ευρετήρια για πίνακα `station`
+-- Indexes for table `station`
 --
 ALTER TABLE `station`
   ADD PRIMARY KEY (`station_id`),
@@ -1144,7 +1147,7 @@ ALTER TABLE `station`
   ADD KEY `supplier_id` (`supplier_id`);
 
 --
--- Ευρετήρια για πίνακα `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
@@ -1152,64 +1155,64 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT για άχρηστους πίνακες
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT για πίνακα `car_model`
+-- AUTO_INCREMENT for table `car_model`
 --
 ALTER TABLE `car_model`
   MODIFY `model_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT για πίνακα `charge_event`
+-- AUTO_INCREMENT for table `charge_event`
 --
 ALTER TABLE `charge_event`
-  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
+  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
 
 --
--- AUTO_INCREMENT για πίνακα `elec_supplier`
+-- AUTO_INCREMENT for table `elec_supplier`
 --
 ALTER TABLE `elec_supplier`
   MODIFY `supplier_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
--- AUTO_INCREMENT για πίνακα `point`
+-- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
   MODIFY `point_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT για πίνακα `station`
+-- AUTO_INCREMENT for table `station`
 --
 ALTER TABLE `station`
   MODIFY `station_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT για πίνακα `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
--- Περιορισμοί για άχρηστους πίνακες
+-- Constraints for dumped tables
 --
 
 --
--- Περιορισμοί για πίνακα `blacklist`
+-- Constraints for table `blacklist`
 --
 ALTER TABLE `blacklist`
   ADD CONSTRAINT `blacklist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Περιορισμοί για πίνακα `car`
+-- Constraints for table `car`
 --
 ALTER TABLE `car`
   ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `car_ibfk_2` FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`);
 
 --
--- Περιορισμοί για πίνακα `charge_event`
+-- Constraints for table `charge_event`
 --
 ALTER TABLE `charge_event`
   ADD CONSTRAINT `charge_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
@@ -1218,26 +1221,26 @@ ALTER TABLE `charge_event`
   ADD CONSTRAINT `charge_event_ibfk_4` FOREIGN KEY (`license_plate`) REFERENCES `car` (`license_plate`);
 
 --
--- Περιορισμοί για πίνακα `credit_card`
+-- Constraints for table `credit_card`
 --
 ALTER TABLE `credit_card`
   ADD CONSTRAINT `credit_card_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Περιορισμοί για πίνακα `elec_owes`
+-- Constraints for table `elec_owes`
 --
 ALTER TABLE `elec_owes`
   ADD CONSTRAINT `elec_owes_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `elec_supplier` (`supplier_id`),
   ADD CONSTRAINT `elec_owes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Περιορισμοί για πίνακα `point`
+-- Constraints for table `point`
 --
 ALTER TABLE `point`
   ADD CONSTRAINT `point_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `station` (`station_id`) ON DELETE CASCADE;
 
 --
--- Περιορισμοί για πίνακα `station`
+-- Constraints for table `station`
 --
 ALTER TABLE `station`
   ADD CONSTRAINT `station_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
