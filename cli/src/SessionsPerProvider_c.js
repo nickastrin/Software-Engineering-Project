@@ -1,8 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionsPerEV (evid, from, to, format) {
-    const url = '/evcharge/api/SessionsPerEV/' + evid + '/' + from + '/' + to + '?format=' + format;
+function sessionsPerProvider (providerid, from, to, format) {
+    const url = '/evcharge/api/SessionsPerProvider/' + providerid + '/' + from + '/' + to + '?format=' + format;
     const path = "./softeng20bAPI.token";
     
     if(!fs.existsSync(path)) {
@@ -12,6 +12,7 @@ function sessionsPerEV (evid, from, to, format) {
 
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
+
 
     const options = {
         hostname: 'localhost',
@@ -30,7 +31,18 @@ function sessionsPerEV (evid, from, to, format) {
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log(d);
+                if(format==='json'){
+                    //process.stdout.write(d+'\n')
+                    obj=JSON.parse(d)
+                    console.log(obj);
+                }
+                else if (format==='csv'){
+                    process.stdout.write(d+'\n')
+                }
+                else{
+                    console.log(`Format "${format}" is not recognised as a format type. \
+Accepted formats are "json" and "csv".`)
+                }
             }
             else if(res.statusCode == 401) {
                 console.log('User authentication failed.');
@@ -56,4 +68,4 @@ function sessionsPerEV (evid, from, to, format) {
     req.end();
 }
 
-exports.sessionsPerEV = sessionsPerEV;
+exports.sessionsPerProvider = sessionsPerProvider;

@@ -10,6 +10,9 @@ function users (username) {
         process.exit();
     }
 
+    const raw = fs.readFileSync(path);
+    const token = JSON.parse(raw).token;
+
     const options = {
         hostname: 'localhost',
         port: 8765,
@@ -27,7 +30,7 @@ function users (username) {
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log(d);
+                console.log(JSON.parse(d));
             }
             else {
                 console.log('Status code: ' + res.statusCode);
@@ -43,4 +46,4 @@ function users (username) {
     req.end();
 }
 
-exports.usermod = usermod;
+exports.users = users;

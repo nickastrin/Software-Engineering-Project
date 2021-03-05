@@ -1,6 +1,6 @@
 const https = require('https');
 const fs = require('fs');
-const { parse } = require('json2csv');
+//const { parse } = require('json2csv');
 
 function sessionsPerPoint (pointid, from, to, format) {
     const url = '/evcharge/api/SessionsPerPoint/' + pointid + '/' + from + '/' + to + '?format=' + format;
