@@ -1,6 +1,6 @@
 const https = require('https');
 const fs = require('fs');
-const ObjectsToCsv = require('objects-to-csv');
+const { parse } = require('json2csv');
 
 function sessionsPerPoint (pointid, from, to, format) {
     const url = '/evcharge/api/SessionsPerPoint/' + pointid + '/' + from + '/' + to + '?format=' + format;
@@ -10,10 +10,10 @@ function sessionsPerPoint (pointid, from, to, format) {
         console.log('User authentication required. Please sign in');
         process.exit();
     }
-//------------------------------------------------
+
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-//------------------------------------
+
     const options = {
         hostname: 'localhost',
         port: 8765,
@@ -26,9 +26,7 @@ function sessionsPerPoint (pointid, from, to, format) {
         }
     }
 
-    const req = https.request(options, res => {
-        //console.log(`statusCode: ${res.statusCode}`)
-    
+    const req = https.request(options, res => {  
         res.on('data', d=> {
             if(res.statusCode == 200) {
                 if(format==='json'){
