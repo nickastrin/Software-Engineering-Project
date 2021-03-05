@@ -1,4 +1,4 @@
 export function cli(args) {
-    console.log('hi');
+    console.log('Hello ody');
     console.log(args);
 }
