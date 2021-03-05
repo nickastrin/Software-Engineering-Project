@@ -12,3 +12,5 @@ documentation/SoftEng_ER.png
 documentation/Companies_activity_diagram.vpd.png
 
 node_modules
+
+cli/src/softeng20bAPI.token
