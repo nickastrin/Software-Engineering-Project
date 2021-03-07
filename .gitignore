@@ -10,3 +10,7 @@ documentation/Find_stations_sequence_diagram.vpd.png
 documentation/SoftEng ER.jpg
 documentation/SoftEng_ER.png
 documentation/Companies_activity_diagram.vpd.png
+
+node_modules
+
+cli/softeng20bAPI.token
