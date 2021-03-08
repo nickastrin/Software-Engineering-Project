@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const program = require("commander")
 
-//const { healthcheck } = require("./healthcheck_c.js")
-const { resetsessions } = require("./src/resetsessions_c.js")
+const { healthcheck } = require("./src/admin/healthcheck_c.js")
+const { resetsessions } = require("./src/admin/resetsessions_c.js")
 const { login } = require("./src/login_c.js")
 const { logout } = require("./src/logout_c.js")
 const {sessionsPerPoint} = require('./src/SessionsPerPoint_c.js')
@@ -16,9 +16,14 @@ program
     .version("1.0.0")
     .description("CLI")
 //COMMANDS - SCOPE
-//apikey missing!!!
-
 //healthcheck
+program
+    .command('healthcheck')
+    .alias('h')
+    .description("Checks Database's health")
+    .action(()=>{
+        healthcheck()
+    })
 //resetsessions
 program
     .command('resetsessions')
@@ -119,8 +124,8 @@ program
     .option('--passw <password>',"User's password")
     .option('-supd, --sessionupd', 'Add new sessions from csv file')
     .option('--source <file>', 'Source file')
-    //.option('--healthcheck')
-    //.option('--resetsessions')
+    .option('--healthcheck')
+    .option('--resetsessions')
     .description('Administrative commands')
     .alias('admin')
     .action((options)=>{
@@ -145,10 +150,15 @@ program
                 console.log('Source(--source) is required option for --sessionupd')
             }
             else{
-                //sessionupd(options.source)
-                console.log(`Username ${options.source}`)
+                sessionupd(options.source)
+                //console.log(`Username ${options.source}`)
             }
         }
+        else if(options.healthcheck){
+            healthcheck()
+        }
+        else if(options.resetsessions){
+                resetsessions()
+        }
     })
-    //------------------------
 program.parse(process.argv)

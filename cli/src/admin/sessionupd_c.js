@@ -12,25 +12,28 @@ function sessionupd (source) {
 
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-
+  
     const options = {
         hostname: 'localhost',
         port: 8765,
         path: url,
-        method: 'POST',
+        method: "POST",
         rejectUnauthorized: false,
-
         headers: {
-            'X-OBSERVATORY-AUTH': token
+            'X-OBSERVATORY-AUTH': token,
+            "Content-Type": "multipart/form-data"
+        },
+        formData : {
+            "file" : fs.createReadStream(source)
         }
-    }
+    };
 
     const req = https.request(options, res => {
         //console.log(`statusCode: ${res.statusCode}`)
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log("User: " + username + " password changed");
+                console.log(JSON.parse(d));
             }
             else {
                 console.log('Status code: ' + res.statusCode);
