@@ -4,6 +4,8 @@ import "./App.css";
 
 import MainPage from "./components/MainPage";
 import Dashboard from "./components/Dashboard";
+import SessionsPerStation from "./components/SessionsPerStation";
+import SessionsPerPoint from "./components/SessionsPerPoint";
 import Login from "./components/Login";
 
 function App() {
@@ -11,6 +13,12 @@ function App() {
     <div className="wrapper">
       <BrowserRouter>
         <Switch>
+          <Route path="/SessionsPerStation">
+            <SessionsPerStation />
+          </Route>
+          <Route path="/SessionsPerPoint">
+            <SessionsPerPoint />
+          </Route>
           <Route path="/Dashboard">
             <Dashboard />
           </Route>
@@ -25,6 +33,12 @@ function App() {
               </button>
               <button>
                 <Link to="/Dashboard">Profile</Link>
+              </button>
+              <button>
+                <Link to="/SessionsPerStation">Station Session Search</Link>
+              </button>
+              <button>
+                <Link to="/SessionsPerPoint">Point Session Search</Link>
               </button>
             </nav>
           </Route>

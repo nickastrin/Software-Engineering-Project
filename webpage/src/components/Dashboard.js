@@ -8,16 +8,23 @@ class Dashboard extends Component {
     return (
       <div>
         <h1>Dashboard Page</h1>
-        <BrowserRouter>
-          <nav>
-            <button>
-              <Link to="/Dashboard/Statistics">Statistics</Link>
-            </button>
-          </nav>
+        <nav>
+          <button>
+            <Link to="/">Return Home</Link>
+          </button>
+        </nav>
 
+        <BrowserRouter>
           <Switch>
             <Route path="/Dashboard/Statistics">
               <Statistics />
+            </Route>
+            <Route path="/">
+              <nav>
+                <button>
+                  <Link to="/Dashboard/Statistics">Statistics</Link>
+                </button>
+              </nav>
             </Route>
           </Switch>
         </BrowserRouter>

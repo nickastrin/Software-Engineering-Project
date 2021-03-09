@@ -5,10 +5,10 @@ class Statistics extends Component {
   render() {
     return (
       <div>
-        <h2>Your Statistics Page</h2>
         <button>
           <Link to="/Dashboard">Close Statistics</Link>
         </button>
+        <h2>Your Statistics Page</h2>
       </div>
     );
   }
