@@ -6,6 +6,7 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const conn = require('../Dbconnection/connection');
+const makeQuery = require('../Dbconnection/promiseQuery');
 
 function verifyBody(body){
     const schema = Joi.object({
@@ -115,27 +116,7 @@ router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
 
 });
 
-router.get('/healthcheck', (req,res) =>{
-    const conn = mysql.createConnection({
-        host: 'localhost', 
-        user:'back-end', 
-        password: 'back-end1234',
-        port: 3306,
-        connectionLimit: 5,
-        database: 'softeng'
-    });
-    conn.connect((err) =>{
-        if(err){
-            console.log('healthCheck error ' + err);
-            res.status(402).json({status: "failed"});
-            return;
-        }
-        console.log('MySql connected');
-        res.json({status: "OK"});
-    });
-});
-
-router.post('/system/sessionsupd', (req,res) =>{
+router.post('/system/sessionsupd', authenticateToken, authRole(1), (req,res) =>{
     if(req.files && req.files.file){
         let file = req.files.file;
         let csvData = file.data.toString('utf8');
@@ -190,6 +171,96 @@ router.post('/system/sessionsupd', (req,res) =>{
     else{
         console.log('no file');
         res.send('Please provide a file in the field name "file"');
+    }
+});
+
+router.get('/healthcheck', (req,res) =>{
+    const conn = mysql.createConnection({
+        host: 'localhost', 
+        user:'back-end', 
+        password: 'back-end1234',
+        port: 3306,
+        connectionLimit: 5,
+        database: 'softeng'
+    });
+    conn.connect((err) =>{
+        if(err){
+            console.log('healthCheck error ' + err);
+            res.status(402).json({status: "failed"});
+            return;
+        }
+        console.log('MySql connected');
+        res.json({status: "OK"});
+    });
+});
+
+router.post('/resetsessions', async (req,res) =>{
+    try{
+        let delete_query = `DELETE FROM charge_event`;
+
+        let delete_res = makeQuery(delete_query);
+        
+        delete_res
+        .then( d_res =>{
+            // console.log('delete_res: ');
+            // console.log(d_res);
+        })
+        .catch(err => {
+            console.log('delete_res error: ');
+            console.log(err);
+            res.status(400).json({"status":"failed"});
+            return;
+        });
+
+        let sql = `SELECT * FROM user WHERE username='admin'`;
+        const password = 'petrol4ever';
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        let admin_res = await makeQuery(sql);
+        if(admin_res.length > 0){
+            //update default user
+            
+            let update_query = `UPDATE user SET password = '${hashedPassword}' WHERE username='admin'`;
+            let upd_res = await makeQuery(update_query);
+            
+            // console.log(upd_res);
+        }
+        else{
+            //create default user
+
+            const user = {
+                email: 'admin@admin.com',
+                name: 'Administrator', 
+                password: hashedPassword,
+                country: 'Greece', 
+                city: 'Athens', 
+                street_name: 'Heroon Polytechniou', 
+                street_number: 9, 
+                postal_code: '15780', 
+                phone_number: '210-772-1000', 
+                date_of_birth: '1950-01-01',
+                points: 0, 
+                sex: 2, 
+                is_admin: 1, 
+                username: 'admin'
+            };
+            let create_query = 'INSERT INTO user SET ?';
+            conn.query(create_query, user, (err, qres) => {
+                if (err) {
+                    console.log('create_query error: ');
+                    console.log(err);
+                    res.status(400).json({"status":"failed"});
+                    return;
+                }
+                // console.log('The result is: ');
+                // console.log(qres);
+            });
+        }
+
+        res.json({"status":"OK"});
+    } catch(e){
+        console.log('resetsessions error: ' + e);
+        res.status(400).json({"status":"failed"});
     }
 });
 
