@@ -45,23 +45,23 @@ class SessionsPerEV extends Component {
       list.push(
         "Session No. " +
           (i + 1) +
-          ": Session ID: " +
+          ":\n Session ID: " +
           this.state.sessionList[i].SessionID +
-          ": Session Index: " +
+          "\n Session Index: " +
           this.state.sessionList[i].SessionIndex +
-          ", Energy Provider: " +
+          ",\n Energy Provider: " +
           this.state.sessionList[i].EnergyProvider +
-          ", Started On: " +
+          ",\n Started On: " +
           this.state.sessionList[i].StartedOn +
-          ", Finished On: " +
+          ",\n Finished On: " +
           this.state.sessionList[i].FinishedOn +
-          ", Price Policy: " +
+          ",\n Price Policy: " +
           this.state.sessionList[i].PricePolicyRef +
-          ", Cost Per kWh: " +
+          ",\n Cost Per kWh: " +
           this.state.sessionList[i].CostPerKWh +
-          " kWh, Energy Delivered: " +
+          " kWh,\n Energy Delivered: " +
           this.state.sessionList[i].ΕnergyDelivered +
-          " kWh, Total Cost: " +
+          " kWh,\n Total Cost: " +
           this.state.sessionList[i].SessionCost
       );
     }
@@ -152,11 +152,11 @@ class SessionsPerEV extends Component {
             <div>
               Session Summary:
               {
-                <ul>
+                <pre>
                   {this.sessionLoop().map((value, index) => {
                     return <li key={index}>{value}</li>;
                   })}
-                </ul>
+                </pre>
               }
             </div>
           </div>

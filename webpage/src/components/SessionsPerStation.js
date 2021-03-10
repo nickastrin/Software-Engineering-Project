@@ -46,11 +46,11 @@ class SessionsPerStation extends Component {
       list.push(
         "Session No. " +
           (i + 1) +
-          ": PointID: " +
+          ":\n PointID: " +
           this.state.sessionList[i].PointID +
-          ", Point Sessions: " +
+          ",\n Point Sessions: " +
           this.state.sessionList[i].PointSessions +
-          ", Energy Delivered: " +
+          ",\n Energy Delivered: " +
           this.state.sessionList[i].EnergyDelivered +
           " kWh"
       );
@@ -142,11 +142,11 @@ class SessionsPerStation extends Component {
             <div>
               Session Summary:
               {
-                <ul>
+                <pre>
                   {this.sessionLoop().map((value, index) => {
                     return <li key={index}>{value}</li>;
                   })}
-                </ul>
+                </pre>
               }
             </div>
           </div>

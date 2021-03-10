@@ -46,21 +46,21 @@ class SessionsPerStation extends Component {
       list.push(
         "Session No. " +
           (i + 1) +
-          ": SessionID: " +
+          ":\n SessionID: " +
           this.state.sessionList[i].SessionID +
-          ", Session Index: " +
+          ",\n Session Index: " +
           this.state.sessionList[i].SessionIndex +
-          ", Started On: " +
+          ",\n Started On: " +
           this.state.sessionList[i].StartedOn +
-          ", Finished On: " +
+          ",\n Finished On: " +
           this.state.sessionList[i].FinishedOn +
-          ", Payment: " +
+          ",\n Payment: " +
           this.state.sessionList[i].Payment +
-          ", Protocol: " +
+          ",\n Protocol: " +
           this.state.sessionList[i].Protocol +
-          ", Vehicle Type: " +
+          ",\n Vehicle Type: " +
           this.state.sessionList[i].VehicleType +
-          ", Energy Delivered: " +
+          ",\n Energy Delivered: " +
           this.state.sessionList[i].EnergyDelivered +
           " kWh"
       );
@@ -168,11 +168,11 @@ class SessionsPerStation extends Component {
             <div>
               Session Summary:
               {
-                <ul>
+                <pre>
                   {this.sessionLoop().map((value, index) => {
                     return <li key={index}>{value}</li>;
                   })}
-                </ul>
+                </pre>
               }
             </div>
           </div>
