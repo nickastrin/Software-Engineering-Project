@@ -29,6 +29,7 @@ const SessionsPerEVRouter = require('./routes/SessionsPerEV');
 const SessionsPerPointRouter = require('./routes/SessionsPerPoint');
 const SessionsPerStationRouter = require('./routes/SessionsPerStation');
 const SessionsPerProviderRouter = require('./routes/SessionsPerProvider');
+const FindStationRouter = require('./routes/FindStation');
 
 //Set up routers middleware
 app.use('/evcharge/api/login', loginRouter);
@@ -38,6 +39,7 @@ app.use('/evcharge/api/SessionsPerEV', SessionsPerEVRouter);
 app.use('/evcharge/api/SessionsPerPoint', SessionsPerPointRouter);
 app.use('/evcharge/api/SessionsPerStation', SessionsPerStationRouter);
 app.use('/evcharge/api/SessionsPerProvider', SessionsPerProviderRouter);
+app.use('/evcharge/api/FindStation', FindStationRouter);
 
 
 app.get('/', (req, res) =>{
