@@ -3,16 +3,28 @@ import React, { Component } from "react";
 import DatePicker from "react-date-picker";
 import https from "https";
 
-class SessionsPerPoint extends Component {
+class SessionsPerStation extends Component {
   constructor(props) {
     super(props);
-    this.state = { startDate: new Date(), endDate: new Date(), id: 0 };
+    this.state = {
+      startDate: new Date(),
+      endDate: new Date(),
+      stationid: 0,
+      pointid: 0,
+      chargingSessions: 0,
+      operator: "",
+      periodFrom: "",
+      periodTo: "",
+      sessionList: [],
+    };
 
     this.changeStartDate = this.changeStartDate.bind(this);
     this.changeEndDate = this.changeEndDate.bind(this);
 
     this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeStation = this.handleChangeStation.bind(this);
+    this.handleChangePoint = this.handleChangePoint.bind(this);
+    this.sessionLoop = this.sessionLoop.bind(this);
   }
 
   changeStartDate = (e) => {
@@ -27,6 +39,35 @@ class SessionsPerPoint extends Component {
     return this.state.endDate >= this.state.startDate ? 1 : 0;
   }
 
+  sessionLoop() {
+    let length = this.state.sessionList.length;
+    let list = [];
+    for (var i = 0; i < length; i++) {
+      list.push(
+        "Session No. " +
+          (i + 1) +
+          ": SessionID: " +
+          this.state.sessionList[i].SessionID +
+          ", Session Index: " +
+          this.state.sessionList[i].SessionIndex +
+          ", Started On: " +
+          this.state.sessionList[i].StartedOn +
+          ", Finished On: " +
+          this.state.sessionList[i].FinishedOn +
+          ", Payment: " +
+          this.state.sessionList[i].Payment +
+          ", Protocol: " +
+          this.state.sessionList[i].Protocol +
+          ", Vehicle Type: " +
+          this.state.sessionList[i].VehicleType +
+          ", Energy Delivered: " +
+          this.state.sessionList[i].EnergyDelivered +
+          " kWh"
+      );
+    }
+    return list;
+  }
+
   handleClick(e) {
     e.preventDefault(e);
     // Simple GET request using axios
@@ -38,7 +79,9 @@ class SessionsPerPoint extends Component {
 
     let url =
       "/SessionsPerPoint/" +
-      this.state.id +
+      this.state.stationid +
+      "-" +
+      this.state.pointid +
       "/" +
       startYear +
       startMonth +
@@ -56,26 +99,47 @@ class SessionsPerPoint extends Component {
         }),
       })
       .then((response) => {
-        console.log(response.data);
+        this.setState({
+          chargingSessions: response.data.NumberOfChargingSessions,
+        });
+        this.setState({ operator: response.data.PointOperator });
+        this.setState({ periodFrom: response.data.PeriodFrom });
+        this.setState({ periodTo: response.data.PeriodTo });
+        this.setState({ sessionList: response.data.ChargingSessionsList });
       });
   }
 
-  handleChange(e) {
-    this.setState({ id: e.target.value });
+  handleChangeStation(e) {
+    this.setState({ stationid: e.target.value });
+  }
+
+  handleChangePoint(e) {
+    this.setState({ pointid: e.target.value });
   }
 
   render() {
     return (
       <div>
         <h1>Point Session Screen</h1>
-        <h2>Choose Point ID</h2>
+        <h2>Choose Station ID</h2>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            StationID:
+            <input
+              type="text"
+              stationid={this.state.stationid}
+              onChange={this.handleChangeStation}
+            />
+          </label>
+        </form>
+        <h4>Choose Point ID</h4>
         <form onSubmit={this.handleSubmit}>
           <label>
             PointID:
             <input
               type="text"
-              id={this.state.id}
-              onChange={this.handleChange}
+              pointid={this.state.pointid}
+              onChange={this.handleChangePoint}
             />
           </label>
         </form>
@@ -91,9 +155,33 @@ class SessionsPerPoint extends Component {
         ) : (
           <h4>Invalid</h4>
         )}
+        {this.state.operator !== "" ? (
+          <div>
+            <h5>Search Results:</h5>
+            <p>
+              Point: {this.state.stationid} - {this.state.pointid}
+            </p>
+            <p>Number of Charging Sessions: {this.state.chargingSessions}</p>
+            <p>Operator Name: {this.state.operator}</p>
+            <p>Period From: {this.state.periodFrom}</p>
+            <p>Period To: {this.state.periodTo}</p>
+            <div>
+              Session Summary:
+              {
+                <ul>
+                  {this.sessionLoop().map((value, index) => {
+                    return <li key={index}>{value}</li>;
+                  })}
+                </ul>
+              }
+            </div>
+          </div>
+        ) : (
+          <p></p>
+        )}
       </div>
     );
   }
 }
 
-export default SessionsPerPoint;
+export default SessionsPerStation;

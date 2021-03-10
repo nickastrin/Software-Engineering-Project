@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import "./App.css";
-
 import MainPage from "./components/MainPage";
 import Dashboard from "./components/Dashboard";
 import SessionsPerStation from "./components/SessionsPerStation";
 import SessionsPerPoint from "./components/SessionsPerPoint";
+import SessionsPerEV from "./components/SessionsPerEV";
+import SessionsPerProvider from "./components/SessionsPerProvider";
 import Login from "./components/Login";
 
 function App() {
@@ -18,6 +19,12 @@ function App() {
           </Route>
           <Route path="/SessionsPerPoint">
             <SessionsPerPoint />
+          </Route>
+          <Route path="/SessionsPerProvider">
+            <SessionsPerProvider />
+          </Route>
+          <Route path="/SessionsPerEV">
+            <SessionsPerEV />
           </Route>
           <Route path="/Dashboard">
             <Dashboard />
@@ -39,6 +46,12 @@ function App() {
               </button>
               <button>
                 <Link to="/SessionsPerPoint">Point Session Search</Link>
+              </button>
+              <button>
+                <Link to="/SessionsPerEV">EV Session Search</Link>
+              </button>
+              <button>
+                <Link to="/SessionsPerProvider">Provider Session Search</Link>
               </button>
             </nav>
           </Route>

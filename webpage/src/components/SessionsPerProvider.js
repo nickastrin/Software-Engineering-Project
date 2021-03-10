@@ -3,20 +3,15 @@ import React, { Component } from "react";
 import DatePicker from "react-date-picker";
 import https from "https";
 
-class SessionsPerStation extends Component {
+class SessionsPerProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
       startDate: new Date(),
       endDate: new Date(),
-      stationid: 0,
-      activePoints: 0,
-      chargingSessions: 0,
-      operator: "",
-      periodFrom: "",
-      periodTo: "",
+      providerid: 0,
+      providerName: "",
       sessionList: [],
-      totalDelivered: 0,
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -46,13 +41,24 @@ class SessionsPerStation extends Component {
       list.push(
         "Session No. " +
           (i + 1) +
-          ": PointID: " +
-          this.state.sessionList[i].PointID +
-          ", Point Sessions: " +
-          this.state.sessionList[i].PointSessions +
-          ", Energy Delivered: " +
-          this.state.sessionList[i].EnergyDelivered +
-          " kWh"
+          ", Station Sessions: " +
+          this.state.sessionList[i].StationID +
+          ": Session ID: " +
+          this.state.sessionList[i].SessionID +
+          ", Vehicle ID: " +
+          this.state.sessionList[i].VehicleID +
+          ", Started On: " +
+          this.state.sessionList[i].StartedOn +
+          ", Finished On: " +
+          this.state.sessionList[i].FinishedOn +
+          ", Price Policy: " +
+          this.state.sessionList[i].PricePolicyRef +
+          ", Cost Per kWh: " +
+          this.state.sessionList[i].CostPerKWh +
+          " kWh, Energy Delivered: " +
+          this.state.sessionList[i].ΕnergyDelivered +
+          " kWh, Total Cost: " +
+          this.state.sessionList[i].TotalCost
       );
     }
     return list;
@@ -68,8 +74,8 @@ class SessionsPerStation extends Component {
     let [endDay, endMonth, endYear] = tmpEnd.split("/");
 
     let url =
-      "/SessionsPerStation/" +
-      this.state.stationid +
+      "/SessionsPerProvider/" +
+      this.state.providerid +
       "/" +
       startYear +
       startMonth +
@@ -87,33 +93,27 @@ class SessionsPerStation extends Component {
         }),
       })
       .then((response) => {
-        this.setState({ activePoints: response.data.NumberOfActivePoints });
-        this.setState({
-          chargingSessions: response.data.NumberOfChargingSessions,
-        });
-        this.setState({ operator: response.data.Operator });
-        this.setState({ periodFrom: response.data.PeriodFrom });
-        this.setState({ periodTo: response.data.PeriodTo });
-        this.setState({ sessionList: response.data.SessionsSummaryList });
-        this.setState({ totalDelivered: response.data.TotalEnergyDelivered });
+        console.log(response.data);
+        this.setState({ providerName: response.data.ProviderName });
+        this.setState({ sessionList: response.data.Sessions });
       });
   }
 
   handleChange(e) {
-    this.setState({ stationid: e.target.value });
+    this.setState({ providerid: e.target.value });
   }
 
   render() {
     return (
       <div>
-        <h1>Station Session Screen</h1>
-        <h2>Choose Station ID</h2>
+        <h1>Provider Session Screen</h1>
+        <h2>Specify Provider ID</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
-            StationID:
+            ProviderID:
             <input
               type="text"
-              stationid={this.state.stationid}
+              providerid={this.state.providerid}
               onChange={this.handleChange}
             />
           </label>
@@ -130,15 +130,10 @@ class SessionsPerStation extends Component {
         ) : (
           <h4>Invalid</h4>
         )}
-        {this.state.operator !== "" ? (
+        {this.state.providerName !== "" ? (
           <div>
             <h5>Search Results:</h5>
-            <p>Active Points: {this.state.activePoints}</p>
-            <p>Number of Charging Sessions: {this.state.chargingSessions}</p>
-            <p>Operator Name: {this.state.operator}</p>
-            <p>Period From: {this.state.periodFrom}</p>
-            <p>Period To: {this.state.periodTo}</p>
-            <p>Total Energy Delivered: {this.state.totalDelivered}</p>
+            <p>Provider Name: {this.state.providerName}</p>
             <div>
               Session Summary:
               {
@@ -158,4 +153,4 @@ class SessionsPerStation extends Component {
   }
 }
 
-export default SessionsPerStation;
+export default SessionsPerProvider;

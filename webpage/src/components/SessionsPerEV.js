@@ -3,20 +3,19 @@ import React, { Component } from "react";
 import DatePicker from "react-date-picker";
 import https from "https";
 
-class SessionsPerStation extends Component {
+class SessionsPerEV extends Component {
   constructor(props) {
     super(props);
     this.state = {
       startDate: new Date(),
       endDate: new Date(),
-      stationid: 0,
-      activePoints: 0,
-      chargingSessions: 0,
-      operator: "",
+      licenseid: 0,
+      sessionNumber: 0,
+      sessionList: [],
+      visitedPoints: 0,
+      totalEnergy: 0,
       periodFrom: "",
       periodTo: "",
-      sessionList: [],
-      totalDelivered: 0,
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -46,13 +45,24 @@ class SessionsPerStation extends Component {
       list.push(
         "Session No. " +
           (i + 1) +
-          ": PointID: " +
-          this.state.sessionList[i].PointID +
-          ", Point Sessions: " +
-          this.state.sessionList[i].PointSessions +
-          ", Energy Delivered: " +
-          this.state.sessionList[i].EnergyDelivered +
-          " kWh"
+          ": Session ID: " +
+          this.state.sessionList[i].SessionID +
+          ": Session Index: " +
+          this.state.sessionList[i].SessionIndex +
+          ", Energy Provider: " +
+          this.state.sessionList[i].EnergyProvider +
+          ", Started On: " +
+          this.state.sessionList[i].StartedOn +
+          ", Finished On: " +
+          this.state.sessionList[i].FinishedOn +
+          ", Price Policy: " +
+          this.state.sessionList[i].PricePolicyRef +
+          ", Cost Per kWh: " +
+          this.state.sessionList[i].CostPerKWh +
+          " kWh, Energy Delivered: " +
+          this.state.sessionList[i].ΕnergyDelivered +
+          " kWh, Total Cost: " +
+          this.state.sessionList[i].SessionCost
       );
     }
     return list;
@@ -68,8 +78,8 @@ class SessionsPerStation extends Component {
     let [endDay, endMonth, endYear] = tmpEnd.split("/");
 
     let url =
-      "/SessionsPerStation/" +
-      this.state.stationid +
+      "/SessionsPerEV/" +
+      this.state.licenseid +
       "/" +
       startYear +
       startMonth +
@@ -87,33 +97,34 @@ class SessionsPerStation extends Component {
         }),
       })
       .then((response) => {
-        this.setState({ activePoints: response.data.NumberOfActivePoints });
         this.setState({
-          chargingSessions: response.data.NumberOfChargingSessions,
+          sessionNumber: response.data.NumberOfVehicleChargingSessions,
         });
-        this.setState({ operator: response.data.Operator });
+        this.setState({
+          sessionList: response.data.VehicleChargingSessionsList,
+        });
+        this.setState({ visitedPoints: response.data.NumberOfVisitedPoints });
         this.setState({ periodFrom: response.data.PeriodFrom });
         this.setState({ periodTo: response.data.PeriodTo });
-        this.setState({ sessionList: response.data.SessionsSummaryList });
-        this.setState({ totalDelivered: response.data.TotalEnergyDelivered });
+        this.setState({ totalEnergy: response.data.TotalEnergyConsumed });
       });
   }
 
   handleChange(e) {
-    this.setState({ stationid: e.target.value });
+    this.setState({ licenseid: e.target.value });
   }
 
   render() {
     return (
       <div>
-        <h1>Station Session Screen</h1>
-        <h2>Choose Station ID</h2>
+        <h1>EV Session Screen</h1>
+        <h2>Specify License Plate</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
-            StationID:
+            License Plate:
             <input
               type="text"
-              stationid={this.state.stationid}
+              stationid={this.state.licenseid}
               onChange={this.handleChange}
             />
           </label>
@@ -130,15 +141,14 @@ class SessionsPerStation extends Component {
         ) : (
           <h4>Invalid</h4>
         )}
-        {this.state.operator !== "" ? (
+        {this.state.periodFrom !== "" ? (
           <div>
             <h5>Search Results:</h5>
-            <p>Active Points: {this.state.activePoints}</p>
-            <p>Number of Charging Sessions: {this.state.chargingSessions}</p>
-            <p>Operator Name: {this.state.operator}</p>
+            <p>No. of Charging Sessions: {this.state.sessionNumber}</p>
+            <p>No. of Visited Points: {this.state.visitedPoints}</p>
             <p>Period From: {this.state.periodFrom}</p>
             <p>Period To: {this.state.periodTo}</p>
-            <p>Total Energy Delivered: {this.state.totalDelivered}</p>
+            <p>Total Energy Consumed: {this.state.totalEnergy}</p>
             <div>
               Session Summary:
               {
@@ -158,4 +168,4 @@ class SessionsPerStation extends Component {
   }
 }
 
-export default SessionsPerStation;
+export default SessionsPerEV;
