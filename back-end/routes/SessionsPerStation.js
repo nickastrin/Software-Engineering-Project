@@ -82,7 +82,7 @@ router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,re
                         PointID: element.point_id,
                         PointSessions: 1,
                         EnergyDelivered: kwh,
-                        Events: [element.event_id]
+                        // Events: [element.event_id]
                     });
                 }
                 else{
@@ -92,7 +92,7 @@ router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,re
                             found_point = true;
                             ses_elem.PointSessions++;
                             ses_elem.EnergyDelivered += kwh;
-                            ses_elem.Events.push(element.event_id);
+                            // ses_elem.Events.push(element.event_id);
                         }
                     });
 
@@ -101,7 +101,7 @@ router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,re
                             PointID: element.point_id,
                             PointSessions: 1,
                             EnergyDelivered: kwh,
-                            Events: [element.event_id]
+                            // Events: [element.event_id]
                         });
                     }
                 }
