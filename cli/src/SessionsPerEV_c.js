@@ -2,6 +2,12 @@ const https = require('https');
 const fs = require('fs');
 
 function sessionsPerEV (evid, from, to, format) {
+
+    if(format != 'csv' && format != 'json') {
+        console.log('Invalid format option. Supported options: json csv');
+        process.exit();
+    }
+
     const url = '/evcharge/api/SessionsPerEV/' + evid + '/' + from + '/' + to + '?format=' + format;
     const path = "./softeng20bAPI.token";
     

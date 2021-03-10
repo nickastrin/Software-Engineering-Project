@@ -1,8 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 
-function usermod (username, password) {
-    const url = '/evcharge/api/admin/usermod/' + username + '/' + password ;
+function users (username) {
+    const url = '/evcharge/api/admin/users/' + username;
     const path = "./softeng20bAPI.token";
     
     if(!fs.existsSync(path)) {
@@ -10,14 +10,11 @@ function usermod (username, password) {
         process.exit();
     }
 
-    const raw = fs.readFileSync(path);
-    const token = JSON.parse(raw).token;
-
     const options = {
         hostname: 'localhost',
         port: 8765,
         path: url,
-        method: 'POST',
+        method: 'GET',
         rejectUnauthorized: false,
 
         headers: {
@@ -30,7 +27,7 @@ function usermod (username, password) {
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log("User's: " + username + " password changed");
+                console.log(d);
             }
             else {
                 console.log('Status code: ' + res.statusCode);

@@ -2,6 +2,12 @@ const https = require('https');
 const fs = require('fs');
 
 function sessionsPerStation (stationid, from, to, format) {
+    
+    if(format != 'csv' && format != 'json') {
+        console.log('Invalid format option. Supported options: json csv');
+        process.exit();
+    }
+    
     const url = '/evcharge/api/SessionsPerStation/' + stationid + '/' + from + '/' + to + '?format=' + format;
     const path = './softeng20bAPI.token';
 
@@ -48,8 +54,9 @@ Accepted formats are "json" and "csv".`)
             else if(res.statusCode == 401) {
                 console.log('User authentication failed.');
                 if(fs.existsSync(path)) {
-                    fs.unlink(path);
-                    console.log('You have been logged out. Please log in again');
+                    fs.unlink(path, () => {
+                        console.log('You have been logged out. Please log in again');
+                    });   
                 }
             }
             else if(res.statusCode == 402) {

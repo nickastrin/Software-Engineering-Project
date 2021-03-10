@@ -30,7 +30,7 @@ function usermod (username, password) {
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log("User's: " + username + " password changed");
+                console.log("User: " + username + " password changed");
             }
             else {
                 console.log('Status code: ' + res.statusCode);

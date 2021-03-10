@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const program = require("commander")
 
-//const { healthcheck } = require("./healthcheck_c.js")
-const { resetsessions } = require("./src/resetsessions_c.js")
+const { healthcheck } = require("./src/admin/healthcheck_c.js")
+const { resetsessions } = require("./src/admin/resetsessions_c.js")
 const { login } = require("./src/login_c.js")
 const { logout } = require("./src/logout_c.js")
 const {sessionsPerPoint} = require('./src/SessionsPerPoint_c.js')
@@ -11,14 +11,19 @@ const {sessionsPerEV} = require('./src/SessionsPerEV_c.js')
 const {sessionsPerProvider} = require('./src/SessionsPerProvider_c.js')
 const {usermod} = require('./src/admin/usermod_c.js')
 const {users} = require('./src/admin/users_c.js')
-const {sessionupd} = require('./src/admin/sessionupd_c.js')
+const {sessionsupd} = require('./src/admin/sessionsupd_c.js')
 program
     .version("1.0.0")
     .description("CLI")
 //COMMANDS - SCOPE
-//apikey missing!!!
-
 //healthcheck
+program
+    .command('healthcheck')
+    .alias('h')
+    .description("Checks Database's health")
+    .action(()=>{
+        healthcheck()
+    })
 //resetsessions
 program
     .command('resetsessions')
@@ -117,10 +122,10 @@ program
     .option('--users', "Show User's state")
     .option('--username <username>', "User's username")
     .option('--passw <password>',"User's password")
-    .option('-supd, --sessionupd', 'Add new sessions from csv file')
+    .option('-supd, --sessionsupd', 'Add new sessions from csv file')
     .option('--source <file>', 'Source file')
-    //.option('--healthcheck')
-    //.option('--resetsessions')
+    .option('--healthcheck')
+    .option('--resetsessions')
     .description('Administrative commands')
     .alias('admin')
     .action((options)=>{
@@ -140,15 +145,20 @@ program
                 users(options.username, options.passw)
             }
         }
-        else if(options.sessionupd){
+        else if(options.sessionsupd){
             if(options.source===undefined) {
-                console.log('Source(--source) is required option for --sessionupd')
+                console.log('Source(--source) is required option for --sessionsupd')
             }
             else{
-                //sessionupd(options.source)
-                console.log(`Username ${options.source}`)
+                sessionsupd(options.source)
+                //console.log(`Username ${options.source}`)
             }
         }
+        else if(options.healthcheck){
+            healthcheck()
+        }
+        else if(options.resetsessions){
+                resetsessions()
+        }
     })
-    //------------------------
 program.parse(process.argv)

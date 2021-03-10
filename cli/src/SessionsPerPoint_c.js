@@ -3,6 +3,12 @@ const fs = require('fs');
 //const { parse } = require('json2csv');
 
 function sessionsPerPoint (pointid, from, to, format) {
+    
+    if(format != 'csv' && format != 'json') {
+        console.log('Invalid format option. Supported options: json csv');
+        process.exit();
+    }
+    
     const url = '/evcharge/api/SessionsPerPoint/' + pointid + '/' + from + '/' + to + '?format=' + format;
     const path = "./softeng20bAPI.token";
     
