@@ -32,7 +32,7 @@ router.get('/:city', async (req,res) => {
                 StationName: element.station_name,
                 ChargeRate: element.charge_rate,
                 Operator: "unknown",
-                Country: element.Country,
+                Country: element.country,
                 City: element.city,
                 Street: element.street_name + " " + element.street_number,
                 PostalCode: element.postal_code
