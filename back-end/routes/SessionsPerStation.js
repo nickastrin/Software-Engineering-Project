@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const conn = require('../Dbconnection/connection');
+const {conn} = require('../Dbconnection/connection');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const sendCsv = require('../csvParser/csvResponse');
 const {currentTimestamp, twodeciPointsAcc} = require('../csvParser/timestamp');
