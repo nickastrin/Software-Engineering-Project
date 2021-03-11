@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const conn = require('../Dbconnection/connection');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');
@@ -37,6 +36,10 @@ async function getData(providerId, from_date, to_date, req, res) {
         let provider_query = `SELECT name FROM elec_supplier WHERE supplier_id = ${providerId}`;
 
         let prov_resp = await makeQuery(provider_query);
+        if(prov_resp.length == 0){
+            res.status(402).send('No such provider found');
+            return;
+        }
         let provider_name = JSON.parse(JSON.stringify(prov_resp))[0].name;
 
         let sql = `SELECT * FROM station WHERE supplier_id='${providerId}'`;

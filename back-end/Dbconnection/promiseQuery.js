@@ -1,4 +1,4 @@
-const conn = require('../Dbconnection/connection');
+const {conn} = require('../Dbconnection/connection');
 
 const makeQuery = (sql_query) => {
     return new Promise((resolve, reject) =>{

@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const {checkToken, addToken, deleteToken, clearTokens} = require('../Authentication/tokens')
-const conn = require('../Dbconnection/connection');
 const makeQuery = require('../Dbconnection/promiseQuery');
 
 router.post('/', async (req, res) => {

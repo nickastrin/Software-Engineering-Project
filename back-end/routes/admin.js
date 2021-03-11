@@ -5,7 +5,7 @@ const mysql = require('mysql');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
-const conn = require('../Dbconnection/connection');
+const {conn_settings, conn} = require('../Dbconnection/connection');
 const makeQuery = require('../Dbconnection/promiseQuery');
 
 function verifyBody(body){
@@ -175,15 +175,8 @@ router.post('/system/sessionsupd', authenticateToken, authRole(1), (req,res) =>{
 });
 
 router.get('/healthcheck', (req,res) =>{
-    const conn = mysql.createConnection({
-        host: 'localhost', 
-        user:'back-end', 
-        password: 'back-end1234',
-        port: 3306,
-        connectionLimit: 5,
-        database: 'softeng'
-    });
-    conn.connect((err) =>{
+    const health_conn =  mysql.createConnection(conn_settings);
+    health_conn.connect((err) =>{
         if(err){
             console.log('healthCheck error ' + err);
             res.status(402).json({status: "failed"});
