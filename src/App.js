@@ -8,6 +8,7 @@ import SessionsPerPoint from "./components/SessionsPerPoint";
 import SessionsPerEV from "./components/SessionsPerEV";
 import SessionsPerProvider from "./components/SessionsPerProvider";
 import FindStation from "./components/FindStation";
+import Companies from "./components/Companies";
 import Login from "./components/Login";
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/FindStation">
             <FindStation />
+          </Route>
+          <Route path="/Companies">
+            <Companies />
           </Route>
           <Route path="/Dashboard">
             <Dashboard />
@@ -59,6 +63,9 @@ function App() {
               </button>
               <button>
                 <Link to="/FindStation">Find Station</Link>
+              </button>
+              <button>
+                <Link to="/Companies">Find Manufacturer</Link>
               </button>
             </nav>
           </Route>
