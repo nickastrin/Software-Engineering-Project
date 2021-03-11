@@ -1,25 +1,42 @@
 const https = require('https');
 const fs = require('fs');
+//const { parse } = require('json2csv');
 
-function sessionsPerStation (stationid, from, to, format) {
+function sessionsPerPoint (pointid, from, to, format) {
     
+    const date = new RegExp("^([0-9]{8})$");
+    const point = new RegExp("^([0-9]+-[0-9]+)$");
+
+    if(!point.test(pointid)) {
+        console.log('Invalid --point value. Value must have form StationID-PointID');
+        process.exit();
+    }
+
+    if(!date.test(from)) {
+        console.log('Invalid --datefrom value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
+    if(!date.test(to)) {
+        console.log('Invalid --datet value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
     if(format != 'csv' && format != 'json') {
         console.log('Invalid format option. Supported options: json csv');
         process.exit();
     }
-    
-    const url = '/evcharge/api/SessionsPerStation/' + stationid + '/' + from + '/' + to + '?format=' + format;
-    const path = './softeng20bAPI.token';
 
+    const url = '/evcharge/api/SessionsPerPoint/' + pointid + '/' + from + '/' + to + '?format=' + format;
+    const path = "./softeng20bAPI.token";
+    
     if(!fs.existsSync(path)) {
         console.log('User authentication required. Please sign in');
         process.exit();
     }
 
-    //------------------------------------------------
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-    //------------------------------------
 
     const options = {
         hostname: 'localhost',
@@ -33,9 +50,7 @@ function sessionsPerStation (stationid, from, to, format) {
         }
     }
 
-    const req = https.request(options, res => {
-        //console.log(`statusCode: ${res.statusCode}`)
-    
+    const req = https.request(options, res => {  
         res.on('data', d=> {
             if(res.statusCode == 200) {
                 if(format==='json'){
@@ -56,7 +71,7 @@ Accepted formats are "json" and "csv".`)
                 if(fs.existsSync(path)) {
                     fs.unlink(path, () => {
                         console.log('You have been logged out. Please log in again');
-                    });   
+                    });
                 }
             }
             else if(res.statusCode == 402) {
@@ -76,4 +91,4 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
-exports.sessionsPerStation = sessionsPerStation;
+exports.sessionsPerPoint = sessionsPerPoint;

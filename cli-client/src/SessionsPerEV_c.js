@@ -3,6 +3,24 @@ const fs = require('fs');
 
 function sessionsPerEV (evid, from, to, format) {
 
+    const date = new RegExp("^([0-9]{8})$");
+    const plate = new RegExp("^([A-Z]{3}-[0-9]{4})$");
+
+    if(!plate.test(evid)) {
+        console.log('Invalid --ev value. Value must have form ABC-1234');
+        process.exit();
+    }
+
+    if(!date.test(from)) {
+        console.log('Invalid --datefrom value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
+    if(!date.test(to)) {
+        console.log('Invalid --datet value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
     if(format != 'csv' && format != 'json') {
         console.log('Invalid format option. Supported options: json csv');
         process.exit();
@@ -52,8 +70,9 @@ Accepted formats are "json" and "csv".`)
             else if(res.statusCode == 401) {
                 console.log('User authentication failed.');
                 if(fs.existsSync(path)) {
-                    fs.unlink(path);
-                    console.log('You have been logged out. Please log in again');
+                    fs.unlink(path, () => {
+                        console.log('You have been logged out. Please log in again');
+                    });
                 }
             }
             else if(res.statusCode == 402) {
