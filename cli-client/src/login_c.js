@@ -8,7 +8,6 @@ const options = {
     path: '/evcharge/api/login',
     method: 'POST',
     rejectUnauthorized: false,
-
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     }

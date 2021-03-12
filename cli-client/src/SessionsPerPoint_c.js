@@ -2,8 +2,8 @@ const https = require('https');
 const fs = require('fs');
 //const { parse } = require('json2csv');
 
-function sessionsPerPoint (pointid, from, to, format) {
-    
+function createOptions(pointid, from, to, format){
+        
     const date = new RegExp("^([0-9]{8})$");
     const point = new RegExp("^([0-9]+-[0-9]+)$");
 
@@ -49,6 +49,11 @@ function sessionsPerPoint (pointid, from, to, format) {
             'X-OBSERVATORY-AUTH': token
         }
     }
+    return options
+}
+
+function sessionsPerPoint (pointid, from, to, format) {
+    const options = createOptions(pointid, from, to, format)
 
     const req = https.request(options, res => {  
         res.on('data', d=> {
@@ -91,4 +96,5 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
+exports.createOptions = createOptions;
 exports.sessionsPerPoint = sessionsPerPoint;
