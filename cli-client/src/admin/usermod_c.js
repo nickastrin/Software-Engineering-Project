@@ -1,8 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionupd (source) {
-    const url = '/evcharge/api/admin/system/sessionupd';
+function usermod (username, password) {
+    const url = '/evcharge/api/admin/usermod/' + username + '/' + password ;
     const path = "./softeng20bAPI.token";
     
     if(!fs.existsSync(path)) {
@@ -12,28 +12,25 @@ function sessionupd (source) {
 
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-  
+
     const options = {
         hostname: 'localhost',
         port: 8765,
         path: url,
-        method: "POST",
+        method: 'POST',
         rejectUnauthorized: false,
+
         headers: {
-            'X-OBSERVATORY-AUTH': token,
-            "Content-Type": "multipart/form-data"
-        },
-        formData : {
-            "file" : fs.createReadStream(source)
+            'X-OBSERVATORY-AUTH': token
         }
-    };
+    }
 
     const req = https.request(options, res => {
         //console.log(`statusCode: ${res.statusCode}`)
     
         res.on('data', d=> {
             if(res.statusCode == 200) {
-                console.log(JSON.parse(d));
+                console.log("User's: " + username + " password changed");
             }
             else {
                 console.log('Status code: ' + res.statusCode);
@@ -49,4 +46,4 @@ function sessionupd (source) {
     req.end();
 }
 
-exports.sessionupd = sessionupd;
+exports.usermod = usermod;

@@ -6,7 +6,7 @@ function healthcheck () {
     const options = {
         hostname: 'localhost',
         port: 8765,
-        path: '/evcharge/api/healthcheck',
+        path: '/evcharge/api/admin/healthcheck',
         method: 'GET',
         rejectUnauthorized: false
     }
@@ -15,15 +15,8 @@ function healthcheck () {
         //console.log(`statusCode: ${res.statusCode}`)
     
         res.on('data', d=> {
-            if(d.status == 'OK') {
-                console.log('Database is connected and healthy.');
-            }
-            else if (d.status = 'failed') {
-                console.log('Database is not connected. Please try again');
-            }
-            else {
-                console.log('Something went wrong: ' + d);
-            }
+            //console.log(res.statusCode);
+            console.log(JSON.parse(d));
         })
     })
     req.on('error', error => {

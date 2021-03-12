@@ -2,8 +2,8 @@
   "name": "ev_group71",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "bin": "./index.js",
+  "main": "ev_group71.js",
+  "bin": "./ev_group71.js",
   "preferGlobal": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,7 @@
     "commander": "^7.1.0",
     "csv": "^5.3.2",
     "esm": "^3.2.25",
+    "form-data": "^4.0.0",
     "https": "^1.0.0",
     "inquirer": "^7.3.3",
     "json2csv": "^5.0.6"

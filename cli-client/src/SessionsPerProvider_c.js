@@ -1,19 +1,42 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionsPerStation (stationid, from, to, format) {
-    const url = '/evcharge/api/SessionsPerStation/' + stationid + '/' + from + '/' + to + '?format=' + format;
-    const path = './softeng20bAPI.token';
+function sessionsPerProvider (providerid, from, to, format) {
+    
+    const date = new RegExp("^([0-9]{8})$");
+    const provider = new RegExp("^([0-9]+)$");
 
+    if(!provider.test(providerid)) {
+        console.log('Invalid --provider value. Value must be an integer');
+        process.exit();
+    }
+
+    if(!date.test(from)) {
+        console.log('Invalid --datefrom value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
+    if(!date.test(to)) {
+        console.log('Invalid --datet value. Value must have form YYYYMMDD');
+        process.exit();
+    }
+
+    if(format != 'csv' && format != 'json') {
+        console.log('Invalid format option. Supported options: json csv');
+        process.exit();
+    }
+
+    const url = '/evcharge/api/SessionsPerProvider/' + providerid + '/' + from + '/' + to + '?format=' + format;
+    const path = "./softeng20bAPI.token";
+    
     if(!fs.existsSync(path)) {
         console.log('User authentication required. Please sign in');
         process.exit();
     }
 
-    //------------------------------------------------
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-    //------------------------------------
+
 
     const options = {
         hostname: 'localhost',
@@ -48,8 +71,9 @@ Accepted formats are "json" and "csv".`)
             else if(res.statusCode == 401) {
                 console.log('User authentication failed.');
                 if(fs.existsSync(path)) {
-                    fs.unlink(path);
-                    console.log('You have been logged out. Please log in again');
+                    fs.unlink(path, () => {
+                        console.log('You have been logged out. Please log in again');
+                    });
                 }
             }
             else if(res.statusCode == 402) {
@@ -69,4 +93,4 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
-exports.sessionsPerStation = sessionsPerStation;
+exports.sessionsPerProvider = sessionsPerProvider;

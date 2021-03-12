@@ -11,7 +11,7 @@ const {sessionsPerEV} = require('./src/SessionsPerEV_c.js')
 const {sessionsPerProvider} = require('./src/SessionsPerProvider_c.js')
 const {usermod} = require('./src/admin/usermod_c.js')
 const {users} = require('./src/admin/users_c.js')
-const {sessionupd} = require('./src/admin/sessionupd_c.js')
+const {sessionsupd} = require('./src/admin/sessionsupd_c.js')
 program
     .version("1.0.0")
     .description("CLI")
@@ -122,7 +122,7 @@ program
     .option('--users', "Show User's state")
     .option('--username <username>', "User's username")
     .option('--passw <password>',"User's password")
-    .option('-supd, --sessionupd', 'Add new sessions from csv file')
+    .option('-supd, --sessionsupd', 'Add new sessions from csv file')
     .option('--source <file>', 'Source file')
     .option('--healthcheck')
     .option('--resetsessions')
@@ -145,12 +145,12 @@ program
                 users(options.username, options.passw)
             }
         }
-        else if(options.sessionupd){
+        else if(options.sessionsupd){
             if(options.source===undefined) {
-                console.log('Source(--source) is required option for --sessionupd')
+                console.log('Source(--source) is required option for --sessionsupd')
             }
             else{
-                sessionupd(options.source)
+                sessionsupd(options.source)
                 //console.log(`Username ${options.source}`)
             }
         }

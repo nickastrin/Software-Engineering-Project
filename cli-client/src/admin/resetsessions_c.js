@@ -6,7 +6,7 @@ function resetsessions () {
     const options = {
         hostname: 'localhost',
         port: 8765,
-        path: '/evcharge/api/resetsessions',
+        path: '/evcharge/api/admin/resetsessions',
         method: 'POST',
         rejectUnauthorized: false
     }
@@ -15,14 +15,11 @@ function resetsessions () {
         //console.log(`statusCode: ${res.statusCode}`)
     
         res.on('data', d=> {
-            if(d.status == 'OK') {
-                console.log('Successfully reset event sessions and admin account');
-            }
-            else if (d.status = 'failed') {
-                console.log('Resetting failed. Please try again');
+            if(res.statusCode == 200) {
+                console.log(JSON.parse(d));
             }
             else {
-                console.log('Something went wrong: ' + d);
+                console.log('Something went wrong: \n' + JSON.parse(d));
             }
         })
     })
