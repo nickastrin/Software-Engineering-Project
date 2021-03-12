@@ -1,8 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionsPerProvider (providerid, from, to, format) {
-    
+function createOptions(providerid, from, to, format){
     const date = new RegExp("^([0-9]{8})$");
     const provider = new RegExp("^([0-9]+)$");
 
@@ -50,6 +49,12 @@ function sessionsPerProvider (providerid, from, to, format) {
         }
     }
 
+}
+
+function sessionsPerProvider (providerid, from, to, format) {
+
+    const options = createOptions(providerid, from, to, format)
+
     const req = https.request(options, res => {
         //console.log(`statusCode: ${res.statusCode}`)
     
@@ -93,4 +98,5 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
+exports.createOptionsProvider = createOptions;
 exports.sessionsPerProvider = sessionsPerProvider;

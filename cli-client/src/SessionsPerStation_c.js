@@ -1,8 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionsPerStation (stationid, from, to, format) {
-    
+function createOptions(stationid, from, to, format){
     const date = new RegExp("^([0-9]{8})$");
     const station = new RegExp("^([0-9]+)$");
 
@@ -34,10 +33,8 @@ function sessionsPerStation (stationid, from, to, format) {
         process.exit();
     }
 
-    //------------------------------------------------
     const raw = fs.readFileSync(path);
     const token = JSON.parse(raw).token;
-    //------------------------------------
 
     const options = {
         hostname: 'localhost',
@@ -50,6 +47,12 @@ function sessionsPerStation (stationid, from, to, format) {
             'X-OBSERVATORY-AUTH': token
         }
     }
+    return options
+}
+
+function sessionsPerStation (stationid, from, to, format) {
+    
+    const options = createOptions(stationid, from, to, format)
 
     const req = https.request(options, res => {
         //console.log(`statusCode: ${res.statusCode}`)
@@ -94,4 +97,5 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
+exports.createOptionsStation = createOptions;
 exports.sessionsPerStation = sessionsPerStation;

@@ -96,5 +96,5 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
-exports.createOptions = createOptions;
+exports.createOptionsPoint = createOptions;
 exports.sessionsPerPoint = sessionsPerPoint;
