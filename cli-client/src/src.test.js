@@ -2,6 +2,7 @@ const fs = require('fs');
 const {createOptionsPoint } = require('./SessionsPerPoint_c.js')
 const {createOptionsProvider } = require('./SessionsPerProvider_c.js')
 const {createOptionsStation } = require('./SessionsPerStation_c.js')
+const {createOptionsEV } = require('./SessionsPerEV_c.js')
 /*
 //save old token
 const path = "./softeng20bAPI.token";
@@ -66,6 +67,26 @@ test('options for SessionsPerStation GET request', ()=>{
         hostname: 'localhost',
         port: 8765,
         path: "/evcharge/api/SessionsPerStation/1/20211742/20214217?format=json",
+        method: 'GET',
+        rejectUnauthorized: false,
+        headers: {
+            'X-OBSERVATORY-AUTH': "123456789"
+        }
+    }
+    expect(options).toEqual(expected_options)
+})
+
+//SessionsPerEV_c
+test('options for SessionsPerEV GET request', ()=>{
+    const evid = 'ANS-4242'
+    const from = '20211742'
+    const to = '20214217'
+    const format = 'json'
+    const options = createOptionsEV(evid, from, to, format)
+    expected_options = {
+        hostname: 'localhost',
+        port: 8765,
+        path: "/evcharge/api/SessionsPerEV/ANS-4242/20211742/20214217?format=json",
         method: 'GET',
         rejectUnauthorized: false,
         headers: {

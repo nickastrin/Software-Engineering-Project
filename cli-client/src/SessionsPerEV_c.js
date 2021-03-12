@@ -1,8 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 
-function sessionsPerEV (evid, from, to, format) {
-
+function createOptions(evid, from, to, format){
+    
     const date = new RegExp("^([0-9]{8})$");
     const plate = new RegExp("^([A-Z]{3}-[0-9]{4})$");
 
@@ -48,6 +48,12 @@ function sessionsPerEV (evid, from, to, format) {
             'X-OBSERVATORY-AUTH': token
         }
     }
+    return options
+}
+
+function sessionsPerEV (evid, from, to, format) {
+
+    const options = createOptions(evid, from, to, format)
 
     const req = https.request(options, res => {
         //console.log(`statusCode: ${res.statusCode}`)
@@ -92,4 +98,5 @@ Accepted formats are "json" and "csv".`)
     req.end();
 }
 
+exports.createOptionsEV = createOptions;
 exports.sessionsPerEV = sessionsPerEV;
