@@ -48,6 +48,7 @@ function createOptions(providerid, from, to, format){
             'X-OBSERVATORY-AUTH': token
         }
     }
+    return options;
 
 }
 
