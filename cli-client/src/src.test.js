@@ -2,13 +2,15 @@ const fs = require('fs');
 const {createOptionsPoint } = require('./SessionsPerPoint_c.js')
 const {createOptionsProvider } = require('./SessionsPerProvider_c.js')
 const {createOptionsStation } = require('./SessionsPerStation_c.js')
-
+/*
 //save old token
-const path = "../softeng20bAPI.token";
+const path = "./softeng20bAPI.token";
 const already_logged_in =fs.existsSync(path)
 if(already_logged_in) {
     const old_token = fs.readFileSync(path);
+    //console.log(JSON.parse(old_token))
 }
+*/
 //Create fake login for Unit tests
 fake_token ='{"token":"123456789"}'
 fs.writeFileSync('./softeng20bAPI.token', fake_token);
@@ -73,7 +75,9 @@ test('options for SessionsPerStation GET request', ()=>{
     expect(options).toEqual(expected_options)
 })
 
+/*
 //replace fake_token
 if(already_logged_in) {
     fs.writeFileSync('./softeng20bAPI.token', old_token);
 }
+*/

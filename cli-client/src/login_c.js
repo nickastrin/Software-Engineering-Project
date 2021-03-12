@@ -19,9 +19,7 @@ function login (username, password) {
 
     try {
 
-        const body = "username=" + username + "&password=" + password;
-
-        
+        const body = "username=" + username + "&password=" + password;  
     
         const req = https.request(options, res => {
             //console.log(`statusCode: ${res.statusCode}`)
