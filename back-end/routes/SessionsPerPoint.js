@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const conn = require('../Dbconnection/connection');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');

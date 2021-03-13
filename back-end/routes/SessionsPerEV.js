@@ -1,6 +1,5 @@
 const express = require('express');
-const router = express.Router();
-const conn = require('../Dbconnection/connection');
+const SessionsPerEVRouter = express.Router();
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const makeQuery = require('../Dbconnection/promiseQuery');
 const sendCsv = require('../csvParser/csvResponse');
@@ -42,7 +41,7 @@ const csvFields = [
 ];
 
 //vehicle id is passed as license plate
-router.get('/:vehicleID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
+SessionsPerEVRouter.get('/:vehicleID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const reqTimeStamp = currentTimestamp();
 
     const licensePlate = req.params.vehicleID;
@@ -74,50 +73,18 @@ async function getData(licensePlate, reqTimeStamp, from_date, to_date, req, res)
         });
 
         //Format objList into sessionList and count total Energy and number of points
-        let totalEnergy = 0;
-        let sessionList = [];
-        let points = [];
-
-        for (let i = 0; i < objList.length; i++) {
-            const element = objList[i];
-            let kwh = element.kwh_transferred;
-            totalEnergy += kwh;
-
-            let provider_query = `SELECT name FROM station INNER JOIN elec_supplier ON station.supplier_id = elec_supplier.supplier_id WHERE station_id = ${element.station_id}`;
+        let { totalEnergy, sessionList, points, station_ids} = sessionListFormatter(objList);
+        //find provider names
+        for (let i = 0; i < station_ids.length; i++) {
+            const element = station_ids[i];
+            
+            let provider_query = `SELECT name FROM station INNER JOIN elec_supplier ON station.supplier_id = elec_supplier.supplier_id WHERE station_id = ${element}`;
 
             let prov_resp = await makeQuery(provider_query);
             let provider_name = JSON.parse(JSON.stringify(prov_resp))[0].name;
 
-            sessionList.push({
-                SessionIndex: i+1,
-                SessionID: element.event_id,
-                EnergyProvider: provider_name,
-                StartedOn: element.start_time,
-                FinishedOn: element.finish_time,
-                ΕnergyDelivered: kwh,
-                PricePolicyRef: "unknown",
-                CostPerKWh: element.price / kwh,
-                SessionCost: element.price
-            });
-
-            let curr_point = {
-                stationID: element.station_id,
-                pointID: element.point_id
-            };
-
-            let found = false;
-            points.forEach(p_elem => {
-                if (p_elem.stationID == curr_point.stationID && p_elem.pointID == curr_point.pointID) {
-                    found = true;
-                }
-            });
-            if (!found) {
-                points.push(curr_point);
-            }
+            sessionList[i].EnergyProvider = provider_name;
         }
-
-        //Keep two decimal place accuracy
-        totalEnergy = twodeciPointsAcc(totalEnergy);
 
         let resp = {
             VehicleID: licensePlate,
@@ -142,4 +109,57 @@ async function getData(licensePlate, reqTimeStamp, from_date, to_date, req, res)
     }
 }
 
-module.exports = router;
+function sessionListFormatter(objList){
+    let totalEnergy = 0;
+    let sessionList = [];
+    let points = [];
+    let station_ids = [];
+
+    for (let i = 0; i < objList.length; i++) {
+        const element = objList[i];
+        let kwh = element.kwh_transferred;
+        totalEnergy += kwh;
+
+        station_ids.push(element.station_id);
+
+        sessionList.push({
+            SessionIndex: i+1,
+            SessionID: element.event_id,
+            EnergyProvider: "unknown",
+            StartedOn: element.start_time,
+            FinishedOn: element.finish_time,
+            ΕnergyDelivered: kwh,
+            PricePolicyRef: "unknown",
+            CostPerKWh: element.price / kwh,
+            SessionCost: element.price
+        });
+
+        let curr_point = {
+            stationID: element.station_id,
+            pointID: element.point_id
+        };
+
+        let found = false;
+        points.forEach(p_elem => {
+            if (p_elem.stationID == curr_point.stationID && p_elem.pointID == curr_point.pointID) {
+                found = true;
+            }
+        });
+        if (!found) {
+            points.push(curr_point);
+        }
+    }
+
+    //Keep two decimal place accuracy
+    totalEnergy = twodeciPointsAcc(totalEnergy);
+
+    return {
+        totalEnergy: totalEnergy,
+        sessionList: sessionList,
+        points: points,
+        station_ids: station_ids
+    };
+
+}
+
+module.exports = {SessionsPerEVRouter, sessionListFormatter};
