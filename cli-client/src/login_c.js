@@ -23,18 +23,19 @@ function login(username, password) {
         //console.log(`statusCode: ${res.statusCode}`)
 
         res.on("data", (d) => {
-          if (d == "User not found") {
+          if (res.statusCode == 200) {
+            fs.writeFile("softeng20bAPI.token", d, function (err) {
+              if (err) throw err;
+              resolve("Login successful!");
+            });
+          } else if (d == "User not found") {
             resolve("Login unsuccessful: User not found. Please try again.");
           } else if (d == "invalid password") {
             resolve(
               "Login unsuccessful: Incorrect password. Please try again."
             );
           } else {
-            //process.stdout.write(d)
-            fs.writeFile("softeng20bAPI.token", d, function (err) {
-              if (err) throw err;
-              resolve("Login successful!");
-            });
+            resolve("Error: " + d);
           }
         });
       });
