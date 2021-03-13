@@ -1,6 +1,6 @@
 const express = require('express');
 const Joi = require('joi');
-const router = express.Router();
+const adminRouter = express.Router();
 const mysql = require('mysql');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
@@ -31,7 +31,7 @@ function verifyBody(body){
     else return true;
 }
 
-router.post('/usermod/:username/:password', authenticateToken, authRole(1), async (req, res) => {
+adminRouter.post('/usermod/:username/:password', authenticateToken, authRole(1), async (req, res) => {
     try{
         const username = req.params.username;
         const password = req.params.password;
@@ -98,7 +98,7 @@ router.post('/usermod/:username/:password', authenticateToken, authRole(1), asyn
     }
 });
 
-router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
+adminRouter.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
     const username = req.params.username;
     //check if username appears in the database
     let sql = `SELECT * FROM user WHERE username='${username}'`;
@@ -116,7 +116,7 @@ router.get('/users/:username', authenticateToken, authRole(1), (req,res) =>{
 
 });
 
-router.post('/system/sessionsupd', authenticateToken, authRole(1), (req,res) =>{
+adminRouter.post('/system/sessionsupd', authenticateToken, authRole(1), (req,res) =>{
     if(req.files && req.files.file){
         let file = req.files.file;
         let csvData = file.data.toString('utf8');
@@ -174,7 +174,7 @@ router.post('/system/sessionsupd', authenticateToken, authRole(1), (req,res) =>{
     }
 });
 
-router.get('/healthcheck', (req,res) =>{
+adminRouter.get('/healthcheck', (req,res) =>{
     const health_conn =  mysql.createConnection(conn_settings);
     health_conn.connect((err) =>{
         if(err){
@@ -187,7 +187,7 @@ router.get('/healthcheck', (req,res) =>{
     });
 });
 
-router.post('/resetsessions', async (req,res) =>{
+adminRouter.post('/resetsessions', async (req,res) =>{
     try{
         let delete_query = `DELETE FROM charge_event`;
 
@@ -257,4 +257,4 @@ router.post('/resetsessions', async (req,res) =>{
     }
 });
 
-module.exports = router;
+module.exports = {adminRouter, verifyBody};

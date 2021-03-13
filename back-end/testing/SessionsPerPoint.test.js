@@ -28,11 +28,13 @@ test('valid SessionsPerPoint test', async ()=>{
 
     expect(res.statusCode).toEqual(200);
     expect(res.body.PointOperator).toEqual('Mira Spears');
-    expect(res.body.ChargingSessionsList.length).toEqual(4);
+    expect(res.body.ChargingSessionsList.length).toEqual(6);
     expect(res.body.ChargingSessionsList[0].SessionID).toEqual(45);
     expect(res.body.ChargingSessionsList[1].SessionID).toEqual(197);
     expect(res.body.ChargingSessionsList[2].SessionID).toEqual(421);
     expect(res.body.ChargingSessionsList[3].SessionID).toEqual(422);
+    expect(res.body.ChargingSessionsList[4].SessionID).toEqual(425);
+    expect(res.body.ChargingSessionsList[5].SessionID).toEqual(426);
 });
 /*
 {
