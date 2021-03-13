@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2021 at 08:15 PM
+-- Generation Time: Mar 13, 2021 at 01:55 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -664,7 +664,9 @@ INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `li
 (399, 64, 24, 1, 'ZDJ-2118', '2021-01-04 11:32:12', '2021-01-04 11:56:16', 13.45, 3.23, 1, 'OpenADR'),
 (400, 98, 23, 2, 'IBW-8841', '2021-01-11 07:36:48', '2021-01-11 08:32:35', 6.52, 1.50, 4, 'OCPI'),
 (421, 42, 1, 1, 'HOS-9576', '2021-01-08 19:41:04', '2021-01-08 20:39:11', 5.09, 1.43, 3, 'OCPI'),
-(422, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI');
+(422, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI'),
+(425, 42, 1, 1, 'HOS-9576', '2021-01-08 19:41:04', '2021-01-08 20:39:11', 5.09, 1.43, 3, 'OCPI'),
+(426, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI');
 
 -- --------------------------------------------------------
 
@@ -942,7 +944,8 @@ INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, 
 (27, 25, 7, 0.11, 0.28, 'Station-27', 'United States', 'Uhyerclkec Street', 'Springfield', '32544', 1301),
 (28, 32, 4, 0.17, 0.24, 'Station-28', 'United States', 'Bpyejnwxqj Street', 'Columbia', '31675', 251),
 (29, 30, 3, 0.16, 0.24, 'Station-29', 'United States', 'Zpgjdlkrnt Street', 'Provo', '28486', 1116),
-(30, 35, 1, 0.15, 0.23, 'Station-30', 'United States', 'Ezboqxddmm Street', 'Colorado Springs', '48028', 1927);
+(30, 35, 1, 0.15, 0.23, 'Station-30', 'United States', 'Ezboqxddmm Street', 'Colorado Springs', '48028', 1927),
+(31, 35, 2, 0.17, 0.25, 'Station-31', 'United States', 'Pontu Street', 'Colorado Springs', '48028', 42);
 
 -- --------------------------------------------------------
 
@@ -1074,7 +1077,7 @@ INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `
 (99, 'dui.in@eleifendvitaeerat.co.uk', 'Aurora Myers', '$2b$10$EFoagb0aER8y1H9/i1ZXkutci65TUiPsTIUmVH7q26wsxGcrgFHK.', 'Niue', 'Moffat', '7753 Molestie Ave', 32, 'OB75 9TY', '(448) 680-3670', '1955-01-22', 13, 2, 1, 'IJ917NBN6HB'),
 (100, 'vestibulum.massa@justoPraesent', 'Shea Page', '$2b$10$3eRk4rvBHZ2QQ7mKU8w/mecSkQDAaNUj8ZVRyttMiZXJPvezc0cxG', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG'),
 (102, 'rty@mail.com', 'Colombiano', '$2b$10$iwIy3FgqrD/xRrZZN7Y9ouy6revBYpWJJcaauKNKPBIYhi0.2Cm9O', 'Greece', 'Filiatra', 'Pontou', 6, '34789', '6979587142', '1999-07-02', 0, 1, 0, 'Lapouta'),
-(106, 'stef@poutas.com', 'Stefanos', '$2b$10$iACCRjpUqqgkMD/Qgbo95OdMXj7gubKe8bZiLO.5MvSMyJCqLPefW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 1, 'Stef'),
+(106, 'stef@poutas.com', 'Stefanos', '$2b$10$lMuQ4pPw6pqFquc2V0/t7uKEC15VxLGEtksWuixUBDzwK5mZ2dZ0.', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 1, 'Stef'),
 (108, 'paleho@poutas.com', 'Sokaros', '$2b$10$MWViEvUlqzFXbf7q05rhmek1VUkAlUUC7FEZG.LtSq2.grybsQILW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 0, 'Paleho');
 
 --
@@ -1168,7 +1171,7 @@ ALTER TABLE `car_model`
 -- AUTO_INCREMENT for table `charge_event`
 --
 ALTER TABLE `charge_event`
-  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
+  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=427;
 
 --
 -- AUTO_INCREMENT for table `elec_supplier`
@@ -1186,7 +1189,7 @@ ALTER TABLE `point`
 -- AUTO_INCREMENT for table `station`
 --
 ALTER TABLE `station`
-  MODIFY `station_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `station_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user`
