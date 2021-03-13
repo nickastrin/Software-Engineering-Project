@@ -41,7 +41,11 @@ program
 returns token in file ${HOME}/softeng20bAPI.token"
   )
   .action((options) => {
-    login(options.username, options.password);
+    login(options.username, options.password).then((result) => {
+      console.log(result).catch((err) => {
+        console.log(err);
+      });
+    });
   });
 
 //logout

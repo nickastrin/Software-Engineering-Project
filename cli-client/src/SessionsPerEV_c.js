@@ -3,29 +3,6 @@ const fs = require("fs");
 const { evcheck, datecheck } = require("./check_c");
 
 function createOptions(evid, from, to, format) {
-  const date = new RegExp("^([0-9]{8})$");
-  const plate = new RegExp("^([A-Z]{3}-[0-9]{4})$");
-
-  if (!plate.test(evid)) {
-    console.log("Invalid --ev value. Value must have form ABC-1234");
-    process.exit();
-  }
-
-  if (!date.test(from)) {
-    console.log("Invalid --datefrom value. Value must have form YYYYMMDD");
-    process.exit();
-  }
-
-  if (!date.test(to)) {
-    console.log("Invalid --datet value. Value must have form YYYYMMDD");
-    process.exit();
-  }
-
-  if (format != "csv" && format != "json") {
-    console.log("Invalid format option. Supported options: json csv");
-    process.exit();
-  }
-
   const url =
     "/evcharge/api/SessionsPerEV/" +
     evid +
@@ -36,11 +13,6 @@ function createOptions(evid, from, to, format) {
     "?format=" +
     format;
   const path = "./softeng20bAPI.token";
-
-  if (!fs.existsSync(path)) {
-    console.log("User authentication required. Please sign in");
-    process.exit();
-  }
 
   const raw = fs.readFileSync(path);
   const token = JSON.parse(raw).token;
