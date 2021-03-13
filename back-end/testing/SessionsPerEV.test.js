@@ -1,9 +1,11 @@
 const request = require('supertest');
 const app = require('../app'); 
-
-beforeAll(()=>{
-    
+const { conn } = require('../Dbconnection/connection');
+/*
+afterAll(()=>{
+    conn.end()
 })
+*/
 
 test('not authorized SessionsPerEV test', async ()=>{
     const res = await request(app)

@@ -1,5 +1,11 @@
 const request = require('supertest');
 const app = require('../app'); 
+const { conn } = require('../Dbconnection/connection');
+/*
+afterAll(()=>{
+    conn.end()
+})
+*/
 
 test('not authorized SessionsPerProvider test', async ()=>{
     const res = await request(app)
@@ -18,7 +24,6 @@ test('valid SessionsPerProvider test', async ()=>{
                 });
 
     const token = login_res.body.token;
-
     const res = await request(app)
                     .get("/evcharge/api/SessionsPerProvider/1/20210104/20210106")
                     .set('X-OBSERVATORY-AUTH', token)

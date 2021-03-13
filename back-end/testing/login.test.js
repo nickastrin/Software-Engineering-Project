@@ -1,5 +1,12 @@
 const request = require('supertest');
 const app = require('../app'); 
+const { conn } = require('../Dbconnection/connection');
+
+/*
+afterAll(()=>{
+    conn.end()
+})
+*/
 
 test('valid login test', async ()=>{
     const res = await request(app)
