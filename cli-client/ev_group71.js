@@ -12,6 +12,7 @@ const { sessionsPerProvider } = require("./src/SessionsPerProvider_c.js");
 const { usermod } = require("./src/admin/usermod_c.js");
 const { users } = require("./src/admin/users_c.js");
 const { sessionsupd } = require("./src/admin/sessionsupd_c.js");
+const stringify = require("csv-stringify/lib/sync");
 program.version("1.0.0").description("CLI");
 //COMMANDS - SCOPE
 //healthcheck
@@ -41,11 +42,13 @@ program
 returns token in file ${HOME}/softeng20bAPI.token"
   )
   .action((options) => {
-    login(options.username, options.password).then((result) => {
-      console.log(result).catch((err) => {
+    login(options.username, options.password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
         console.log(err);
       });
-    });
   });
 
 //logout
@@ -85,9 +88,7 @@ in the URL."
       options.format
     )
       .then((result) => {
-        if (options.format == "json") {
-          console.log(result);
-        } else process.stdout.write(result);
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);
@@ -116,9 +117,7 @@ is returned"
       options.format
     )
       .then((result) => {
-        if (options.format == "json") {
-          console.log(result);
-        } else process.stdout.write(result);
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);
@@ -141,9 +140,7 @@ in the URL."
   .action((options) => {
     sessionsPerEV(options.ev, options.datefrom, options.dateto, options.format)
       .then((result) => {
-        if (options.format == "json") {
-          console.log(result);
-        } else process.stdout.write(result);
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);
@@ -171,9 +168,7 @@ period which are given as parameters in the URL."
       options.format
     )
       .then((result) => {
-        if (options.format == "json") {
-          console.log(result);
-        } else process.stdout.write(result);
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);

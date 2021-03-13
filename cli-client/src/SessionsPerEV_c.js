@@ -63,7 +63,7 @@ function sessionsPerEV(evid, from, to, format) {
             resolve(JSON.parse(d));
             //process.stdout.write(d + "\n");
           } else {
-            resolve(d);
+            resolve(decodeURIComponent(d));
           }
         } else if (res.statusCode == 401) {
           if (fs.existsSync(path)) {
