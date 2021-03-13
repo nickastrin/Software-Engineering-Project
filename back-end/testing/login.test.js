@@ -13,7 +13,7 @@ test('valid login test', async ()=>{
                     .post("/evcharge/api/login")
                     .send({
                         username: 'Stef',
-                        password: 'yolaria123'
+                        password: process.env.STEF_PASS
                     });
 
     expect(res.statusCode).toEqual(200);
