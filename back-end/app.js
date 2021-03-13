@@ -20,10 +20,10 @@ app.use(cors(corsOptions));
 //Import routers
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
-const adminRouter = require('./routes/admin');
-const SessionsPerEVRouter = require('./routes/SessionsPerEV');
+const {adminRouter} = require('./routes/admin');
+const {SessionsPerEVRouter} = require('./routes/SessionsPerEV');
 const SessionsPerPointRouter = require('./routes/SessionsPerPoint');
-const SessionsPerStationRouter = require('./routes/SessionsPerStation');
+const {SessionsPerStationRouter} = require('./routes/SessionsPerStation');
 const SessionsPerProviderRouter = require('./routes/SessionsPerProvider');
 const FindStationRouter = require('./routes/FindStation');
 const CompaniesRouter = require('./routes/Companies');

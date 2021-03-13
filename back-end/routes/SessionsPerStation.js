@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const SessionsPerStationRouter = express.Router();
 const {conn} = require('../Dbconnection/connection');
 const {authRole, authenticateToken} = require('../Authentication/basicAuth');
 const sendCsv = require('../csvParser/csvResponse');
@@ -44,7 +44,7 @@ const csvFields = [
     },
 ];
 
-router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
+SessionsPerStationRouter.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const reqTimeStamp = currentTimestamp();
     const stationID = req.params.stationID;
     const yyyymmdd_from = JSON.stringify(req.params.yyyymmdd_from);
@@ -72,40 +72,7 @@ router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,re
             // console.log(objList);
 
             //Format objList into sessionList and count total Energy
-            let totalEnergy = 0;
-            let sessionList = [];
-            objList.forEach(element => {
-                let kwh = element.kwh_transferred;
-                totalEnergy += kwh;
-                if(!sessionList){
-                    sessionList.push({
-                        PointID: element.point_id,
-                        PointSessions: 1,
-                        EnergyDelivered: kwh,
-                        // Events: [element.event_id]
-                    });
-                }
-                else{
-                    let found_point = false;
-                    sessionList.forEach(ses_elem => {
-                        if(ses_elem.PointID == element.point_id){
-                            found_point = true;
-                            ses_elem.PointSessions++;
-                            ses_elem.EnergyDelivered += kwh;
-                            // ses_elem.Events.push(element.event_id);
-                        }
-                    });
-
-                    if(!found_point){
-                        sessionList.push({
-                            PointID: element.point_id,
-                            PointSessions: 1,
-                            EnergyDelivered: kwh,
-                            // Events: [element.event_id]
-                        });
-                    }
-                }
-            });
+            let {totalEnergy, sessionList} = SessionsPerStationFormatter(objList);
 
             //Keep two decimal place accuracy
             totalEnergy = twodeciPointsAcc(totalEnergy);
@@ -153,4 +120,44 @@ router.get('/:stationID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,re
     });
 });
 
-module.exports = router;
+function SessionsPerStationFormatter(objList){
+    let totalEnergy = 0;
+    let sessionList = [];
+    objList.forEach(element => {
+        let kwh = element.kwh_transferred;
+        totalEnergy += kwh;
+        if(!sessionList){
+            sessionList.push({
+                PointID: element.point_id,
+                PointSessions: 1,
+                EnergyDelivered: kwh,
+                // Events: [element.event_id]
+            });
+        }
+        else{
+            let found_point = false;
+            sessionList.forEach(ses_elem => {
+                if(ses_elem.PointID == element.point_id){
+                    found_point = true;
+                    ses_elem.PointSessions++;
+                    ses_elem.EnergyDelivered += kwh;
+                    // ses_elem.Events.push(element.event_id);
+                }
+            });
+
+            if(!found_point){
+                sessionList.push({
+                    PointID: element.point_id,
+                    PointSessions: 1,
+                    EnergyDelivered: kwh,
+                    // Events: [element.event_id]
+                });
+            }
+        }
+    });
+
+
+    return {totalEnergy, sessionList};
+}
+
+module.exports = {SessionsPerStationRouter, SessionsPerStationFormatter};
