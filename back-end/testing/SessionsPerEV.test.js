@@ -1,11 +1,6 @@
 const request = require('supertest');
 const app = require('../app'); 
 const { conn } = require('../Dbconnection/connection');
-/*
-afterAll(()=>{
-    conn.end()
-})
-*/
 
 test('not authorized SessionsPerEV test', async ()=>{
     const res = await request(app)
@@ -31,13 +26,14 @@ test('valid SessionsPerEV test', async ()=>{
                     .set('X-OBSERVATORY-AUTH', token)
                    
     
-
     expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual('HOS-9576');
     expect(res.body.VehicleID).toEqual('HOS-9576');
     expect(res.body.PeriodFrom).toEqual('2021-01-01');
     expect(res.body.PeriodTo).toEqual('2021-01-05');
     expect(res.body.VehicleChargingSessionsList.length).toEqual(1);
     expect(res.body.VehicleChargingSessionsList[0].SessionID).toEqual(188);
+
 //logout
     const logout_res = await request(app)
     .post("/evcharge/api/logout")
