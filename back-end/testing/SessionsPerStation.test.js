@@ -33,6 +33,14 @@ test('valid SessionsPerStation test', async ()=>{
     expect(res.body.SessionsSummaryList[1].PointID).toEqual(1);
     expect(res.body.SessionsSummaryList[2].PointID).toEqual(2);
     expect(res.body.SessionsSummaryList[3].PointID).toEqual(4);
+
+    //logout
+    const logout_res = await request(app)
+    .post("/evcharge/api/logout")
+    .set('X-OBSERVATORY-AUTH', token)
+
+    expect(logout_res.statusCode).toEqual(200);
+    expect(logout_res.text).toEqual('Token removed');
 });
 /*
 {

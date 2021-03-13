@@ -37,8 +37,14 @@ test('valid SessionsPerEV test', async ()=>{
     expect(res.body.PeriodFrom).toEqual('2021-01-01');
     expect(res.body.PeriodTo).toEqual('2021-01-05');
     expect(res.body.VehicleChargingSessionsList.length).toEqual(1);
-
     expect(res.body.VehicleChargingSessionsList[0].SessionID).toEqual(188);
+//logout
+    const logout_res = await request(app)
+    .post("/evcharge/api/logout")
+    .set('X-OBSERVATORY-AUTH', token)
+
+    expect(logout_res.statusCode).toEqual(200);
+    expect(logout_res.text).toEqual('Token removed');
 });
 /*
     "VehicleID": "HOS-9576",

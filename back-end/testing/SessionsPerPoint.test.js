@@ -33,6 +33,14 @@ test('valid SessionsPerPoint test', async ()=>{
     expect(res.body.ChargingSessionsList[1].SessionID).toEqual(197);
     expect(res.body.ChargingSessionsList[2].SessionID).toEqual(421);
     expect(res.body.ChargingSessionsList[3].SessionID).toEqual(422);
+            
+    //logout
+    const logout_res = await request(app)
+    .post("/evcharge/api/logout")
+    .set('X-OBSERVATORY-AUTH', token)
+
+    expect(logout_res.statusCode).toEqual(200);
+    expect(logout_res.text).toEqual('Token removed');
 });
 /*
 {
