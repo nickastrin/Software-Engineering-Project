@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import https from "https";
+
 
 class SessionsPerEV extends Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class SessionsPerEV extends Component {
       visitedPoints: 0,
       totalEnergy: 0,
       periodFrom: "",
-      periodTo: "",
+      periodTo: ""
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -88,14 +90,18 @@ class SessionsPerEV extends Component {
       endYear +
       endMonth +
       endDay;
-
     window.history.replaceState(null, "Query Result", url);
     axios
-      .get("https://localhost:8765/evcharge/api" + url, {
+      .get("https://localhost:8765/evcharge/api" + url, 
+        {
+        headers: {
+          'x-observatory-auth': this.props.token}
+      },
+      {
         httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
-      })
+           rejectUnauthorized: false
+         })}
+      )
       .then((response) => {
         this.setState({
           sessionNumber: response.data.NumberOfVehicleChargingSessions,
@@ -115,6 +121,9 @@ class SessionsPerEV extends Component {
   }
 
   render() {
+    const token=this.props.token;
+    if(token===undefined || token===null)
+        {return(<Redirect to="/Login" />)}
     return (
       <div>
         <h1>EV Session Screen</h1>
