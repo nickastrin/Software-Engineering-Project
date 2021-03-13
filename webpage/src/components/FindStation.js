@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import https from "https";
 
 class FindStation extends Component {
@@ -11,6 +12,7 @@ class FindStation extends Component {
       stationcity: "",
       sessionList: [],
       flag: "",
+      err: "",
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -63,8 +65,26 @@ class FindStation extends Component {
         }),
       })
       .then((response) => {
+        this.setState({ err: "ok" });
         this.setState({ flag: "true" });
         this.setState({ sessionList: response.data });
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Request made and server responded
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          this.setState({ err: error.response.data });
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+          this.setState({ err: error.request });
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+          this.setState({ err: error.message });
+        }
       });
   }
 
@@ -76,6 +96,11 @@ class FindStation extends Component {
     return (
       <div>
         <h1>Find Station Screen</h1>
+        <nav>
+          <button>
+            <Link to="/">Return to Home</Link>
+          </button>
+        </nav>
         <h2>Specify City</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -88,7 +113,7 @@ class FindStation extends Component {
           </label>
         </form>
         <button onClick={this.handleClick}> Proceed </button>
-        {this.state.flag !== "" ? (
+        {this.state.err === "ok" ? (
           <div>
             <h4>Query Results:</h4>
             {
@@ -100,7 +125,7 @@ class FindStation extends Component {
             }
           </div>
         ) : (
-          <p></p>
+          <p>{this.state.err}</p>
         )}
       </div>
     );

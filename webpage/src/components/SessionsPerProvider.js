@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import https from "https";
 
@@ -13,6 +13,7 @@ class SessionsPerProvider extends Component {
       providerid: 0,
       providerName: "",
       sessionList: [],
+      err: "",
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -99,9 +100,27 @@ class SessionsPerProvider extends Component {
         }),
       })
       .then((response) => {
+        this.setState({ err: "ok" });
         console.log(response.data);
         this.setState({ providerName: response.data.ProviderName });
         this.setState({ sessionList: response.data.Sessions });
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Request made and server responded
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          this.setState({ err: error.response.data });
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+          this.setState({ err: error.request });
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+          this.setState({ err: error.message });
+        }
       });
   }
 
@@ -113,53 +132,58 @@ class SessionsPerProvider extends Component {
     const token=this.props.token;
     if(token===undefined || token===null)
         {return(<Redirect to="/Login" />)}
-    return (
-      <div>
-        <h1>Provider Session Screen</h1>
-        <h2>Specify Provider ID</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            ProviderID:
-            <input
-              type="text"
-              providerid={this.state.providerid}
-              onChange={this.handleChange}
-            />
-          </label>
-        </form>
-        <h4>Choose Start Date</h4>
-        <DatePicker
-          onChange={this.changeStartDate}
-          value={this.state.startDate}
-        />
-        <h4>Choose End Date</h4>
-        <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
-        {this.errorCheck() ? (
-          <button onClick={this.handleClick}> Proceed </button>
-        ) : (
-          <h4>Invalid</h4>
-        )}
-        {this.state.providerName !== "" ? (
+        return (
           <div>
-            <h5>Search Results:</h5>
-            <p>Provider Name: {this.state.providerName}</p>
-            <div>
-              Session Summary:
-              {
-                <pre>
-                  {this.sessionLoop().map((value, index) => {
-                    return <li key={index}>{value}</li>;
-                  })}
-                </pre>
-              }
-            </div>
+            <h1>Provider Session Screen</h1>
+            <nav>
+              <button>
+                <Link to="/">Return to Home</Link>
+              </button>
+            </nav>
+            <h2>Specify Provider ID</h2>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                ProviderID:
+                <input
+                  type="text"
+                  providerid={this.state.providerid}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </form>
+            <h4>Choose Start Date</h4>
+            <DatePicker
+              onChange={this.changeStartDate}
+              value={this.state.startDate}
+            />
+            <h4>Choose End Date</h4>
+            <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
+            {this.errorCheck() ? (
+              <button onClick={this.handleClick}> Proceed </button>
+            ) : (
+              <h4>Invalid</h4>
+            )}
+            {this.state.err === "ok" ? (
+              <div>
+                <h5>Search Results:</h5>
+                <p>Provider Name: {this.state.providerName}</p>
+                <div>
+                  Session Summary:
+                  {
+                    <pre>
+                      {this.sessionLoop().map((value, index) => {
+                        return <li key={index}>{value}</li>;
+                      })}
+                    </pre>
+                  }
+                </div>
+              </div>
+            ) : (
+              <p>{this.state.err}</p>
+            )}
           </div>
-        ) : (
-          <p></p>
-        )}
-      </div>
-    );
-  }
-}
-
+        );
+      }
+    }
+    
 export default SessionsPerProvider;

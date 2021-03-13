@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import https from "https";
+import { Card, Form, Input, Button, Error } from "../components/AuthForms";
 
 
 class SessionsPerEV extends Component {
@@ -17,7 +18,8 @@ class SessionsPerEV extends Component {
       visitedPoints: 0,
       totalEnergy: 0,
       periodFrom: "",
-      periodTo: ""
+      periodTo: "",
+      err: "",
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -99,10 +101,11 @@ class SessionsPerEV extends Component {
       },
       {
         httpsAgent: new https.Agent({
-           rejectUnauthorized: false
+           rejectUnauthorized: false //to make CORS work
          })}
       )
       .then((response) => {
+        this.setState({ err: "ok" });
         this.setState({
           sessionNumber: response.data.NumberOfVehicleChargingSessions,
         });
@@ -113,6 +116,23 @@ class SessionsPerEV extends Component {
         this.setState({ periodFrom: response.data.PeriodFrom });
         this.setState({ periodTo: response.data.PeriodTo });
         this.setState({ totalEnergy: response.data.TotalEnergyConsumed });
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Request made and server responded
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          this.setState({ err: error.response.data });
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+          this.setState({ err: error.request });
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+          this.setState({ err: error.message });
+        }
       });
   }
 
@@ -121,60 +141,64 @@ class SessionsPerEV extends Component {
   }
 
   render() {
-    const token=this.props.token;
-    if(token===undefined || token===null)
+    if(this.props.token===undefined || this.props.token===null)
         {return(<Redirect to="/Login" />)}
-    return (
-      <div>
-        <h1>EV Session Screen</h1>
-        <h2>Specify License Plate</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            License Plate:
-            <input
-              type="text"
-              stationid={this.state.licenseid}
-              onChange={this.handleChange}
-            />
-          </label>
-        </form>
-        <h4>Choose Start Date</h4>
-        <DatePicker
-          onChange={this.changeStartDate}
-          value={this.state.startDate}
-        />
-        <h4>Choose End Date</h4>
-        <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
-        {this.errorCheck() ? (
-          <button onClick={this.handleClick}> Proceed </button>
-        ) : (
-          <h4>Invalid</h4>
-        )}
-        {this.state.periodFrom !== "" ? (
+        return (
           <div>
-            <h5>Search Results:</h5>
-            <p>No. of Charging Sessions: {this.state.sessionNumber}</p>
-            <p>No. of Visited Points: {this.state.visitedPoints}</p>
-            <p>Period From: {this.state.periodFrom}</p>
-            <p>Period To: {this.state.periodTo}</p>
-            <p>Total Energy Consumed: {this.state.totalEnergy}</p>
-            <div>
-              Session Summary:
-              {
-                <pre>
-                  {this.sessionLoop().map((value, index) => {
-                    return <li key={index}>{value}</li>;
-                  })}
-                </pre>
-              }
-            </div>
+            <h1>EV Session Screen</h1>
+            <nav>
+              <button>
+                <Link to="/">Return to Home</Link>
+              </button>
+            </nav>
+            <h2>Specify License Plate</h2>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                License Plate:
+                <input
+                  type="text"
+                  stationid={this.state.licenseid}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </form>
+            <h4>Choose Start Date</h4>
+            <DatePicker
+              onChange={this.changeStartDate}
+              value={this.state.startDate}
+            />
+            <h4>Choose End Date</h4>
+            <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
+            {this.errorCheck() ? (
+              <button onClick={this.handleClick}> Proceed </button>
+            ) : (
+              <h4>Invalid</h4>
+            )}
+            {this.state.err === "ok" ? (
+              <div>
+                <h5>Search Results:</h5>
+                <p>No. of Charging Sessions: {this.state.sessionNumber}</p>
+                <p>No. of Visited Points: {this.state.visitedPoints}</p>
+                <p>Period From: {this.state.periodFrom}</p>
+                <p>Period To: {this.state.periodTo}</p>
+                <p>Total Energy Consumed: {this.state.totalEnergy}</p>
+                <div>
+                  Session Summary:
+                  {
+                    <pre>
+                      {this.sessionLoop().map((value, index) => {
+                        return <li key={index}>{value}</li>;
+                      })}
+                    </pre>
+                  }
+                </div>
+              </div>
+            ) : (
+              <p>{this.state.err}</p>
+            )}
           </div>
-        ) : (
-          <p></p>
-        )}
-      </div>
-    );
-  }
-}
-
+        );
+      }
+    }
+    
 export default SessionsPerEV;

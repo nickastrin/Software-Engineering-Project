@@ -9,11 +9,12 @@ import SessionsPerEV from "./components/SessionsPerEV";
 import SessionsPerProvider from "./components/SessionsPerProvider";
 import FindStation from "./components/FindStation";
 import Login from "./components/Login";
+import Companies from "./components/Companies";
 import { AuthContext } from "./context/auth";
 import { Button } from "./components/AuthForms";
 import "./App.css";
 
-function App(props) {
+function App() {
 
   const existingTokens = JSON.parse(localStorage.getItem("tokens"));
   console.log(existingTokens);
@@ -68,6 +69,9 @@ function App(props) {
           <Route path="/FindStation">
             <FindStation />
           </Route>
+          <Route path="/Companies">
+            <Companies token={authTokens}/>
+          </Route>
           <Route path="/Dashboard">
             <Dashboard />
           </Route>
@@ -97,6 +101,9 @@ function App(props) {
               </button>
               <button>
                 <Link to="/FindStation">Find Station</Link>
+              </button>
+              <button>
+                <Link to="/Companies">Find Manufacturer</Link>
               </button>
               <Button onClick={logOut}>Log out</Button>
             </nav>

@@ -1,24 +1,18 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Redirect ,Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
+import { Redirect, Link } from "react-router-dom";
 import https from "https";
 
-class SessionsPerStation extends Component {
+class Companies extends Component {
   constructor(props) {
     super(props);
     this.state = {
       startDate: new Date(),
       endDate: new Date(),
-      stationid: 0,
-      activePoints: 0,
-      chargingSessions: 0,
-      operator: "",
-      periodFrom: "",
-      periodTo: "",
+      manufacturername: "",
       sessionList: [],
-      totalDelivered: 0,
-      err: ""
+      err: "",
     };
 
     this.changeStartDate = this.changeStartDate.bind(this);
@@ -46,15 +40,16 @@ class SessionsPerStation extends Component {
     let list = [];
     for (var i = 0; i < length; i++) {
       list.push(
-        "Session No. " +
-          (i + 1) +
-          ":\n PointID: " +
-          this.state.sessionList[i].PointID +
-          ",\n Point Sessions: " +
-          this.state.sessionList[i].PointSessions +
-          ",\n Energy Delivered: " +
-          this.state.sessionList[i].EnergyDelivered +
-          " kWh"
+        "Model Name: " +
+          this.state.sessionList[i].Model +
+          ",\n Total Cars: " +
+          this.state.sessionList[i].TotalCars +
+          ",\n Total Energy Consumed: " +
+          this.state.sessionList[i].TotalEnergyConsumed +
+          " kWh\n Average Energy per Session: " +
+          this.state.sessionList[i].AverageEnergyPerSession +
+          " kWh\n Total Sessions: " +
+          this.state.sessionList[i].TotalSessions
       );
     }
     return list;
@@ -70,8 +65,8 @@ class SessionsPerStation extends Component {
     let [endDay, endMonth, endYear] = tmpEnd.split("/");
 
     let url =
-      "/SessionsPerStation/" +
-      this.state.stationid +
+      "/Companies/" +
+      this.state.manufacturername +
       "/" +
       startYear +
       startMonth +
@@ -87,23 +82,15 @@ class SessionsPerStation extends Component {
       {
         headers: {
           'x-observatory-auth': this.props.token}
-      },
+        }, 
       {
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
       })
       .then((response) => {
+        this.setState({ sessionList: response.data });
         this.setState({ err: "ok" });
-        this.setState({ activePoints: response.data.NumberOfActivePoints });
-        this.setState({
-          chargingSessions: response.data.NumberOfChargingSessions,
-        });
-        this.setState({ operator: response.data.Operator });
-        this.setState({ periodFrom: response.data.PeriodFrom });
-        this.setState({ periodTo: response.data.PeriodTo });
-        this.setState({ sessionList: response.data.SessionsSummaryList });
-        this.setState({ totalDelivered: response.data.TotalEnergyDelivered });
       })
       .catch((error) => {
         if (error.response) {
@@ -125,27 +112,27 @@ class SessionsPerStation extends Component {
   }
 
   handleChange(e) {
-    this.setState({ stationid: e.target.value });
+    this.setState({ manufacturername: e.target.value });
   }
 
   render() {
-    if(this.props.token===undefined || this.props.token===null)
+      if(this.props.token===undefined || this.props.token===null)
         {return(<Redirect to="/Login" />)}
-    return (
+      return (
       <div>
-        <h1>Station Session Screen</h1>
+        <h1>Companies Screen</h1>
         <nav>
           <button>
             <Link to="/">Return to Home</Link>
           </button>
         </nav>
-        <h2>Choose Station ID</h2>
+        <h2>Specify Manufacturer Name</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
-            StationID:
+            Manufacturer Name:
             <input
               type="text"
-              stationid={this.state.stationid}
+              stationid={this.state.manufacturername}
               onChange={this.handleChange}
             />
           </label>
@@ -165,12 +152,6 @@ class SessionsPerStation extends Component {
         {this.state.err === "ok" ? (
           <div>
             <h5>Search Results:</h5>
-            <p>Active Points: {this.state.activePoints}</p>
-            <p>Number of Charging Sessions: {this.state.chargingSessions}</p>
-            <p>Operator Name: {this.state.operator}</p>
-            <p>Period From: {this.state.periodFrom}</p>
-            <p>Period To: {this.state.periodTo}</p>
-            <p>Total Energy Delivered: {this.state.totalDelivered}</p>
             <div>
               Session Summary:
               {
@@ -190,4 +171,4 @@ class SessionsPerStation extends Component {
   }
 }
 
-export default SessionsPerStation;
+export default Companies;
