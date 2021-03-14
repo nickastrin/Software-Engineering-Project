@@ -122,6 +122,8 @@ function sessionListFormatter(objList){
 
         station_ids.push(element.station_id);
 
+        const cost = Math.round(element.price / kwh * 100) / 100;
+
         sessionList.push({
             SessionIndex: i+1,
             SessionID: element.event_id,
@@ -130,7 +132,7 @@ function sessionListFormatter(objList){
             FinishedOn: element.finish_time,
             ΕnergyDelivered: kwh,
             PricePolicyRef: "unknown",
-            CostPerKWh: element.price / kwh,
+            CostPerKWh: cost,
             SessionCost: element.price
         });
 

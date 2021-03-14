@@ -156,7 +156,7 @@ function SessionsPerStationFormatter(objList){
         }
     });
 
-
+    totalEnergy = Math.round(totalEnergy * 100) / 100;
     return {totalEnergy, sessionList};
 }
 
