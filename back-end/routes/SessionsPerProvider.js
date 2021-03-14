@@ -70,6 +70,8 @@ async function getData(providerId, from_date, to_date, req, res) {
             const element = objList[i];
             let kwh = element.kwh_transferred;
 
+            const cost = Math.round(element.price / kwh * 100) / 100;
+
             sessionList.push({
                 StationID: element.station_id,
                 SessionID: element.event_id,
@@ -78,7 +80,7 @@ async function getData(providerId, from_date, to_date, req, res) {
                 FinishedOn: element.finish_time,
                 ΕnergyDelivered: kwh,
                 PricePolicyRef: "unknown",
-                CostPerKWh: element.price / kwh,
+                CostPerKWh: cost,
                 TotalCost: element.price
             });
         }

@@ -59,6 +59,7 @@ router.get('/:manufacturer/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, auth
                 query_res.forEach(event => {
                     totalEnergy += event.kwh_transferred
                 });
+                totalEnergy = Math.round(totalEnergy * 100) / 100;
                 models[i].TotalEnergyConsumed = totalEnergy;
                 models[i].AverageEnergyPerSession = totalEnergy / query_res.length;
                 models[i].TotalSessions = query_res.length;
