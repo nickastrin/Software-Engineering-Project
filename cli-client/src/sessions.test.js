@@ -35,7 +35,9 @@ beforeAll(async () => {
 afterAll(() => {
   //replace fake_token
   if (already_logged_in) fs.writeFileSync(path, old_token);
-  else fs.unlinkSync(path);
+  else if (fs.existsSync(path)) {
+    fs.unlinkSync(path);
+  }
 });
 
 test("should return sessionsPerEV in json form", async () => {
