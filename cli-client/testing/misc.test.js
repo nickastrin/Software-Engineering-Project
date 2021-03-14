@@ -1,7 +1,7 @@
-const { companies } = require("./companies_c");
-const { findStation } = require("./findStation_c");
+const { companies } = require("../src/companies_c");
+const { findStation } = require("../src/findStation_c");
 const fs = require("fs");
-const { login } = require("./login_c");
+const { login } = require("../src/login_c");
 
 var already_logged_in, old_token;
 const path = "softeng20bAPI.token";

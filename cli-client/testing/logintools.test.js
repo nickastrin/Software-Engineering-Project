@@ -1,7 +1,7 @@
 const { expect, test } = require("@jest/globals");
 const fs = require("fs");
-const { login } = require("./login_c.js");
-const { logout } = require("./logout_c.js");
+const { login } = require("../src/login_c.js");
+const { logout } = require("../src/logout_c.js");
 var already_logged_in, old_token;
 const path = "softeng20bAPI.token";
 
@@ -53,7 +53,7 @@ test("should fail to logout", async () => {
   const result = await logout();
   expect(result).toEqual("You are not currently logged in");
 });
-/*
+
 test("should return error", async () => {
   token = {
     token: "12345678",
@@ -63,4 +63,3 @@ test("should return error", async () => {
   const result = await logout();
   expect(result).toEqual(expect.stringContaining("Something went wrong"));
 });
-*/

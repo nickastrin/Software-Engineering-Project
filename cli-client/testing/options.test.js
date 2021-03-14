@@ -1,8 +1,8 @@
 const fs = require("fs");
-const { createOptionsPoint } = require("./SessionsPerPoint_c.js");
-const { createOptionsProvider } = require("./SessionsPerProvider_c.js");
-const { createOptionsStation } = require("./SessionsPerStation_c.js");
-const { createOptionsEV } = require("./SessionsPerEV_c.js");
+const { createOptionsPoint } = require("../src/SessionsPerPoint_c.js");
+const { createOptionsProvider } = require("../src/SessionsPerProvider_c.js");
+const { createOptionsStation } = require("../src/SessionsPerStation_c.js");
+const { createOptionsEV } = require("../src/SessionsPerEV_c.js");
 
 var already_logged_in, old_token;
 const path = "./softeng20bAPI.token";

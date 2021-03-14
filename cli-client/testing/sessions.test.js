@@ -1,13 +1,9 @@
 const fs = require("fs");
-const { sessionsPerPoint } = require("./SessionsPerPoint_c.js");
-const { sessionsPerProvider } = require("./SessionsPerProvider_c.js");
-const { sessionsPerStation } = require("./SessionsPerStation_c.js");
-const { sessionsPerEV } = require("./SessionsPerEV_c.js");
-const { login } = require("./login_c.js");
-const { TestScheduler } = require("@jest/core");
-const { hasUncaughtExceptionCaptureCallback } = require("process");
-const { expect, test } = require("@jest/globals");
-const { async } = require("rsvp");
+const { sessionsPerPoint } = require("../src/SessionsPerPoint_c.js");
+const { sessionsPerProvider } = require("../src/SessionsPerProvider_c.js");
+const { sessionsPerStation } = require("../src/SessionsPerStation_c.js");
+const { sessionsPerEV } = require("../src/SessionsPerEV_c.js");
+const { login } = require("../src/login_c.js");
 
 jest.setTimeout(30000);
 
