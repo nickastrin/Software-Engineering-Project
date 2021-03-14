@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 01, 2021 at 08:15 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Φιλοξενητής: 127.0.0.1:3307
+-- Χρόνος δημιουργίας: 14 Μαρ 2021 στις 15:13:23
+-- Έκδοση διακομιστή: 10.4.17-MariaDB
+-- Έκδοση PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,36 +18,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `softeng`
+-- Βάση δεδομένων: `softeng`
 --
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `blacklist`
---
-
-CREATE TABLE `blacklist` (
-  `exp_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `token` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`token`)),
-  `user_id` int(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `car`
---
-
-CREATE TABLE `car` (
-  `license_plate` varchar(8) NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `model_id` int(5) NOT NULL,
-  `current_battery` float(6,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `car`
+-- Άδειασμα δεδομένων του πίνακα `car`
 --
 
 INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VALUES
@@ -202,21 +177,8 @@ INSERT INTO `car` (`license_plate`, `user_id`, `model_id`, `current_battery`) VA
 ('ZMU-2050', 68, 13, 39.20),
 ('ZQM-9777', 18, 5, 18.80);
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `car_model`
---
-
-CREATE TABLE `car_model` (
-  `model_id` int(5) NOT NULL,
-  `manufacturer` varchar(15) NOT NULL,
-  `battery_capacity` float(6,2) NOT NULL,
-  `model_name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `car_model`
+-- Άδειασμα δεδομένων του πίνακα `car_model`
 --
 
 INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_name`) VALUES
@@ -238,28 +200,8 @@ INSERT INTO `car_model` (`model_id`, `manufacturer`, `battery_capacity`, `model_
 (16, 'Hyundai', 38.30, 'Ioniq 2019'),
 (17, 'Hyundai', 8.90, 'Ioniq 2016 PHEV');
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `charge_event`
---
-
-CREATE TABLE `charge_event` (
-  `event_id` int(5) NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `station_id` int(5) NOT NULL,
-  `point_id` int(5) NOT NULL,
-  `license_plate` varchar(8) DEFAULT NULL,
-  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `finish_time` timestamp NULL DEFAULT current_timestamp(),
-  `kwh_transferred` float(6,2) DEFAULT NULL,
-  `price` float(6,2) DEFAULT NULL,
-  `payment_method` int(3) NOT NULL,
-  `protocol` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `charge_event`
+-- Άδειασμα δεδομένων του πίνακα `charge_event`
 --
 
 INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `license_plate`, `start_time`, `finish_time`, `kwh_transferred`, `price`, `payment_method`, `protocol`) VALUES
@@ -664,36 +606,12 @@ INSERT INTO `charge_event` (`event_id`, `user_id`, `station_id`, `point_id`, `li
 (399, 64, 24, 1, 'ZDJ-2118', '2021-01-04 11:32:12', '2021-01-04 11:56:16', 13.45, 3.23, 1, 'OpenADR'),
 (400, 98, 23, 2, 'IBW-8841', '2021-01-11 07:36:48', '2021-01-11 08:32:35', 6.52, 1.50, 4, 'OCPI'),
 (421, 42, 1, 1, 'HOS-9576', '2021-01-08 19:41:04', '2021-01-08 20:39:11', 5.09, 1.43, 3, 'OCPI'),
-(422, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `credit_card`
---
-
-CREATE TABLE `credit_card` (
-  `card_number` int(16) NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `card_owner` varchar(30) DEFAULT NULL,
-  `cvv` int(3) DEFAULT NULL,
-  `expiration_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+(422, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI'),
+(425, 42, 1, 1, 'HOS-9576', '2021-01-08 19:41:04', '2021-01-08 20:39:11', 5.09, 1.43, 3, 'OCPI'),
+(426, 42, 1, 1, 'HOS-9576', '2021-01-09 19:41:04', '2021-01-09 20:39:11', 5.09, 1.43, 3, 'OCPI');
 
 --
--- Table structure for table `elec_owes`
---
-
-CREATE TABLE `elec_owes` (
-  `supplier_id` int(5) NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `amount` float(6,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `elec_owes`
+-- Άδειασμα δεδομένων του πίνακα `elec_owes`
 --
 
 INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
@@ -748,19 +666,8 @@ INSERT INTO `elec_owes` (`supplier_id`, `user_id`, `amount`) VALUES
 (10, 9, 49.34),
 (11, 10, 46.92);
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `elec_supplier`
---
-
-CREATE TABLE `elec_supplier` (
-  `supplier_id` int(5) NOT NULL,
-  `name` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `elec_supplier`
+-- Άδειασμα δεδομένων του πίνακα `elec_supplier`
 --
 
 INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
@@ -780,20 +687,8 @@ INSERT INTO `elec_supplier` (`supplier_id`, `name`) VALUES
 (14, 'Supplier-14'),
 (15, 'Supplier-15');
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `point`
---
-
-CREATE TABLE `point` (
-  `point_id` int(5) NOT NULL,
-  `station_id` int(5) NOT NULL,
-  `is_occupied` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `point`
+-- Άδειασμα δεδομένων του πίνακα `point`
 --
 
 INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
@@ -888,28 +783,8 @@ INSERT INTO `point` (`point_id`, `station_id`, `is_occupied`) VALUES
 (4, 9, 0),
 (4, 10, 0);
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `station`
---
-
-CREATE TABLE `station` (
-  `station_id` int(5) NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `supplier_id` int(5) NOT NULL,
-  `supplier_rate` float(6,2) NOT NULL,
-  `charge_rate` float(6,2) NOT NULL,
-  `station_name` varchar(15) NOT NULL,
-  `country` varchar(15) NOT NULL,
-  `street_name` varchar(20) NOT NULL,
-  `city` varchar(20) NOT NULL,
-  `postal_code` varchar(12) DEFAULT NULL,
-  `street_number` int(3) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `station`
+-- Άδειασμα δεδομένων του πίνακα `station`
 --
 
 INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, `charge_rate`, `station_name`, `country`, `street_name`, `city`, `postal_code`, `street_number`) VALUES
@@ -942,34 +817,11 @@ INSERT INTO `station` (`station_id`, `user_id`, `supplier_id`, `supplier_rate`, 
 (27, 25, 7, 0.11, 0.28, 'Station-27', 'United States', 'Uhyerclkec Street', 'Springfield', '32544', 1301),
 (28, 32, 4, 0.17, 0.24, 'Station-28', 'United States', 'Bpyejnwxqj Street', 'Columbia', '31675', 251),
 (29, 30, 3, 0.16, 0.24, 'Station-29', 'United States', 'Zpgjdlkrnt Street', 'Provo', '28486', 1116),
-(30, 35, 1, 0.15, 0.23, 'Station-30', 'United States', 'Ezboqxddmm Street', 'Colorado Springs', '48028', 1927);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `user_id` int(5) NOT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `name` varchar(30) DEFAULT NULL,
-  `password` varchar(61) DEFAULT NULL,
-  `country` varchar(15) DEFAULT NULL,
-  `city` varchar(20) DEFAULT NULL,
-  `street_name` varchar(20) DEFAULT NULL,
-  `street_number` int(3) DEFAULT NULL,
-  `postal_code` varchar(12) DEFAULT NULL,
-  `phone_number` varchar(15) DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `points` int(5) DEFAULT NULL,
-  `sex` int(1) DEFAULT NULL,
-  `is_admin` tinyint(1) DEFAULT NULL,
-  `username` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(30, 35, 1, 0.15, 0.23, 'Station-30', 'United States', 'Ezboqxddmm Street', 'Colorado Springs', '48028', 1927),
+(31, 35, 2, 0.17, 0.25, 'Station-31', 'United States', 'Pontu Street', 'Colorado Springs', '48028', 42);
 
 --
--- Dumping data for table `user`
+-- Άδειασμα δεδομένων του πίνακα `user`
 --
 
 INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `street_name`, `street_number`, `postal_code`, `phone_number`, `date_of_birth`, `points`, `sex`, `is_admin`, `username`) VALUES
@@ -1074,177 +926,10 @@ INSERT INTO `user` (`user_id`, `email`, `name`, `password`, `country`, `city`, `
 (99, 'dui.in@eleifendvitaeerat.co.uk', 'Aurora Myers', '$2b$10$EFoagb0aER8y1H9/i1ZXkutci65TUiPsTIUmVH7q26wsxGcrgFHK.', 'Niue', 'Moffat', '7753 Molestie Ave', 32, 'OB75 9TY', '(448) 680-3670', '1955-01-22', 13, 2, 1, 'IJ917NBN6HB'),
 (100, 'vestibulum.massa@justoPraesent', 'Shea Page', '$2b$10$3eRk4rvBHZ2QQ7mKU8w/mecSkQDAaNUj8ZVRyttMiZXJPvezc0cxG', 'Guam', 'Nizamabad', 'Ap #523-3899 Nunc St', 95, 'R2Z 0J2', '(720) 593-7014', '2002-06-15', 55, 0, 1, 'SO080QZN8SG'),
 (102, 'rty@mail.com', 'Colombiano', '$2b$10$iwIy3FgqrD/xRrZZN7Y9ouy6revBYpWJJcaauKNKPBIYhi0.2Cm9O', 'Greece', 'Filiatra', 'Pontou', 6, '34789', '6979587142', '1999-07-02', 0, 1, 0, 'Lapouta'),
-(106, 'stef@poutas.com', 'Stefanos', '$2b$10$iACCRjpUqqgkMD/Qgbo95OdMXj7gubKe8bZiLO.5MvSMyJCqLPefW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 1, 'Stef'),
-(108, 'paleho@poutas.com', 'Sokaros', '$2b$10$MWViEvUlqzFXbf7q05rhmek1VUkAlUUC7FEZG.LtSq2.grybsQILW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 0, 'Paleho');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `blacklist`
---
-ALTER TABLE `blacklist`
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `car`
---
-ALTER TABLE `car`
-  ADD PRIMARY KEY (`license_plate`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `model_id` (`model_id`);
-
---
--- Indexes for table `car_model`
---
-ALTER TABLE `car_model`
-  ADD PRIMARY KEY (`model_id`);
-
---
--- Indexes for table `charge_event`
---
-ALTER TABLE `charge_event`
-  ADD PRIMARY KEY (`event_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `station_id` (`station_id`),
-  ADD KEY `point_id` (`point_id`),
-  ADD KEY `license_plate` (`license_plate`);
-
---
--- Indexes for table `credit_card`
---
-ALTER TABLE `credit_card`
-  ADD PRIMARY KEY (`card_number`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `elec_owes`
---
-ALTER TABLE `elec_owes`
-  ADD KEY `supplier_id` (`supplier_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `elec_supplier`
---
-ALTER TABLE `elec_supplier`
-  ADD PRIMARY KEY (`supplier_id`);
-
---
--- Indexes for table `point`
---
-ALTER TABLE `point`
-  ADD PRIMARY KEY (`point_id`,`station_id`),
-  ADD KEY `station_id` (`station_id`);
-
---
--- Indexes for table `station`
---
-ALTER TABLE `station`
-  ADD PRIMARY KEY (`station_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `supplier_id` (`supplier_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `car_model`
---
-ALTER TABLE `car_model`
-  MODIFY `model_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `charge_event`
---
-ALTER TABLE `charge_event`
-  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
-
---
--- AUTO_INCREMENT for table `elec_supplier`
---
-ALTER TABLE `elec_supplier`
-  MODIFY `supplier_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
--- AUTO_INCREMENT for table `point`
---
-ALTER TABLE `point`
-  MODIFY `point_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `station`
---
-ALTER TABLE `station`
-  MODIFY `station_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `blacklist`
---
-ALTER TABLE `blacklist`
-  ADD CONSTRAINT `blacklist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `car`
---
-ALTER TABLE `car`
-  ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `car_ibfk_2` FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`);
-
---
--- Constraints for table `charge_event`
---
-ALTER TABLE `charge_event`
-  ADD CONSTRAINT `charge_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `charge_event_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`station_id`),
-  ADD CONSTRAINT `charge_event_ibfk_3` FOREIGN KEY (`point_id`) REFERENCES `point` (`point_id`),
-  ADD CONSTRAINT `charge_event_ibfk_4` FOREIGN KEY (`license_plate`) REFERENCES `car` (`license_plate`);
-
---
--- Constraints for table `credit_card`
---
-ALTER TABLE `credit_card`
-  ADD CONSTRAINT `credit_card_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `elec_owes`
---
-ALTER TABLE `elec_owes`
-  ADD CONSTRAINT `elec_owes_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `elec_supplier` (`supplier_id`),
-  ADD CONSTRAINT `elec_owes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `point`
---
-ALTER TABLE `point`
-  ADD CONSTRAINT `point_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `station` (`station_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `station`
---
-ALTER TABLE `station`
-  ADD CONSTRAINT `station_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `station_ibfk_2` FOREIGN KEY (`supplier_id`) REFERENCES `elec_supplier` (`supplier_id`);
+(106, 'stef@poutas.com', 'Stefanos', '$2b$10$lMuQ4pPw6pqFquc2V0/t7uKEC15VxLGEtksWuixUBDzwK5mZ2dZ0.', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 1, 'Stef'),
+(108, 'paleho@poutas.com', 'Sokaros', '$2b$10$MWViEvUlqzFXbf7q05rhmek1VUkAlUUC7FEZG.LtSq2.grybsQILW', 'Greece', 'Athens', 'Salamalenkoum', 13, '11234', '6973552567', '1999-06-17', 0, 1, 0, 'Paleho'),
+(109, 'admin@evgroup.com', 'Admin', '$2b$10$xjn/U3vIglmSkLmOPrMMWOGn3DLWcgKp4Gr7A5LrsIqL4r4cEXZq.', 'Greece', 'Athens', 'Mitropoleos', 3, '10557', '000-000-0000', '1980-05-20', 0, 2, 1, 'admin'),
+(110, 'something@somewhere.com', 'Chris', '$2b$10$kpHHvTRYKS5j2w/PGd0vXuAyblgkcCjswdzXUnLu7G9MofUKMer7K', 'Greece', 'Athens', 'Ermou', 17, '15780', '000-000-0000', '1980-05-20', 0, 0, 0, 'user1');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
