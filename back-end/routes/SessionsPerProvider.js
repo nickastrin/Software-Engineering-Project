@@ -36,12 +36,16 @@ async function getData(providerId, from_date, to_date, req, res) {
         let provider_query = `SELECT name FROM elec_supplier WHERE supplier_id = ${providerId}`;
 
         let prov_resp = await makeQuery(provider_query);
+        if(prov_resp.length == 0){
+            res.status(402).send('No such provider found');
+            return;
+        }
         let provider_name = JSON.parse(JSON.stringify(prov_resp))[0].name;
 
         let sql = `SELECT * FROM station WHERE supplier_id='${providerId}'`;
         let stations = await makeQuery(sql);
         if(stations.length == 0){
-            res.status(402).send('No such provider found');
+            res.status(402).send('No stations linked to this provider');
             return;
         }
         for (let i = 0; i < stations.length; i++) {
