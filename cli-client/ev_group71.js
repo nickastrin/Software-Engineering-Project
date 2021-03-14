@@ -12,7 +12,9 @@ const { sessionsPerProvider } = require("./src/SessionsPerProvider_c.js");
 const { usermod } = require("./src/admin/usermod_c.js");
 const { users } = require("./src/admin/users_c.js");
 const { sessionsupd } = require("./src/admin/sessionsupd_c.js");
-const stringify = require("csv-stringify/lib/sync");
+const { companies } = require("./src/admin/companies_c.js");
+const { findStation } = require("./src/findStation_c.js");
+
 program.version("1.0.0").description("CLI");
 //COMMANDS - SCOPE
 //healthcheck
@@ -174,6 +176,27 @@ period which are given as parameters in the URL."
         console.log(error);
       });
   });
+
+//findStation -fs
+program
+.command("findStation")
+.requiredOption("-c, --city <city>", 'city to find nearby stations')
+.alias("fs")
+.description(
+  "Returns list with stations nearby city, which is given as parameter"
+)
+.action((options) => {
+  findStation(
+    options.city
+  )
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 //admin endpoints
 program
   .command("Admin")
@@ -185,6 +208,10 @@ program
   .option("--source <file>", "Source file")
   .option("--healthcheck")
   .option("--resetsessions")
+  .option("-co, --companies", "Return sessions of cars of one manufacturer given as parameter")
+  .option("-m, --manufacturer <manufacturer>", 'car manufacturer for companies')
+  .option("-from, --datefrom <datefrom>")
+  .option("-to, --dateto <dateto>")
   .description("Administrative commands")
   .alias("admin")
   .action((options) => {
@@ -209,10 +236,31 @@ program
         sessionsupd(options.source);
         //console.log(`Username ${options.source}`)
       }
-    } else if (options.healthcheck) {
+    } 
+    else if (options.healthcheck) {
       healthcheck();
-    } else if (options.resetsessions) {
+    } 
+    else if (options.resetsessions) {
       resetsessions();
     }
+    else if (options.companies) {
+      if( options.manufacturer && options.datefrom && options.dateto )
+      {
+      companies(
+      options.manufacturer,
+      options.datefrom,
+      options.dateto
+      )
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      }
+      else{
+        console.log("Not enough parameters given for --companies")
+      }
+  }
   });
 program.parse(process.argv);
