@@ -22,8 +22,8 @@ beforeAll(() => {
 
 afterAll(() => {
   //replace fake_token
-  if (already_logged_in)    fs.writeFileSync(path, old_token);
-  else    fs.unlinkSync(path)
+  if (already_logged_in) fs.writeFileSync(path, old_token);
+  else fs.unlinkSync(path);
 });
 
 // unit tests

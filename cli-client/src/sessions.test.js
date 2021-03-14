@@ -9,10 +9,12 @@ const { hasUncaughtExceptionCaptureCallback } = require("process");
 const { expect, test } = require("@jest/globals");
 const { async } = require("rsvp");
 
-var already_logged_in, old_token;
-const path = "./softeng20bAPI.token";
+jest.setTimeout(30000);
 
-beforeAll(async () => {
+var already_logged_in, old_token;
+const path = "softeng20bAPI.token";
+
+beforeAll(() => {
   //save old token
   already_logged_in = fs.existsSync(path);
   if (already_logged_in) {
@@ -22,7 +24,7 @@ beforeAll(async () => {
   }
 
   //Create fake login for Unit tests
-  await login("admin", "petrol4ever");
+  return login("admin", "petrol4ever");
   /*
   const token = {
     token:
@@ -38,6 +40,10 @@ afterAll(() => {
   else if (fs.existsSync(path)) {
     fs.unlinkSync(path);
   }
+});
+
+test("should already be logged in", () => {
+  expect(fs.existsSync(path)).toBe(true);
 });
 
 test("should return sessionsPerEV in json form", async () => {

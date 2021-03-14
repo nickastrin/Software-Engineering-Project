@@ -6,7 +6,7 @@
   "bin": "./ev_group71.js",
   "preferGlobal": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",

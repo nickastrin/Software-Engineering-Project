@@ -3,7 +3,9 @@ const fs = require("fs");
 const { login } = require("./login_c.js");
 const { logout } = require("./logout_c.js");
 var already_logged_in, old_token;
-const path = "./softeng20bAPI.token";
+const path = "softeng20bAPI.token";
+
+jest.setTimeout(30000);
 
 beforeAll(() => {
   //save old token
