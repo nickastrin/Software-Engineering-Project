@@ -93,15 +93,22 @@ function App() {
                   to="/Login"
                   type="button"
                   className="button"
-                  style={{ marginBottom: "10px" }}
+                  style={{ marginBottom: "10px" ,marginTop: "10px" }}
                 >
                   Login
                 </Link>
-                <br></br>
-                <Link to="/Dashboard" type="button" className="button">
-                  Profile
+                <Link 
+                  to="/Dashboard" 
+                  type="button" 
+                  className="button" 
+                  style={{marginTop: "10px", marginBottom: "10px" }} >
+                    Profile
                 </Link>
-                <button onClick={logOut} type="button" className="button">
+                <button 
+                  onClick={logOut} 
+                  type="button" 
+                  className="button"
+                  style={{ marginTop: "10px", marginBottom: "10px" }}  >
                   Log out
                 </button>
                 <br></br>

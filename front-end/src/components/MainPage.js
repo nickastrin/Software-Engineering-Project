@@ -12,13 +12,13 @@ class MainPage extends Component {
         <h1 type="text" className="text-header">
           No REST for the Wicked
         </h1>
-        <h4
+        <h3
           type="text"
-          className="text-body  "
-          style={{ fontFamily: "Snell Roundhand" }}
+          className="text-body"
+          style={{ fontFamily: "Helvetica" }}
         >
-          <em>Welcome</em>
-        </h4>
+          <em>Welcome!</em>
+        </h3>
       </div>
     );
   }
