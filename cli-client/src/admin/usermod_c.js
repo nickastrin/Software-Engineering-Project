@@ -12,6 +12,16 @@ async function usermod(username, password) {
     process.exit();
   }
 
+  if (username.length < 3) {
+    console.log("Username is too short. Must be at least 3 characters");
+    process.exit();
+  }
+
+  if (password.length < 8) {
+    console.log("Username is too short. Must be at least 8 characters");
+    process.exit();
+  }
+
   const raw = fs.readFileSync(path);
   const token = JSON.parse(raw).token;
 
@@ -37,7 +47,6 @@ async function usermod(username, password) {
       {
         name: "email",
         message: "Give email of the new user:",
-        default: "something@somewhere.com",
       },
       {
         name: "country",
@@ -99,6 +108,10 @@ async function usermod(username, password) {
       body.sex = 2;
     }
 
+    if (!RegExp("^([a-z]+@[a-z]+.[a-z]+)$").test(body.email)) {
+      console.log("Invalid email");
+      process.exit();
+    }
     if (parseInt(body.street_number) == NaN) {
       console.log("Invalid Street Number");
       process.exit();
@@ -120,6 +133,19 @@ async function usermod(username, password) {
       process.exit();
     } else if (parseInt(parts[2] < 1960)) {
       console.log("Incorrect Date format. Format should be YYYY-MM-DD");
+      process.exit();
+    }
+
+    if (body.country < 3) {
+      console.log("Country name is too short. Must be at least 3 characters");
+      process.exit();
+    }
+    if (body.city < 3) {
+      console.log("City name is too short. Must be at least 3 characters");
+      process.exit();
+    }
+    if (body.country < 3) {
+      console.log("Country name is too short. Must be at least 3 characters");
       process.exit();
     }
 
