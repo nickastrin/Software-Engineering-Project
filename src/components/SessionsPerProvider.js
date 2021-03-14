@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import https from "https";
+import { Helmet } from "react-helmet";
+import "./Sessions.css";
 
 class SessionsPerProvider extends Component {
   constructor(props) {
@@ -89,16 +91,24 @@ class SessionsPerProvider extends Component {
 
     window.history.replaceState(null, "Query Result", url);
     axios
-      .get("https://localhost:8765/evcharge/api" + url, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
-      })
+      .get(
+        "https://localhost:8765/evcharge/api" + url,
+        {
+          headers: {
+            "x-observatory-auth": this.props.token,
+          },
+        },
+        {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      )
       .then((response) => {
+        this.setState({ err: "ok" });
         console.log(response.data);
         this.setState({ providerName: response.data.ProviderName });
         this.setState({ sessionList: response.data.Sessions });
-        this.setState({ err: "ok" });
       })
       .catch((error) => {
         if (error.response) {
@@ -124,54 +134,116 @@ class SessionsPerProvider extends Component {
   }
 
   render() {
+    const token = this.props.token;
+    if (token === undefined || token === null) {
+      return <Redirect to="/Login" />;
+    }
     return (
       <div>
-        <h1>Provider Session Screen</h1>
+        <Helmet>
+          <style>{"body { background-color: #eef0f1; }"}</style>
+        </Helmet>
+        <h1 type="text" className="text-header">
+          Provider Session Screen
+        </h1>
         <nav>
-          <button>
-            <Link to="/">Return to Home</Link>
-          </button>
+          <Link
+            to="/"
+            type="button"
+            className="button-menu"
+            style={{ width: "150px", marginBottom: "20px" }}
+          >
+            Return Home
+          </Link>
         </nav>
-        <h2>Specify Provider ID</h2>
+        <h4 type="text" className="text-body">
+          Specify Provider ID
+        </h4>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <label type="text" className="text-body">
             ProviderID:
             <input
-              type="text"
+              type="input"
+              className="input"
               providerid={this.state.providerid}
               onChange={this.handleChange}
             />
           </label>
         </form>
-        <h4>Choose Start Date</h4>
+        <h4 type="text" className="text-body">
+          Choose Start Date
+        </h4>
         <DatePicker
+          type="input"
+          className="input-date"
           onChange={this.changeStartDate}
           value={this.state.startDate}
         />
-        <h4>Choose End Date</h4>
-        <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
+        <h4 type="text" className="text-body">
+          Choose End Date
+        </h4>
+        <DatePicker
+          type="input"
+          className="input-date"
+          onChange={this.changeEndDate}
+          value={this.state.endDate}
+        />
         {this.errorCheck() ? (
-          <button onClick={this.handleClick}> Proceed </button>
+          <button
+            type="button"
+            className="submit-button"
+            onClick={this.handleClick}
+          >
+            {" "}
+            Proceed{" "}
+          </button>
         ) : (
-          <h4>Invalid</h4>
+          <h4 type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            Invalid
+          </h4>
         )}
         {this.state.err === "ok" ? (
           <div>
-            <h5>Search Results:</h5>
-            <p>Provider Name: {this.state.providerName}</p>
+            <h5
+              type="text"
+              className="text-header"
+              style={{ fontWeight: "bold", marginBottom: "15px" }}
+            >
+              Search Results:
+            </h5>
+            <p type="text" className="text-body">
+              Provider Name: {this.state.providerName}
+            </p>
             <div>
-              Session Summary:
+              <text
+                type="text"
+                className="text-header"
+                style={{ fontWeight: "bold" }}
+              >
+                Session Summary:
+              </text>
               {
                 <pre>
                   {this.sessionLoop().map((value, index) => {
-                    return <li key={index}>{value}</li>;
+                    return (
+                      <li
+                        key={index}
+                        type="text"
+                        className="text-body"
+                        style={{ fontSize: "16px" }}
+                      >
+                        {value}
+                      </li>
+                    );
                   })}
                 </pre>
               }
             </div>
           </div>
         ) : (
-          <p>{this.state.err}</p>
+          <p type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            {this.state.err}
+          </p>
         )}
       </div>
     );

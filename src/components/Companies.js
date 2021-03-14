@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
 import DatePicker from "react-date-picker";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import https from "https";
+import { Helmet } from "react-helmet";
+import "./Sessions.css";
 
 class Companies extends Component {
   constructor(props) {
@@ -78,11 +80,19 @@ class Companies extends Component {
 
     window.history.replaceState(null, "Query Result", url);
     axios
-      .get("https://localhost:8765/evcharge/api" + url, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
-      })
+      .get(
+        "https://localhost:8765/evcharge/api" + url,
+        {
+          headers: {
+            "x-observatory-auth": this.props.token,
+          },
+        },
+        {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      )
       .then((response) => {
         this.setState({ sessionList: response.data });
         this.setState({ err: "ok" });
@@ -111,53 +121,112 @@ class Companies extends Component {
   }
 
   render() {
+    if (this.props.token === undefined || this.props.token === null) {
+      return <Redirect to="/Login" />;
+    }
     return (
       <div>
-        <h1>Companies Screen</h1>
+        <Helmet>
+          <style>{"body { background-color: #eef0f1; }"}</style>
+        </Helmet>
+        <h1 type="text" className="text-header">
+          Find Manufacturer Screen
+        </h1>
         <nav>
-          <button>
-            <Link to="/">Return to Home</Link>
-          </button>
+          <Link
+            to="/"
+            type="button"
+            className="button-menu"
+            style={{ width: "150px", marginBottom: "20px" }}
+          >
+            Return Home
+          </Link>
         </nav>
-        <h2>Specify Manufacturer Name</h2>
+        <h4 type="text" className="text-body">
+          Specify Manufacturer Name
+        </h4>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <label type="text" className="text-body">
             Manufacturer Name:
             <input
               type="text"
+              className="input"
               stationid={this.state.manufacturername}
               onChange={this.handleChange}
             />
           </label>
         </form>
-        <h4>Choose Start Date</h4>
+        <h4 type="text" className="text-body">
+          Choose Start Date
+        </h4>
         <DatePicker
+          type="input"
+          className="input-date"
           onChange={this.changeStartDate}
           value={this.state.startDate}
         />
-        <h4>Choose End Date</h4>
-        <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
+        <h4 type="text" className="text-body">
+          Choose End Date
+        </h4>
+        <DatePicker
+          type="input"
+          className="input-date"
+          onChange={this.changeEndDate}
+          value={this.state.endDate}
+        />
         {this.errorCheck() ? (
-          <button onClick={this.handleClick}> Proceed </button>
+          <button
+            type="button"
+            className="submit-button"
+            onClick={this.handleClick}
+          >
+            {" "}
+            Proceed{" "}
+          </button>
         ) : (
-          <h4>Invalid</h4>
+          <h4 type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            Invalid
+          </h4>
         )}
         {this.state.err === "ok" ? (
           <div>
-            <h5>Search Results:</h5>
+            <h5
+              type="text"
+              className="text-header"
+              style={{ fontWeight: "bold", marginBottom: "15px" }}
+            >
+              Search Results:
+            </h5>
             <div>
-              Session Summary:
+              <text
+                type="text"
+                className="text-header"
+                style={{ fontWeight: "bold" }}
+              >
+                Session Summary:
+              </text>
               {
                 <pre>
                   {this.sessionLoop().map((value, index) => {
-                    return <li key={index}>{value}</li>;
+                    return (
+                      <li
+                        key={index}
+                        type="text"
+                        className="text-body"
+                        style={{ fontSize: "16px" }}
+                      >
+                        {value}
+                      </li>
+                    );
                   })}
                 </pre>
               }
             </div>
           </div>
         ) : (
-          <p>{this.state.err}</p>
+          <p type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            {this.state.err}
+          </p>
         )}
       </div>
     );

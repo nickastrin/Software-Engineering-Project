@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Redirect, Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
-import { Link } from "react-router-dom";
 import https from "https";
+import { Helmet } from "react-helmet";
+import "./Sessions.css";
 
 class SessionsPerStation extends Component {
   constructor(props) {
@@ -83,12 +85,21 @@ class SessionsPerStation extends Component {
 
     window.history.replaceState(null, "Query Result", url);
     axios
-      .get("https://localhost:8765/evcharge/api" + url, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
-      })
+      .get(
+        "https://localhost:8765/evcharge/api" + url,
+        {
+          headers: {
+            "x-observatory-auth": this.props.token,
+          },
+        },
+        {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      )
       .then((response) => {
+        this.setState({ err: "ok" });
         this.setState({ activePoints: response.data.NumberOfActivePoints });
         this.setState({
           chargingSessions: response.data.NumberOfChargingSessions,
@@ -123,59 +134,132 @@ class SessionsPerStation extends Component {
   }
 
   render() {
+    if (this.props.token === undefined || this.props.token === null) {
+      return <Redirect to="/Login" />;
+    }
     return (
       <div>
-        <h1>Station Session Screen</h1>
+        <Helmet>
+          <style>{"body { background-color: #eef0f1; }"}</style>
+        </Helmet>
+        <h1 type="text" className="text-header">
+          Station Session Screen
+        </h1>
         <nav>
-          <button>
-            <Link to="/">Return to Home</Link>
-          </button>
+          <Link
+            to="/"
+            type="button"
+            className="button-menu"
+            style={{ width: "150px", marginBottom: "20px" }}
+          >
+            Return Home
+          </Link>
         </nav>
-        <h2>Choose Station ID</h2>
+        <h4 type="text" className="text-body">
+          Choose Station ID
+        </h4>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            StationID:
+          <label type="text" className="text-body">
+            Station ID:
             <input
-              type="text"
+              type="input"
+              className="input"
               stationid={this.state.stationid}
               onChange={this.handleChange}
             />
           </label>
         </form>
-        <h4>Choose Start Date</h4>
+        <h4 type="text" className="text-body">
+          Choose Start Date
+        </h4>
         <DatePicker
+          type="input"
+          className="input-date"
           onChange={this.changeStartDate}
           value={this.state.startDate}
         />
-        <h4>Choose End Date</h4>
-        <DatePicker onChange={this.changeEndDate} value={this.state.endDate} />
+        <h4 type="text" className="text-body">
+          Choose End Date
+        </h4>
+        <DatePicker
+          type="input"
+          className="input-date"
+          onChange={this.changeEndDate}
+          value={this.state.endDate}
+        />
         {this.errorCheck() ? (
-          <button onClick={this.handleClick}> Proceed </button>
+          <button
+            type="button"
+            className="submit-button"
+            onClick={this.handleClick}
+          >
+            {" "}
+            Proceed{" "}
+          </button>
         ) : (
-          <h4>Invalid</h4>
+          <h4 type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            Invalid
+          </h4>
         )}
         {this.state.err === "ok" ? (
           <div>
-            <h5>Search Results:</h5>
-            <p>Active Points: {this.state.activePoints}</p>
-            <p>Number of Charging Sessions: {this.state.chargingSessions}</p>
-            <p>Operator Name: {this.state.operator}</p>
-            <p>Period From: {this.state.periodFrom}</p>
-            <p>Period To: {this.state.periodTo}</p>
-            <p>Total Energy Delivered: {this.state.totalDelivered}</p>
+            <h5
+              type="text"
+              className="text-header"
+              style={{ fontWeight: "bold", marginBottom: "15px" }}
+            >
+              Search Results:
+            </h5>
+            <p type="text" className="text-body">
+              Active Points: {this.state.activePoints}
+            </p>
+            <p type="text" className="text-body">
+              Number of Charging Sessions: {this.state.chargingSessions}
+            </p>
+            <p type="text" className="text-body">
+              Operator Name: {this.state.operator}
+            </p>
+            <p type="text" className="text-body">
+              Period From: {this.state.periodFrom}
+            </p>
+            <p type="text" className="text-body">
+              Period To: {this.state.periodTo}
+            </p>
+            <p type="text" className="text-body">
+              Total Energy Delivered: {this.state.totalDelivered}
+            </p>
             <div>
-              Session Summary:
+              <text
+                type="text"
+                className="text-header"
+                style={{ fontWeight: "bold" }}
+              >
+                Session Summary:
+              </text>
               {
                 <pre>
                   {this.sessionLoop().map((value, index) => {
-                    return <li key={index}>{value}</li>;
+                    return (
+                      <div>
+                        <li
+                          key={index}
+                          type="text"
+                          className="text-body"
+                          style={{ fontSize: "16px" }}
+                        >
+                          {value}
+                        </li>
+                      </div>
+                    );
                   })}
                 </pre>
               }
             </div>
           </div>
         ) : (
-          <p>{this.state.err}</p>
+          <p type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            {this.state.err}
+          </p>
         )}
       </div>
     );

@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import https from "https";
+import { Helmet } from "react-helmet";
+import "./Sessions.css";
 
 class FindStation extends Component {
   constructor(props) {
@@ -65,6 +67,7 @@ class FindStation extends Component {
         }),
       })
       .then((response) => {
+        this.setState({ err: "ok" });
         this.setState({ flag: "true" });
         this.setState({ sessionList: response.data });
       })
@@ -94,37 +97,75 @@ class FindStation extends Component {
   render() {
     return (
       <div>
-        <h1>Find Station Screen</h1>
+        <Helmet>
+          <style>{"body { background-color: #eef0f1; }"}</style>
+        </Helmet>
+        <h1 type="text" className="text-header">
+          Find Station Screen
+        </h1>
         <nav>
-          <button>
-            <Link to="/">Return to Home</Link>
-          </button>
+          <Link
+            to="/"
+            type="button"
+            className="button-menu"
+            style={{ width: "150px", marginBottom: "20px" }}
+          >
+            Return Home
+          </Link>
         </nav>
-        <h2>Specify City</h2>
+        <h4 type="text" className="text-body">
+          Specify City
+        </h4>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <label type="text" className="text-body">
             City:
             <input
-              type="text"
+              type="input"
+              className="input"
               stationcity={this.state.stationcity}
               onChange={this.handleChange}
             />
           </label>
+
+          <button
+            type="button"
+            className="submit-button"
+            onClick={this.handleClick}
+          >
+            {" "}
+            Proceed{" "}
+          </button>
         </form>
-        <button onClick={this.handleClick}> Proceed </button>
         {this.state.err === "ok" ? (
           <div>
-            <h4>Query Results:</h4>
+            <h5
+              type="text"
+              className="text-header"
+              style={{ fontWeight: "bold", marginBottom: "15px" }}
+            >
+              Query Results:
+            </h5>
             {
               <pre>
                 {this.sessionLoop().map((value, index) => {
-                  return <li key={index}>{value}</li>;
+                  return (
+                    <li
+                      key={index}
+                      type="text"
+                      className="text-body"
+                      style={{ fontSize: "16px" }}
+                    >
+                      {value}
+                    </li>
+                  );
                 })}
               </pre>
             }
           </div>
         ) : (
-          <p>{this.state.err}</p>
+          <p type="text" className="text-body" style={{ fontWeight: "bold" }}>
+            {this.state.err}
+          </p>
         )}
       </div>
     );
