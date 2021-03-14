@@ -1,8 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const conn = require('../Dbconnection/connection');
+const {authRole, authenticateToken} = require('../Authentication/basicAuth');
+const makeQuery = require('../Dbconnection/promiseQuery');
+const sendCsv = require('../csvParser/csvResponse');
 
-router.get('/:providerID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
+const csvFields = [
+    {
+        label: 'ProviderID',
+        value: 'ProviderID'
+    },
+    {
+        label: 'ProviderName',
+        value: 'ProviderName'
+    },
+    {
+        label: 'Sessions',
+        value: 'Sessions'
+    }
+];
+
+router.get('/:providerID/:yyyymmdd_from/:yyyymmdd_to', authenticateToken, (req,res) =>{
     const providerID = req.params.providerID;
     const yyyymmdd_from = JSON.stringify(req.params.yyyymmdd_from);
     const from_date = yyyymmdd_from.slice(1, 5) + '-' + yyyymmdd_from.slice(5, 7) + '-' + yyyymmdd_from.slice(7, 9);
@@ -11,25 +28,24 @@ router.get('/:providerID/:yyyymmdd_from/:yyyymmdd_to', (req,res) =>{
     const to_date = yyyymmdd_to.slice(1, 5) + '-' + yyyymmdd_to.slice(5, 7) + '-' + yyyymmdd_to.slice(7, 9);
     // console.log(to_date);
 
-    getData(providerID, from_date, to_date, res);
+    getData(providerID, from_date, to_date, req, res);
 });
 
-function makeQuery(sql_query){
-    return new Promise((resolve, reject) =>{
-        conn.query(sql_query, (error, results) => {
-            if (error) reject('query error');
-            else resolve(results);
-        });
-    })
-}
-
-async function getData(providerId, from_date, to_date, res) {
+async function getData(providerId, from_date, to_date, req, res) {
     try{
-        // console.log('getData start');
+        let provider_query = `SELECT name FROM elec_supplier WHERE supplier_id = ${providerId}`;
+
+        let prov_resp = await makeQuery(provider_query);
+        if(prov_resp.length == 0){
+            res.status(402).send('No such provider found');
+            return;
+        }
+        let provider_name = JSON.parse(JSON.stringify(prov_resp))[0].name;
+
         let sql = `SELECT * FROM station WHERE supplier_id='${providerId}'`;
         let stations = await makeQuery(sql);
         if(stations.length == 0){
-            res.status(402).send('No such provider found');
+            res.status(402).send('No stations linked to this provider');
             return;
         }
         for (let i = 0; i < stations.length; i++) {
@@ -37,26 +53,55 @@ async function getData(providerId, from_date, to_date, res) {
         }
         // console.log('stations: ' + stations);
 
-        let response = new Array();
+        let objList = [];
         for (let i = 0; i < stations.length; i++) {
             sql = `SELECT * FROM charge_event WHERE station_id='${stations[i]}' AND start_time>='${from_date}' AND start_time<='${to_date}'`;
 
             let q_res = await makeQuery(sql);
             for (let j = 0; j < q_res.length; j++) {
-                response.push(JSON.parse(JSON.stringify(q_res[j]))); //to convert RowDataPacket to plain object
+                objList.push(JSON.parse(JSON.stringify(q_res[j]))); //to convert RowDataPacket to plain object
             }
         }
-        // console.log(response);
+        // console.log(objList);
         // console.log('before returning');
-        if(response.length > 0){
-            res.json(response);
+
+        if(objList.length == 0){
+            return res.status(402).send('There are no sessions for that provider');
         }
-        else{
-            res.status(402).send('There are no sessions for that provider');
+
+        let sessionList = [];
+        for (let i = 0; i < objList.length; i++) {
+            const element = objList[i];
+            let kwh = element.kwh_transferred;
+
+            sessionList.push({
+                StationID: element.station_id,
+                SessionID: element.event_id,
+                VehicleID: element.license_plate,
+                StartedOn: element.start_time,
+                FinishedOn: element.finish_time,
+                ΕnergyDelivered: kwh,
+                PricePolicyRef: "unknown",
+                CostPerKWh: element.price / kwh,
+                TotalCost: element.price
+            });
         }
+
+        let resp = {
+            ProviderID: providerId,
+            ProviderName: provider_name,
+            Sessions: sessionList
+        };
+
+        if(req.query && req.query.format == 'csv'){
+            //csv format was requested
+            return sendCsv(res, 'SessionsPerProvider.csv', csvFields, resp);
+        }
+        
+        return res.json(resp);
     } catch (err){
         console.log('SessionsPerProvider/getdata error: ' + err);
-        res.status(402).send('There are no sessions for that provider');
+        res.status(400).send('error');
     }
 }
 
