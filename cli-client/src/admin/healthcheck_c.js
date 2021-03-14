@@ -1,7 +1,8 @@
 const https= require('https');
-
+  const {previous_path} = require("../../path")
+  const path = previous_path + "/softeng20bAPI.token"
 function healthcheck () {
-    path = './softeng20bAPI.token';
+    
 
     const options = {
         hostname: 'localhost',

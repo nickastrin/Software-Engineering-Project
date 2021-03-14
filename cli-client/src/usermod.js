@@ -3,7 +3,8 @@ const fs = require('fs');
 
 function usermod (username, password) {
     const url = '/evcharge/api/admin/usermod/' + username + '/' + password ;
-    const path = "./softeng20bAPI.token";
+      const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
     
     if(!fs.existsSync(path)) {
         console.log('User authentication required. Please sign in');

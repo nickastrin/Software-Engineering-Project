@@ -14,7 +14,9 @@ const options = {
 };
 
 function login(username, password) {
-  const path = "./softeng20bAPI.token";
+  const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
+
   return new Promise((resolve, reject) => {
     try {
       const body = "username=" + username + "&password=" + password;
@@ -24,7 +26,7 @@ function login(username, password) {
 
         res.on("data", (d) => {
           if (res.statusCode == 200) {
-            fs.writeFile("softeng20bAPI.token", d, function (err) {
+            fs.writeFile(path, d, function (err) {
               if (err) throw err;
               resolve("Login successful!");
             });
@@ -58,7 +60,7 @@ function login(username, password) {
             if (answers.loginPrompt == "N") {
               resolve("You have not been logged out");
             } else if (answers.loginPrompt == "Y") {
-              fs.unlink("softeng20bAPI.token", function (err) {
+              fs.unlink(path, function (err) {
                 if (err) throw err;
               });
               req.write(body);

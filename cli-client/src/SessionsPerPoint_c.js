@@ -15,7 +15,8 @@ function createOptions(pointid, from, to, format) {
     to +
     "?format=" +
     format;
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
   const raw = fs.readFileSync(path);
   const token = JSON.parse(raw).token;
@@ -35,7 +36,8 @@ function createOptions(pointid, from, to, format) {
 }
 
 function sessionsPerPoint(pointid, from, to, format) {
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
   return new Promise((resolve, reject) => {
     if (!pointcheck(pointid)) {
       resolve("Invalid --point value. Value must have form StationID-PointID");

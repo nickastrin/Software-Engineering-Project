@@ -7,7 +7,8 @@ function createOptions(manufacturer, datefrom, dateto) {
   const url =
     "/evcharge/api/Companies/" + manufacturer + "/" + datefrom + "/" + dateto;
 
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
   const raw = fs.readFileSync(path);
   const token = JSON.parse(raw).token;
@@ -27,7 +28,8 @@ function createOptions(manufacturer, datefrom, dateto) {
 }
 
 function companies(manufacturer, datefrom, dateto) {
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
   return new Promise((resolve, reject) => {
     if (!datecheck(datefrom)) {
       resolve("Invalid --datefrom value. Value must have form YYYYMMDD");

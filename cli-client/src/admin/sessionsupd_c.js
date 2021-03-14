@@ -5,7 +5,8 @@ const formdata = require('form-data');
 function sessionsupd (source) {
 
     const url = '/evcharge/api/admin/system/sessionsupd';
-    const path = "./softeng20bAPI.token";
+      const {previous_path} = require("../../path")
+  const path = previous_path + "/softeng20bAPI.token"
     
     const form = new formdata();
     form.append("file", fs.createReadStream(source));

@@ -8,7 +8,8 @@ const { login } = require("../src/login_c.js");
 jest.setTimeout(30000);
 
 var already_logged_in, old_token;
-const path = "softeng20bAPI.token";
+  const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
 beforeAll(() => {
   //save old token

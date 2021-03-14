@@ -16,7 +16,8 @@ function createOptions(city) {
 }
 
 function findStation(city) {
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
   return new Promise((resolve, reject) => {
     /*if (!citycheck(city)) {
       resolve("Invalid --city value.");

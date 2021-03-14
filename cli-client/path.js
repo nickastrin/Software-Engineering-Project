@@ -1,0 +1,1 @@
+exports.previous_path = __dirname;

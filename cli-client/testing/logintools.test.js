@@ -3,7 +3,8 @@ const fs = require("fs");
 const { login } = require("../src/login_c.js");
 const { logout } = require("../src/logout_c.js");
 var already_logged_in, old_token;
-const path = "softeng20bAPI.token";
+  const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
 jest.setTimeout(30000);
 

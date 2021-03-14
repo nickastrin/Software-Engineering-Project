@@ -1,7 +1,8 @@
 const https = require("https");
 const fs = require("fs");
 
-const path = "./softeng20bAPI.token";
+  const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
 function logout() {
   return new Promise((resolve, reject) => {

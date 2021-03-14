@@ -4,7 +4,8 @@ const inquirer = require("inquirer");
 
 async function usermod(username, password) {
   const url = "/evcharge/api/admin/usermod/" + username + "/" + password;
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../../path")
+  const path = previous_path + "/softeng20bAPI.token"
   let body;
 
   if (!fs.existsSync(path)) {

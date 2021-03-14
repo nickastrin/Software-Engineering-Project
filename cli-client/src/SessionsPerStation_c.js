@@ -12,7 +12,8 @@ function createOptions(stationid, from, to, format) {
     to +
     "?format=" +
     format;
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
 
   const raw = fs.readFileSync(path);
   const token = JSON.parse(raw).token;
@@ -32,7 +33,8 @@ function createOptions(stationid, from, to, format) {
 }
 
 function sessionsPerStation(stationid, from, to, format) {
-  const path = "./softeng20bAPI.token";
+    const {previous_path} = require("../path")
+  const path = previous_path + "/softeng20bAPI.token"
   return new Promise((resolve, reject) => {
     if (!stationcheck(stationid)) {
       resolve("Invalid --station value. Value must be an integer");
