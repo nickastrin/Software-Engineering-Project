@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project was created for the Software Engineering Course @ NTUA ECE, 2021. The purpose of this project was to create a backend, a command line interface and a responsive frontend, that could show various statistics on nearby Car Charging Stations.
+This project was created for the Software Engineering Course @ NTUA ECE, 2020. The purpose of this project was to create a backend, a command line interface and a responsive frontend, that could show various statistics on nearby Car Charging Stations.
 
 ## Team members
 
