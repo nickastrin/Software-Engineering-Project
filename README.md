@@ -26,4 +26,4 @@ In order for the site to be able to be fully functional, certain steps are requi
 
 * Add data to your Relational Database. Our dummy data can be found in the */back-end/DBDumps* folder.
 * Connect to the Database, using the credentials found in the */back-end/DBConnection*
-* Use npm install in the *back-end* and *front-end/src* folders and then npm start.
+* Use npm install in the *back-end* and *front-end* folders and then npm start.
